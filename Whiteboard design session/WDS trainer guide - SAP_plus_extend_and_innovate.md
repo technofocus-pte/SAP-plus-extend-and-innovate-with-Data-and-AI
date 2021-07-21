@@ -172,15 +172,15 @@ When participants are doing activities, you can **look ahead to refresh your mem
 
 ## Abstract and learning objectives
 
-Contoso Retail, Inc has been facing challenges in modernizing its on-premises SAP landscape in order to better compete in the current marketplace. Among the main challenges are that Contoso has an aging on-premises infrastructure, not capable of running more demanding analytical workloads.  They also do not have a disaster recovery environment and limited high-availability provisions. Contoso has found that it is expensive to maintain development and testing environments. They have a lack of full visibility of supply and demand signals across the value chain.  They are also insufficient in their ability to use customer data, precluding the ability to implement targeted advertising. They have determined that they maintain a suboptimal delivery route planning and scheduling.
+Contoso Retail, Inc. has been facing challenges in modernizing its on-premises SAP landscape in order to better compete in the current marketplace. Among the main challenges are that Contoso has an aging on-premises infrastructure, not capable of running more demanding analytical workloads.  They do not have a disaster recovery environment and limited high-availability provisions. Contoso has found that it is expensive to maintain development and testing environments. They have a lack of full visibility of supply and demand signals across the value chain.  They are also insufficient in their ability to use customer data, precluding the ability to implement targeted advertising. They have determined that they maintain a suboptimal delivery route planning and scheduling.
 
 As a struggling retailer, Contoso has been dealing with significant financial constraints. Given a hard limit of its capital expenditure budget, Contoso has been considering leveraging its operational budget and taking advantage of the pay-as-you-go model offered by Microsoft Azure. 
 
-To remedy its challenges, Contoso has asked you to design and implement a solution that would help them regain the competitive edge by transitioning their SAP landscape to Azure and modernizing it by leveraging Azure services. 
+To remedy these challenges, Contoso has asked you to design and implement a solution that will help them regain the competitive edge by transitioning their SAP landscape to Azure and modernizing it by leveraging Azure services. 
 
 Contoso has determined that to optimize their environment, the following key success criteria must be met.  They would like a highly available SAP landscape with the ability to minimize cost through right-sizing and optimized resource allocation.  They need data integration and analytics capabilities that include the ability to provide a comprehensive view of logistical and operational data, including sensor data from IoT devices in warehouses, stores, and manufacturing plants.  Contoso would like to utilize social media sentiment analytics and personalized marketing.  In addition, they would like to improve delivery route planning and scheduling, leveraging external data feeds that account for such factors as road closures or inclement weather.  They also would like optimized demand forecasting with automatic anomaly detection within their supply chain.
 
-Your primary objective is to provide integration across all data to be used for analysis and reporting, bringing together manufacturing, supply chain, and sales. Your solution should help the customer (represented by the Chief Marketing Officer, Chief Digital Officer, the Chief Data Officer, and the Customer Experience Manager) to deliver a 360 degree view of the Contoso's business operations and to optimize them through data analytics.
+Your primary objective is to provide integration across all data to be used for analysis and reporting, bringing together manufacturing, supply chain, and sales. Your solution should help the customer, represented by the Chief Marketing Officer, Chief Digital Officer, the Chief Data Officer, and the Customer Experience Manager, deliver a 360 degree view of the Contoso's business operations and to optimize them through data analytics.
 
 ## Step 1: Review the customer case study
 
@@ -202,18 +202,17 @@ Directions: With all participants in the session, the facilitator/SME presents a
 
 Contoso Retail, Inc. has been selling goods through various retail channels for the past 15 years. They currently have over 200 brick-and-mortar stores but plan to reduce the number of physical locations to 150 in the next year due to declining revenue and various other factors. Of the remaining 150 stores, 35 of them are currently streamlined for an attempted re-branding that happened a few years ago. SAP is the line-of-business application and database for all customer and supply chain information. 
 
-Contoso needs the ability to collect and analyze data from within SAP in order to make the best uniform solution possible.
-They want to take control of their supply chain so customers know when and where products are available, and stores are prepared to keep up with demand.
+Contoso needs the ability to collect and analyze data from within SAP in order to make the best uniform solution possible. They want to take control of their supply chain, so customers know when and where products are available, and stores are prepared to keep up with demand.
 
 The improved ability to meet customer demand will be accomplished by establishing a 360-degree view of the supply chain. With data analysis and reporting, stores will be able to plan and schedule product deliveries based on customer sentiment and current buying trends. 
 
 To remediate these shortcomings, Contoso is looking for the ability to combine all sources of data, including:
 
-*   Contoso has sensor data from IoT devices in warehouses, stores, and manufacturing plants that they would like to be able to analyze.
+*   Contoso has sensor data from IoT devices in warehouses, stores, and manufacturing plants they would like to be able to analyze.
 *   They would like to utilize social media sentiment analytics for inventory recommendations.
 *   Contoso would like to use external feeds with such information as road closures and inclement weather to manage deliveries efficiently.
 
-Contoso wants to take control of their supply chain to ensure that their customers can easily locate and purchase the products they are interested in and that their stores are prepared to keep up with the actual demand. To accomplish this, Contoso will need to establish a 360 degree view of the supply chain, with data analysis and reporting that provides the business with the ability to address manufacturing and service issues, plan and schedule deliveries of products according to forecasted needs, and gauge these needs based on customer sentiment and up-to-date buying trends.
+Contoso wants to take control of their supply chain to ensure that their customers can easily locate and purchase the products they are interested in and that their stores are prepared to keep up with the actual demand. To accomplish this, Contoso will need to establish a 360-degree view of the supply chain, with data analysis and reporting that provides the business with the ability to address manufacturing and service issues, plan and schedule deliveries of products according to forecasted needs, and gauge these needs based on customer sentiment and up-to-date buying trends.
 
 As part of its business plan, Contoso is looking to implement the following objectives:
 
@@ -226,28 +225,35 @@ As part of its business plan, Contoso is looking to implement the following obje
 *   Contoso wants to automate collection, pre-processing, and analytics of streaming data.
 *   They would like to consolidate online and in-store data to facilitate targeted advertising tailored towards individual customers.
 *   Contoso wants to improve online customer experience by leveraging Artificial Intelligence (AI) technologies such as natural language understanding.
-
+*   
 ### Customer needs
 
 1.  Contoso wants to minimize the cost by right-sizing the SAP landscape implementation and optimize the use of compute resources.
-1. They would like to leverage Azure services to extend and innovate data collection and analysis (including sensor data from IoT devices, web site and app telemetry, as well as social networking feeds reflecting customer behavior, sentiment, and purchasing patterns).
-1. Contoso would like to fine-tune inventory and staff management to ensure all channels are working with the optimal resource allocation according to predicted demands.
-1. Contoso wants to streamline remediation of manufacturing service issues and enhance available-to-promise retail capabilities.
-1. They would also like to minimize the operational overhead within their current processes.
+
+2. They would like to leverage Azure services to extend and innovate data collection and analysis (including sensor data from IoT devices, web site and app telemetry, as well as social networking feeds reflecting customer behavior, sentiment, and purchasing patterns).
+
+3. Contoso would like to fine-tune inventory and staff management to ensure all channels are working with the optimal resource allocation according to predicted demands.
+
+4. Contoso wants to streamline remediation of manufacturing service issues and enhance available-to-promise retail capabilities.
+
+5. They would also like to minimize the operational overhead within their current processes.
 
 ### Customer objections
 
 1.  We currently have all the data we need, why do we need to do anything else?
-1.  We've spent a lot of money and time building out the systems we have, why should we start over in Azure rather than upgrade our existing hardware?
-1.  How will this solution help us to create a better process for getting our products from the manufacturing to the warehouses and then to the stores any quicker? Our staff is already working overtime and trucks won't be able to physically drive any faster while maintaining safety standards. 
-1.  How can we ensure that privacy of our customers is sufficiently protected if we pursue targeted advertising by leveraging Azure services?
+
+2.  We've spent a lot of money and time building out the systems we have, why should we start over in Azure rather than upgrade our existing hardware?
+
+3.  How will this solution help us to create a better process for getting our products from the manufacturing to the warehouses and then to the stores any quicker? Our staff is already working overtime and trucks won't be able to physically drive any faster while maintaining safety standards. 
+
+4.  How can we ensure that privacy of our customers is sufficiently protected if we pursue targeted advertising by leveraging Azure services?
 
 ### Infographic for common scenarios
 
 SAP on Azure provides many potential scenarios and benefits that are show in this illustration.
 ![Diagram illustrating SAP on Azure scenarios and benefits.](media/sap-on-azure-scenarios-benefits.png 'SAP on Azure Scenarios and Benefits')
 
-Cloud, data and AI provide was to shift how data is utilized. This graphic highlights some of these capabilities.
+Cloud, data and AI provide ways to shift how data is utilized. This graphic highlights some of these capabilities.
 ![Diagram illustrating a transformative shift fueled by cloud, data, and AI.](media/cloud-data-ai-transformative-shift.png 'Cloud, Data, and AI fueling a transformative shift')
 
 There are many drivers for migrating SAP to the cloud.  This graphic illustrates some of these drivers.
@@ -276,7 +282,7 @@ Directions: With all participants at your table, answer the following questions 
 
 1. Who should you present this solution to? Who is your target customer audience? Who are the decision makers?
 
-1. What customer business needs do you need to address with your solution?
+2. What customer business needs do you need to address with your solution?
 
 **Design**
 
@@ -296,36 +302,39 @@ Besides addressing the core functional requirements, consider the resiliency and
 _Data ingestion and integration_
 
 1. Which Azure services can you use to ingest data from sources such as IoT devices and social networking feeds?
-1. Of the options you identified in the previous step, which ones would you recommend to Contoso?
-1. What data integration options would Contoso benefit from?
-1. Which Azure integration services would you recommend to be used by Contoso?
+ 
+2. Of the options you identified in the previous step, which ones would you recommend to Contoso?
+
+3. What data integration options would Contoso benefit from?
+
+4. Which Azure integration services would you recommend be used by Contoso?
 
 _Data transformation and processing_
 
-1. What types of data transformation and processing do you anticipate you might need to address the Contoso's needs?
-1. Which Azure services would you use to implement the corresponding functionality?
+1. How would you approach the need for additional analysis of data originating from SAP and non-SAP data sources?
 
-_Data integration_
-
-1. What data integration options would Contoso benefit from?
-1. Which Azure integration services would you recommend to be used by Contoso?
+2. Which Azure services would you use to implement the corresponding functionality?
 
 _Data analytics_
 
 1. How would you analyze the data to facilitate identifying relevant information?
-1. What Azure services would allow Contoso to further enrich the data by leveraging technologies such as artificial intelligence?
+
+2. What Azure services would allow Contoso to further enrich the data by leveraging technologies such as artificial intelligence?
 
 _Personalized marketing_ 
 
 1. How would you improve personalized marketing for Contoso customers?
-1. Which Azure services would allow you to enhance personalize marketing experience for Contoso customers?
+
+2. Which Azure services would allow you to enhance personalize marketing experience for Contoso customers?
 
 **Prepare**
 
 Directions: With all participants at your table:
 
 1.  Identify any customer needs that are not addressed with the proposed solution.
+
 2.  Identify the benefits of your solution.
+
 3.  Determine how you will respond to the customer's objections.
 
 Prepare a 15-minute chalk-talk style presentation to the customer.
@@ -370,14 +379,14 @@ Directions: Tables reconvene with the larger group to hear the facilitator/SME s
 | Connect to SAP systems from Azure Logic Apps | <https://docs.microsoft.com/azure/logic-apps/logic-apps-using-sap-connector> |
 | What is Azure Databricks | <https://docs.microsoft.com/azure/databricks/scenarios/what-is-azure-databricks> |
 | Azure Synapse Analytics | <https://azure.microsoft.com/services/synapse-analytics/> |
-| Cosmos DB | <https://azure.microsoft.com/services/cosmos-db/> |
+| Azure Cosmos DB | <https://azure.microsoft.com/services/cosmos-db/> |
 | Azure Machine Learning | <https://azure.microsoft.com/free/machine-learning> |
 | What is Azure IoT Hub | <https://docs.microsoft.com/azure/iot-hub/about-iot-hub> |
 | Azure IoT Edge | <https://azure.microsoft.com/services/iot-edge/> |
 | Event Hubs | <https://azure.microsoft.com/services/event-hubs/> |
 | Connect to SAP systems from Azure Logic Apps | <https://docs.microsoft.com/azure/logic-apps/logic-apps-using-sap-connector> |
-| SAP API Business Hug | <https://api.sap.com/search?searchterm=retail&tab=All&refinedBy=true&top=12> |
-| SAP extensibility use case | <https://blogs.sap.com/2016/09/12/s4hana-extensibility-use-case-overview/> |
+| SAP API Business Hub | <https://api.sap.com/search?searchterm=retail&tab=All&refinedBy=true&top=12> |
+| S/4HANA Extensibility: Use Case Overview | <https://blogs.sap.com/2016/09/12/s4hana-extensibility-use-case-overview/> |
 | SAP Extension Suite | <https://www.sapinsideronline.com/extend-your-core-business-applications-and-drive-your-business-forward-with-sap-extension-suite/>|
 
 # SAP: Extend and Innovate with Microsoft Azure whiteboard design session trainer guide
