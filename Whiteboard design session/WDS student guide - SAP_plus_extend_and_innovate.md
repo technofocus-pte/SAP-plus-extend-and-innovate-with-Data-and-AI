@@ -132,6 +132,7 @@ There are many drivers for migrating SAP to the cloud.  This graphic illustrates
 ![Diagram illustrating drivers for migrating SAP to the cloud.](media/drivers-for-migrating-sap-to-cloud.png 'Drivers for migrating SAP to the cloud')
 
 When migrating to Azure, there are different drivers that optimize your costs. Some of the key factors are on this graphic.
+
 ![Diagram illustrating cost savings with Azure.](media/optimize-cost-with-azure.png 'Optimize cost with Azure')
 
 When determining how data is processed, you must understand the architecture of an IoT infrastructure and how data is handled.  This graphic illustrates that lambda architecture for IoT data processing.
