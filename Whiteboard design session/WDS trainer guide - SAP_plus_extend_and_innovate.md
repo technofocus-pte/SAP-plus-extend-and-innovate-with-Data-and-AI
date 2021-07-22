@@ -42,7 +42,7 @@ Microsoft and the trademarks listed at https://www.microsoft.com/en-us/legal/int
   - [Step 3: Present the solution](#step-3-present-the-solution)
   - [Wrap-up](#wrap-up)
   - [Additional references](#additional-references)
-- [SAP plus extend and innovate student guide trainer guide](#sap-plus-extend-and-innovate-trainer-guide)
+- [SAP plus extend and innovate trainer guide](#sap-plus-extend-and-innovate-trainer-guide)
   - [Step 1: Review the customer case study](#step-1-review-the-customer-case-study-1)
   - [Step 2: Design a proof of concept solution](#step-2-design-a-proof-of-concept-solution-1)
   - [Step 3: Present the solution](#step-3-present-the-solution-1)
@@ -441,7 +441,6 @@ Directions: Tables reconvene with the larger group to hear the facilitator/SME s
 
 ## Preferred solution  
 
-![This is a diagram illustrating the preferred solution for extending data and AI into an SAP architecture.](media/azure-data-pipeline-social-media.png 'Diagram of the Preferred solution') 
 
 _High-level architecture_
 
@@ -454,71 +453,97 @@ The proposed solutions takes advantage of a wide range of Azure services in orde
 - Integration with Azure Machine Learning and Azure Cognitive Services.
 - Business integration that leverages Azure Logic Apps.
 
+  ![This is a diagram illustrating the preferred solution for extending data and AI into an SAP architecture.](media/azure-data-pipeline-social-media.png 'Diagram of the Preferred solution') 
+
 _Data ingestion and integration_
 
-Azure IoT Intelligent Edge a combination of Azure services and a runtime that runs on IoT devices. The runtime manages containerized modules that you can use to implement business logic in the form of SAP and in-house developed applications. The modules extend the application functionality to the edge of your enterprise, expediting a response to IoT device-generated events by applying relevant actions directly to the source. In addition, the modules handle bulk of processing tasks at the edge, limiting the dependency on the cloud compute and storage resources, lowering the corresponding cost. By running SAP Essential Business Functions modules on Azure IoT Edge, Contoso will be able to extend the reach of their S4/HANA and C4/HANA workloads directly to their assets, bringing the capabilities of business applications and governance to the edge.
+1. Which Azure services can you use to ingest data from sources such as IoT devices and social networking feeds?
+    
+    Azure IoT Intelligent Edge a combination of Azure services and a runtime that runs on IoT devices. The runtime manages containerized modules that you can use to implement business logic in the form of SAP and in-house developed applications. The modules extend the application functionality to the edge of your enterprise, expediting a response to IoT device-generated events by applying relevant actions directly to the source. 
+    
+    In addition, the modules handle bulk of processing tasks at the edge, limiting the dependency on the cloud compute and storage resources, lowering the corresponding cost. By running SAP Essential Business Functions modules on Azure IoT Edge, Contoso will be able to extend the reach of their S4/HANA and C4/HANA workloads directly to their assets, bringing the capabilities of business applications and governance to the edge.
 
-IoT Edge consists of the following components:
+1. Of the options you identified in the previous step, which ones would you recommend to Contoso?
+     
+    IoT Edge consists of the following components:
 
-- Azure IoT Hub, which provides a cloud-hosted backend to connect IoT devices with Azure cloud services. IoT Hub enables highly secure and reliable bi-directional communication, management, and provisioning (by using Device Provisioning Service, aka DPS) for IoT Edge devices.
-- Azure Storage provides flexible, scalable, secure, and inexpensive data store. The solution can use Azure Blob Storage or Azure Data Lake to store massive amounts of unstructured data.
-- Azure Cognitive Services are a family of AI services and cognitive APIs that help build intelligent apps. For example, the solution could provide image recognition by leveraging Computer Vision and Custom Vision services.
-- Machine Learning (ML) uses algorithms to automatically improve predictions or decisions through a self-learning process. Machine learning algorithms help ensure that the modules deployed to IoT devices remain accurate despite changing data trends.
+    - Azure IoT Hub, which provides a cloud-hosted backend to connect IoT devices with Azure cloud services. IoT Hub enables highly secure and reliable bi-directional communication, management, and provisioning (by using Device Provisioning Service, aka DPS) for IoT Edge devices.
+    - Azure Storage provides flexible, scalable, secure, and inexpensive data store. The solution can use Azure Blob Storage or Azure Data Lake to store massive amounts of unstructured data.
+    - Azure Cognitive Services are a family of AI services and cognitive APIs that help build intelligent apps. For example, the solution could provide image recognition by leveraging Computer Vision and Custom Vision services.
+    - Machine Learning (ML) uses algorithms to automatically improve predictions or decisions through a self-learning process. Machine learning algorithms help ensure that the modules deployed to IoT devices remain accurate despite changing data trends.
 
-Azure IoT Hub serves as an ingestion point for sensor-generated data. IoT Hub is a managed service that acts as a central message hub for bidirectional communications between IoT applications and IoT devices. It scales to millions of devices, reliably and securely connecting them to their backend solutions. With the IoT Hub's capabilities, you can build IoT solutions that manage equipment used in manufacturing and monitor retail inventory levels.
+      Azure IoT Hub serves as an ingestion point for sensor-generated data. IoT Hub is a managed service that acts as a central message hub for bidirectional communications between IoT applications and IoT devices. It scales to millions of devices, reliably and securely connecting them to their backend solutions. With the IoT Hub's capabilities, you can build IoT solutions that manage equipment used in manufacturing and monitor retail inventory levels.
 
-![Diagram illustrating an Azure data pipeline that leverages Azure IoT intelligent edge.](media/azure-data-pipeline-iot-intelligent-edge.png 'Azure data pipeline that leverages IoT Intelligent Edge') 
+    ![Diagram illustrating an Azure data pipeline that leverages Azure IoT intelligent edge.](media/azure-data-pipeline-iot-intelligent-edge.png 'Azure data pipeline that leverages IoT Intelligent Edge') 
 
-In addition, business and customer data from sources such as social media postings, third party applications, and external sites can be ingested by using services such as Event Hub, parsed by Stream Analytics, aggregated into Azure Blob Storage or Azure Data Lake, and, subsequently, processed and analyzed by Azure Synapse Analytics, Azure HDInsight, or Azure Data Lake Analytics. At various points of the data path, you have the option to leverage Cognitive Services and Azure Machine Learning models to offer even deeper understanding of what customers might be interested in, based on such criteria as consumer sentiment or social media trending.
+1. What data integration options would Contoso benefit from?
+   
+    In addition, business and customer data from sources such as social media postings, third party applications, and external sites can be ingested by using services such as Event Hub, parsed by Stream Analytics, aggregated into Azure Blob Storage or Azure Data Lake, and, subsequently, processed and analyzed by Azure Synapse Analytics, Azure HDInsight, or Azure Data Lake Analytics. At various points of the data path, you have the option to leverage Cognitive Services and Azure Machine Learning models to offer even deeper understanding of what customers might be interested in, based on such criteria as consumer sentiment or social media trending.
 
-For integration purposes, you can take advantage of Azure Logic Apps or use Azure Data Factory as part of pipeline for social media feeds, transferring and manipulating data between Azure Blob Storage, Data Lake Store, or delivering it directly to SAP HANA. 
+    For integration purposes, you can take advantage of Azure Logic Apps or use Azure Data Factory as part of pipeline for social media feeds, transferring and manipulating data between Azure Blob Storage, Data Lake Store, or delivering it directly to SAP HANA. 
 
-Azure Logic Apps simplify authoring and implementation of trigger-driven integration workflows that leverage a visual designer and 250+ connectors, including a bi-directional connector for SAP. The connector is compatible with:
+    Azure Logic Apps simplify authoring and implementation of trigger-driven integration workflows that leverage a visual designer and 250+ connectors, including a bi-directional connector for SAP. The connector is compatible with:
 
-- On-premises and cloud-based HANA-based SAP systems, such as S/4 HANA.
-- Classic on-premises SAP systems, such as R/3 and ECC.
+    - On-premises and cloud-based HANA-based SAP systems, such as S/4 HANA.
+    - Classic on-premises SAP systems, such as R/3 and ECC.
 
-The SAP connector supports integration between non-SAP application and SAP systems through Intermediate Document (IDoc), Business Application Programming Interface (BAPI), or Remote Function Call (RFC). For example, you can create a relatively simple Logic App that reads tweets, analyses their text by employing Cognitive Services' Sentiment Analysis, and uses the SAP connector to store the outcome in a HANA database. Logic Apps can also provide conditional workflow management, passing messages to appropriate downstream targets, such as a call handler, notification hub, or email, a tweet, or a chatbot. 
+    The SAP connector supports integration between non-SAP application and SAP systems through Intermediate Document (IDoc), Business Application Programming Interface (BAPI), or Remote Function Call (RFC). For example, you can create a relatively simple Logic App that reads tweets, analyses their text by employing Cognitive Services' Sentiment Analysis, and uses the SAP connector to store the outcome in a HANA database. Logic Apps can also provide conditional workflow management, passing messages to appropriate downstream targets, such as a call handler, notification hub, or email, a tweet, or a chatbot. 
 
-![Diagram illustrating an Azure data pipeline that leverages social media.](media/azure-data-pipeline-social-media.png 'Azure data pipeline that leverages social media') 
+    ![Diagram illustrating an Azure data pipeline that leverages social media.](media/azure-data-pipeline-social-media.png 'Azure data pipeline that leverages social media') 
 
-Alternatively, it is possible to build low-code apps and workflows by using Microsoft Power Platform that includes SAP ERP connector for Power Apps and Power Automate, which provides the equivalent functionality. The connector is certified by SAP for integration with SAP S/4HANA and SAP ERP and allows integration with SAP ERP systems via BAPIs and RFCs, including support for dynamic schemas.
+1. Which Azure integration services would you recommend be used by Contoso?
+  
+   Alternatively, it is possible to build low-code apps and workflows by using Microsoft Power Platform that includes SAP ERP connector for Power Apps and Power Automate, which provides the equivalent functionality. The connector is certified by SAP for integration with SAP S/4HANA and SAP ERP and allows integration with SAP ERP systems via BAPIs and RFCs, including support for dynamic schemas.
 
-![Diagram illustrating a Power Platform flow that includes a SAP ERP connector.](media/power-platform-sap-erp-connector.png 'Power Platform SAP ERP connector') 
+    ![Diagram illustrating a Power Platform flow that includes a SAP ERP connector.](media/power-platform-sap-erp-connector.png 'Power Platform SAP ERP connector') 
 
 _Data transformation and processing_
 
-You have the option of combining SAP and non-SAP data sources for additional transformation and processing. This might involve long-running batch jobs to filter, aggregate, and prepare data for further analysis. Processing options include U-SQL jobs in Azure Data Lake Analytics, Hive, Pig, and custom Map/Reduce jobs in an HDInsight cluster, or Java, Scala, and Python programs in a Synapse Analytics Spark cluster. It is also possible to use Azure Data Factory to extract data from SAP HANA and SAP Business Warehouse (BW) into Azure data stores, such as Azure Blob Storage and Azure Data Lake to facilitate implementation of advanced analytics with Azure Synapse Analytics. 
+1. How would you approach the need for additional analysis of data originating from SAP and non-SAP data sources?
+   
+   You have the option of combining SAP and non-SAP data sources for additional transformation and processing. This might involve long-running batch jobs to filter, aggregate, and prepare data for further analysis. Processing options include U-SQL jobs in Azure Data Lake Analytics, Hive, Pig, and custom Map/Reduce jobs in an HDInsight cluster, or Java, Scala, and Python programs in a Synapse Analytics Spark cluster. 
+   
+1. Which Azure services would you use to implement the corresponding functionality?
+      
+   It is also possible to use Azure Data Factory to extract data from SAP HANA and SAP Business Warehouse (BW) into Azure data stores, such as Azure Blob Storage and Azure Data Lake to facilitate implementation of advanced analytics with Azure Synapse Analytics. 
 
-![Diagram illustrating an Azure data pipeline that leverages SAP and non-SAP data sources.](media/azure-data-pipeline-with-sap-sources.png 'Azure data pipeline that leverages the preferred solution') 
+    ![Diagram illustrating an Azure data pipeline that leverages SAP and non-SAP data sources.](media/azure-data-pipeline-with-sap-sources.png 'Azure data pipeline that leverages the preferred solution') 
 
 _Data analytics_
 
-The solution prepares data for analysis and then serves the processed data in a structured format that can be queried using analytical tools. The analytical data store used to serve these queries can be a relational data warehouse, which is part of the existing business intelligence solution. Alternatively, the data could be presented through a low-latency NoSQL technology such as HBase, or an interactive Hive database that provides a metadata abstraction over data files in the distributed data store. 
+1. How would you analyze the data to facilitate identifying relevant information?
+   
+   The solution prepares data for analysis and then serves the processed data in a structured format that can be queried using analytical tools. The analytical data store used to serve these queries can be a relational data warehouse, which is part of the existing business intelligence solution. Alternatively, the data could be presented through a low-latency NoSQL technology such as HBase, or an interactive Hive database that provides a metadata abstraction over data files in the distributed data store. 
 
-Azure Synapse Analytics provides a managed service for large-scale, cloud-based data warehousing. Azure Synapse Analytics Spark tools are optimized for analyzing and transforming data for presentation. This analysis could reference data stored in Azure Cosmos DB. For example, Azure Synapse Link for Azure Cosmos DB enables you to run near real-time analytics over operational data in Azure Cosmos DB. 
+    Azure Synapse Analytics provides a managed service for large-scale, cloud-based data warehousing. Azure Synapse Analytics Spark tools are optimized for analyzing and transforming data for presentation. This analysis could reference data stored in Azure Cosmos DB. For example, Azure Synapse Link for Azure Cosmos DB enables you to run near real-time analytics over operational data in Azure Cosmos DB. 
 
-To further enrich your data, you can combine data from your SAP databases with other systems pooled into Azure Data Lake. With Azure Synapse Analytics and Power BI dashboards, you are able to monitor supplier status, track inbound materials flows, and oversee logistics in real time. This also allows you to overlay operating status with external data such as road closures or inclement weather to identify potential problems before they might impact production schedules or customer deliveries. Combining market and demand data with your resource planning systems, you can further improve
-business forecasting.
+1. What Azure services would allow Contoso to further enrich the data by leveraging technologies such as artificial intelligence?
 
-Another option that helps your further innovate the way you manage business data is Azure Anomaly Detector, which is part of Azure Cognitive Services. Anomaly Detector allows you to evaluate transactions, represented by time series data, across your entire SAP landscape in order to detect potential issues before they might have a negative impact. Based on incoming telemetry sources, the Anomaly Detector solution detects if there is a sudden change in creation or update processes. The detection algorithm can detect these issues automatically, in real time, and notify you in order to initiate a corrective action.
+      To further enrich your data, you can combine data from your SAP databases with other systems pooled into Azure Data Lake. With Azure Synapse Analytics and Power BI dashboards, you are able to monitor supplier status, track inbound materials flows, and oversee logistics in real time. This also allows you to overlay operating status with external data such as road closures or inclement weather to identify potential problems before they might impact production schedules or customer deliveries. Combining market and demand data with your resource planning systems, you can further improve
+      business forecasting.
 
-For example, Contoso could use Anomaly Detector to monitor changes to the Master Data Management (MDM) space, hosting objects representing business entities such as customers and business partners to detect and, optionally, remediate any unusual patterns. Similarly, Contoso could leverage Anomaly Detector to detect a sudden increase in online purchases of a particular product on its e‑commerce website. This would allow to take immediate actions to ensure product availability. 
+      Another option that helps your further innovate the way you manage business data is Azure Anomaly Detector, which is part of Azure Cognitive Services. Anomaly Detector allows you to evaluate transactions, represented by time series data, across your entire SAP landscape in order to detect potential issues before they might have a negative impact. Based on incoming telemetry sources, the Anomaly Detector solution detects if there is a sudden change in creation or update processes. The detection algorithm can detect these issues automatically, in real time, and notify you in order to initiate a corrective action.
 
-Contoso could implement Anomaly Detector with native Azure services composing decoupled business logic and the presentation layers. These services include: 
+      For example, Contoso could use Anomaly Detector to monitor changes to the Master Data Management (MDM) space, hosting objects representing business entities such as customers and business partners to detect and, optionally, remediate any unusual patterns. Similarly, Contoso could leverage Anomaly Detector to detect a sudden increase in online purchases of a particular product on its e‑commerce website. This would allow to take immediate actions to ensure product availability. 
 
-- An Azure web app, which forms the presentation layer. Its purpose is to allow users to call the anomaly-detection service by using the prepared time-series data. The choice of Azure Web App Service gives Contoso's developers the option to work in their preferred language, including .NET, .NET Core, Java, Ruby, Node.js, PHP, or Python. In addition, the application endpoint can be protected by leveraging Azure Active Directory for authentication and authorization.
-- Two Azure function apps, which host all business-logic functionality. The first is used to connect to Azure Application Insights and capture SAP telemetry, such as customer or business-partner processes that are target of anomaly detection. This function app transforms target data into JavaScript Object Notation (JSON) format with time-series sub formatting. The second function app captures the precompiled time-series data from the first function app, makes a call to the Anomaly Detector service, and then retrieves the result. At that point, the web app presentation layer displays the results in a graph format. 
-- Application Insights, which stores all SAP log data. This log data is captured from various business processes, including Customer Master Data creation, Business Partner Creation and updates, and batch program logs. These logs serve as the source for anomaly detection.
-- Azure Anomaly Detector, which exposes API to detect and returns all anomaly points based on time-series data sent by the function app. It is possible to interact with Anomaly Detector either by using directly the HTTP REST API or by relying on client SDK.  
+      Contoso could implement Anomaly Detector with native Azure services composing decoupled business logic and the presentation layers. These services include: 
 
-![Diagram illustrating an Anomaly Detector solution.](media/sap-extend-innovate-anomaly-detector.png 'Anomaly Detector architecture')
+      - An Azure web app, which forms the presentation layer. Its purpose is to allow users to call the anomaly-detection service by using the prepared time-series data. The choice of Azure Web App Service gives Contoso's developers the option to work in their preferred language, including .NET, .NET Core, Java, Ruby, Node.js, PHP, or Python. In addition, the application endpoint can be protected by leveraging Azure Active Directory for authentication and authorization.
+      - Two Azure function apps, which host all business-logic functionality. The first is used to connect to Azure Application Insights and capture SAP telemetry, such as customer or business-partner processes that are target of anomaly detection. This function app transforms target data into JavaScript Object Notation (JSON) format with time-series sub formatting. The second function app captures the precompiled time-series data from the first function app, makes a call to the Anomaly Detector service, and then retrieves the result. At that point, the web app presentation layer displays the results in a graph format. 
+      - Application Insights, which stores all SAP log data. This log data is captured from various business processes, including Customer Master Data creation, Business Partner Creation and updates, and batch program logs. These logs serve as the source for anomaly detection.
+      - Azure Anomaly Detector, which exposes API to detect and returns all anomaly points based on time-series data sent by the function app. It is possible to interact with Anomaly Detector either by using directly the HTTP REST API or by relying on client SDK.  
+
+      ![Diagram illustrating an Anomaly Detector solution.](media/sap-extend-innovate-anomaly-detector.png 'Anomaly Detector architecture')
 
 _Personalized marketing_ 
 
-Personalized marketing focuses on targeting marketing initiatives and messaging to specific individuals that are either current or prospective customers. For this approach to be effective, Contoso needs to have access to customers' data and employ data analysis and artificial intelligence.
+1. How would you improve personalized marketing for Contoso customers?
+   
+    Personalized marketing focuses on targeting marketing initiatives and messaging to specific individuals that are either current or prospective customers. For this approach to be effective, Contoso needs to have access to customers' data and employ data analysis and artificial intelligence.
 
-Furthermore, SAP applications can leverage Azure Cognitive Services for a number of purposes, including face recognition, text recognition, and natural language understanding. By deploying Cognitive Services, SAP will be able to analyze information closer to the physical world where the data resides and deliver real-time insights and immersive experiences that are highly responsive and contextually aware. For example, SAP Conversational AI can be implemented in combination with Azure bot channels to enhance conversational experience for online customers, including the ability to communicate via Microsoft Teams.
+1. Which Azure services would allow you to enhance personalize marketing experience for Contoso customers?
+   
+    Furthermore, SAP applications can leverage Azure Cognitive Services for a number of purposes, including face recognition, text recognition, and natural language understanding. By deploying Cognitive Services, SAP will be able to analyze information closer to the physical world where the data resides and deliver real-time insights and immersive experiences that are highly responsive and contextually aware. For example, SAP Conversational AI can be implemented in combination with Azure bot channels to enhance conversational experience for online customers, including the ability to communicate via Microsoft Teams.
 
 ### Customer Needs
 
