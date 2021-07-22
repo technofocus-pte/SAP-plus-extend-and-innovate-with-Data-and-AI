@@ -52,7 +52,6 @@ Microsoft and the trademarks listed at https://www.microsoft.com/en-us/legal/int
     - [Customer Needs](#customer-needs-1)
     - [Checklist of preferred objection handling](#checklist-of-preferred-objection-handling)
   - [Customer quote (to be read back to the attendees at the end)](#customer-quote-to-be-read-back-to-the-attendees-at-the-end)
-  - [Additional Resources](#additional-resources)
 
 <!-- /TOC -->
 
@@ -463,7 +462,7 @@ _Data ingestion and integration_
     
     In addition, the modules handle bulk of processing tasks at the edge, limiting the dependency on the cloud compute and storage resources, lowering the corresponding cost. By running SAP Essential Business Functions modules on Azure IoT Edge, Contoso will be able to extend the reach of their S4/HANA and C4/HANA workloads directly to their assets, bringing the capabilities of business applications and governance to the edge.
 
-1. Of the options you identified in the previous step, which ones would you recommend to Contoso?
+2. Of the options you identified in the previous step, which ones would you recommend to Contoso?
      
     IoT Edge consists of the following components:
 
@@ -476,7 +475,7 @@ _Data ingestion and integration_
 
     ![Diagram illustrating an Azure data pipeline that leverages Azure IoT intelligent edge.](media/azure-data-pipeline-iot-intelligent-edge.png 'Azure data pipeline that leverages IoT Intelligent Edge') 
 
-1. What data integration options would Contoso benefit from?
+3. What data integration options would Contoso benefit from?
    
     In addition, business and customer data from sources such as social media postings, third party applications, and external sites can be ingested by using services such as Event Hub, parsed by Stream Analytics, aggregated into Azure Blob Storage or Azure Data Lake, and, subsequently, processed and analyzed by Azure Synapse Analytics, Azure HDInsight, or Azure Data Lake Analytics. At various points of the data path, you have the option to leverage Cognitive Services and Azure Machine Learning models to offer even deeper understanding of what customers might be interested in, based on such criteria as consumer sentiment or social media trending.
 
@@ -491,7 +490,7 @@ _Data ingestion and integration_
 
     ![Diagram illustrating an Azure data pipeline that leverages social media.](media/azure-data-pipeline-social-media.png 'Azure data pipeline that leverages social media') 
 
-1. Which Azure integration services would you recommend be used by Contoso?
+4. Which Azure integration services would you recommend be used by Contoso?
   
    Alternatively, it is possible to build low-code apps and workflows by using Microsoft Power Platform that includes SAP ERP connector for Power Apps and Power Automate, which provides the equivalent functionality. The connector is certified by SAP for integration with SAP S/4HANA and SAP ERP and allows integration with SAP ERP systems via BAPIs and RFCs, including support for dynamic schemas.
 
@@ -503,7 +502,7 @@ _Data transformation and processing_
    
    You have the option of combining SAP and non-SAP data sources for additional transformation and processing. This might involve long-running batch jobs to filter, aggregate, and prepare data for further analysis. Processing options include U-SQL jobs in Azure Data Lake Analytics, Hive, Pig, and custom Map/Reduce jobs in an HDInsight cluster, or Java, Scala, and Python programs in a Synapse Analytics Spark cluster. 
    
-1. Which Azure services would you use to implement the corresponding functionality?
+2. Which Azure services would you use to implement the corresponding functionality?
       
    It is also possible to use Azure Data Factory to extract data from SAP HANA and SAP Business Warehouse (BW) into Azure data stores, such as Azure Blob Storage and Azure Data Lake to facilitate implementation of advanced analytics with Azure Synapse Analytics. 
 
@@ -517,7 +516,7 @@ _Data analytics_
 
     Azure Synapse Analytics provides a managed service for large-scale, cloud-based data warehousing. Azure Synapse Analytics Spark tools are optimized for analyzing and transforming data for presentation. This analysis could reference data stored in Azure Cosmos DB. For example, Azure Synapse Link for Azure Cosmos DB enables you to run near real-time analytics over operational data in Azure Cosmos DB. 
 
-1. What Azure services would allow Contoso to further enrich the data by leveraging technologies such as artificial intelligence?
+2. What Azure services would allow Contoso to further enrich the data by leveraging technologies such as artificial intelligence?
 
       To further enrich your data, you can combine data from your SAP databases with other systems pooled into Azure Data Lake. With Azure Synapse Analytics and Power BI dashboards, you are able to monitor supplier status, track inbound materials flows, and oversee logistics in real time. This also allows you to overlay operating status with external data such as road closures or inclement weather to identify potential problems before they might impact production schedules or customer deliveries. Combining market and demand data with your resource planning systems, you can further improve
       business forecasting.
@@ -541,7 +540,7 @@ _Personalized marketing_
    
     Personalized marketing focuses on targeting marketing initiatives and messaging to specific individuals that are either current or prospective customers. For this approach to be effective, Contoso needs to have access to customers' data and employ data analysis and artificial intelligence.
 
-1. Which Azure services would allow you to enhance personalize marketing experience for Contoso customers?
+2. Which Azure services would allow you to enhance personalize marketing experience for Contoso customers?
    
     Furthermore, SAP applications can leverage Azure Cognitive Services for a number of purposes, including face recognition, text recognition, and natural language understanding. By deploying Cognitive Services, SAP will be able to analyze information closer to the physical world where the data resides and deliver real-time insights and immersive experiences that are highly responsive and contextually aware. For example, SAP Conversational AI can be implemented in combination with Azure bot channels to enhance conversational experience for online customers, including the ability to communicate via Microsoft Teams.
 
@@ -619,18 +618,3 @@ _Personalized marketing_
 "We are truly satisfied with the results offered through the provided solution. By migrating our SAP landscape to Azure, we have not only increased its agility and resiliency, but also realized meaningful cost savings and, through integration with Azure services, gained an extra competitive advantage. Now we are able to reliably base our tactical and strategic planning on end-to-end business data that incorporates interconnected operations and leverages cutting-edge technologies like AI, machine learning, and IoT. We also got to know better our customers and improved their satisfaction by taking advantage of social networking and Azure Cognitive Services."
 
 Guy Information, CIO, Contoso
-
-
-## Additional Resources  
-
-[SAP on Azure](https://azure.microsoft.com/solutions/sap/)
-
-[Reducing SAP implementations from months to minutes with Azure Logic Apps](https://azure.microsoft.com/blog/reducing-sap-implementations-from-months-to-minutes-with-logic-apps/)
-
-[Connect to SAP systems from Azure Logic Apps](https://docs.microsoft.com/azure/logic-apps/logic-apps-using-sap-connector)
-
-[Examining SAP transactions with Azure Anomaly Detector](https://www.microsoft.com/en-us/itshowcase/examining-sap-transactions-with-azure-anomaly-detector)
-
-[Copy data from SAP ECC by using Azure Data Factory](https://docs.microsoft.com/azure/data-factory/connector-sap-ecc)
-
-[Azure Data Factory offers SAP HANA and Business Warehouse data integration](https://azure.microsoft.com/blog/azure-data-factory-offer-sap-hana-and-business-warehouse-data-integration/)
