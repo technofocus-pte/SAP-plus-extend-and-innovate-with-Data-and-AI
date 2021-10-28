@@ -224,7 +224,7 @@ As part of its business plan, Contoso is looking to implement the following obje
 *   Contoso wants to automate collection, pre-processing, and analytics of streaming data.
 *   They would like to consolidate online and in-store data to facilitate targeted advertising tailored towards individual customers.
 *   Contoso wants to improve online customer experience by leveraging Artificial Intelligence (AI) technologies such as natural language understanding.
-*   
+
 ### Customer needs
 
 1.  Contoso wants to minimize the cost by right-sizing the SAP landscape implementation and optimize the use of compute resources.
