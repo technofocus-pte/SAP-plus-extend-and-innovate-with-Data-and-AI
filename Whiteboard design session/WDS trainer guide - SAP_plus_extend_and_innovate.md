@@ -9,7 +9,7 @@ Whiteboard design session trainer guide
 </div>
 
 <div class="MCWHeader3">
-July 2021
+March 2022
 </div>
 
 Information in this document, including URLs and other Internet Web site references, is subject to change without notice. Unless otherwise noted, the example companies, organizations, products, domain names, e-mail addresses, logos, people, places, and events depicted herein are fictitious, and no association with any real company, organization, product, domain name, e-mail address, logo, person, place or event is intended or should be inferred. Complying with all applicable copyright laws is the responsibility of the user. Without limiting the rights under copyright, no part of this document may be reproduced, stored in or introduced into a retrieval system, or transmitted in any form or by any means (electronic, mechanical, photocopying, recording, or otherwise), or for any purpose, without the express written permission of Microsoft Corporation.
@@ -199,13 +199,15 @@ Directions:  With all participants in the session, the facilitator/SME presents 
 
 ### Customer situation
 
-Contoso Retail, Inc. has been selling goods through various retail channels for the past 15 years. They currently have over 200 brick-and-mortar stores but plan to reduce the number of physical locations to 150 in the next year due to declining revenue and various other factors. Of the remaining 150 stores, 35 of them are currently streamlined for an attempted re-branding that happened a few years ago. SAP is the line-of-business application and database for all customer and supply chain information. 
+Contoso Retail, Inc. has been selling goods through various retail channels for the past 15 years. They currently have over 200 brick-and-mortar stores but plan to reduce the number of physical locations to 150 in the next year due to declining revenue and various other factors. Of the remaining 150 stores, 35 of them are currently streamlined for an attempted re-branding that happened a few years ago. 
+
+SAP is the line-of-business application and database for all customer and supply chain information. SAP will manage the customer experience, including finance, inventory, delivery, and customer service.  SAP will be used to integrate with suppliers for re-ordering of products based on demand and sales projections. Sales and Inventory data will be delivered to executives for revenue projections for analysis of trends and potential shifts in demand.
 
 Contoso needs the ability to collect and analyze data from within SAP in order to make the best uniform solution possible. They want to take control of their supply chain, so customers know when and where products are available, and stores are prepared to keep up with demand.
 
 The improved ability to meet customer demand will be accomplished by establishing a 360-degree view of the supply chain. With data analysis and reporting, stores will be able to plan and schedule product deliveries based on customer sentiment and current buying trends. 
 
-To remediate these shortcomings, Contoso is looking for the ability to combine all sources of data, including:
+Contoso has brought together a group of SAP, Azure, Applications, and Data and AI specialists to design and architect a solution that meets the company's needs. To remediate these shortcomings, Contoso is looking for the ability to combine all sources of data, including:
 
 *   Contoso has sensor data from IoT devices in warehouses, stores, and manufacturing plants they would like to be able to analyze.
 *   They would like to utilize social media sentiment analytics for inventory recommendations.
@@ -215,7 +217,8 @@ Contoso wants to take control of their supply chain to ensure that their custome
 
 As part of its business plan, Contoso is looking to implement the following objectives:
 
-*   They would like to provision compute and storage resources which capacity exceeds what's currently supported by the aging on-premises infrastructure hosting the existing SAP landscape.
+*   They would like to provision compute and storage resources which capacity exceeds what's currently supported by the aging on-premises infrastructure hosting the existing SAP landscape.  
+*   Contoso has invested in SAP S/4HANA for all ERP, finance, customer experience and CRM, and supply chain management solutions.
 *   Contoso wants to increase resiliency by including full-fledged high-availability provisions and setting up a disaster recovery site.
 *   They want to minimize cost of development and testing environments.
 *   Whenever possible, Contoso would like to simplify the operational model by leveraging managed services.
@@ -388,6 +391,8 @@ Directions: Reconvene with the larger group to hear the facilitator/SME share th
 | SAP API Business Hub | <https://api.sap.com/search?searchterm=retail&tab=All&refinedBy=true&top=12> |
 | S/4HANA Extensibility: Use Case Overview | <https://blogs.sap.com/2016/09/12/s4hana-extensibility-use-case-overview/> |
 | SAP Extension Suite | <https://www.sapinsideronline.com/extend-your-core-business-applications-and-drive-your-business-forward-with-sap-extension-suite/>|
+| SAP reference architecture | <https://docs.microsoft.com/en-us/azure/architecture/reference-architectures/sap/sap-overview>|
+| SAP Portfolio categories | <https://www.sap.com/products.html>|
 
 # SAP plus extend and innovate trainer guide
 
