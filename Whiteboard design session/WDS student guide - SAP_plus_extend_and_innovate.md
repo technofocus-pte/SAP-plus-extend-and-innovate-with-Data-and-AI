@@ -18,7 +18,7 @@ Microsoft may have patents, patent applications, trademarks, copyrights, or othe
 
 The names of manufacturers, products, or URLs are provided for informational purposes only and Microsoft makes no representations and warranties, either expressed, implied, or statutory, regarding these manufacturers or the use of the products with any Microsoft technologies. The inclusion of a manufacturer or product does not imply endorsement of Microsoft of the manufacturer or product. Links may be provided to third party sites. Such sites are not under the control of Microsoft and Microsoft is not responsible for the contents of any linked site or any link contained in a linked site, or any changes or updates to such sites. Microsoft is not responsible for webcasting or any other form of transmission received from any linked site. Microsoft is providing these links to you only as a convenience, and the inclusion of any link does not imply endorsement of Microsoft of the site or the products contained therein.
 
-© 2021 Microsoft Corporation. All rights reserved.
+© 2022 Microsoft Corporation. All rights reserved.
 
 Microsoft and the trademarks listed at https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/Usage/General.aspx are trademarks of the Microsoft group of companies. All other trademarks are property of their respective owners.
 
@@ -52,7 +52,7 @@ To remedy these challenges, Contoso has asked you to design and implement a solu
 
 Contoso has determined that to optimize their environment, the following key success criteria must be met.  They would like a highly available SAP landscape with the ability to minimize cost through right-sizing and optimized resource allocation.  They need data integration and analytics capabilities that include the ability to provide a comprehensive view of logistical and operational data, including sensor data from IoT devices in warehouses, stores, and manufacturing plants.  Contoso would like to utilize social media sentiment analytics and personalized marketing.  In addition, they would like to improve delivery route planning and scheduling, leveraging external data feeds that account for such factors as road closures or inclement weather.  They also would like optimized demand forecasting with automatic anomaly detection within their supply chain.
 
-Your primary objective is to provide integration across all data to be used for analysis and reporting, bringing together manufacturing, supply chain, and sales. Your solution should help the customer, represented by the Chief Marketing Officer, Chief Digital Officer, the Chief Data Officer, and the Customer Experience Manager, deliver a 360 degree view of the Contoso's business operations and to optimize them through data analytics. The Chief Executive Officer (CEO), Chief Financial Officer (CFO), and Chief Information Officer (CIO) believe that providing this level of customer insights will increase revenue and deliver a competitive advantage to Contoso. 
+Your primary objective is to provide integration across all data to be used for analysis and reporting, bringing together manufacturing, supply chain, and sales. Your solution should help the customer, represented by the Chief Marketing Officer, Chief Digital Officer, the Chief Data Officer, and the Customer Experience Manager, deliver a 360-degree view of the Contoso's business operations and to optimize them through data analytics. The Chief Executive Officer (CEO), Chief Financial Officer (CFO), and Chief Information Officer (CIO) believe that providing this level of customer insights will increase revenue and deliver a competitive advantage to Contoso. 
 
 ## Step 1: Review the customer case study 
 
@@ -86,7 +86,7 @@ Contoso has brought together a group of SAP, Azure, Applications, and Data and A
 *   They would like to utilize social media sentiment analytics for inventory recommendations.
 *   Contoso would like to use external feeds with such information as road closures and inclement weather to manage deliveries efficiently.
 
-Contoso wants to take control of their supply chain to ensure that their customers can easily locate and purchase the products they are interested in and that their stores are prepared to keep up with the actual demand. To accomplish this, Contoso will need to establish a 360-degree view of the supply chain, with data analysis and reporting that provides the business with the ability to address manufacturing and service issues, plan and schedule deliveries of products according to forecasted needs, and gauge these needs based on customer sentiment and up-to-date buying trends.
+Contoso wants to take control of their supply chain to ensure that their customers can easily locate and purchase the products they are interested in and that their stores are prepared to keep up with the actual demand. To accomplish this, Contoso will need to establish a 360-degree view of the supply chain, with data analysis and reporting that provides the business with the ability to address manufacturing and service issues, plan, and schedule deliveries of products according to forecasted needs, and gauge these needs based on customer sentiment and up-to-date buying trends.
 
 As part of its business plan, Contoso is looking to implement the following objectives:
 
@@ -103,7 +103,7 @@ As part of its business plan, Contoso is looking to implement the following obje
 
 ### Customer needs
 
-1.  Contoso wants to minimize the cost by right-sizing the SAP landscape implementation and optimize the use of compute resources.
+1.  Contoso wants to minimize the cost by right sizing the SAP landscape implementation and optimize the use of compute resources.
 
 2. They would like to leverage Azure services to extend and innovate data collection and analysis (including sensor data from IoT devices, web site and app telemetry, as well as social networking feeds reflecting customer behavior, sentiment, and purchasing patterns).
 
@@ -121,20 +121,20 @@ As part of its business plan, Contoso is looking to implement the following obje
 
 3.  How will this solution help us to create a better process for getting our products from the manufacturing to the warehouses and then to the stores any quicker? Our staff is already working overtime and trucks won't be able to physically drive any faster while maintaining safety standards. 
 
-4.  How can we ensure that privacy of our customers is sufficiently protected if we pursue targeted advertising by leveraging Azure services?
+4.  How can we ensure the privacy of our customers is sufficiently protected if we pursue targeted advertising by leveraging Azure services?
 
 ### Infographic for common scenarios
 
-SAP on Azure provides many potential scenarios and benefits that are show in this illustration.
+SAP on Azure provides many potential scenarios and benefits that are shown in this illustration.
 ![Diagram illustrating SAP on Azure scenarios and benefits.](media/sap-on-azure-scenarios-benefits.png 'SAP on Azure Scenarios and Benefits')
 
-Cloud, data and AI provide ways to shift how data is utilized. This graphic highlights some of these capabilities.
+Cloud, data, and AI provide ways to shift how data is utilized. This graphic highlights some of these capabilities.
 ![Diagram illustrating a transformative shift fueled by cloud, data, and AI.](media/cloud-data-ai-transformative-shift.png 'Cloud, Data, and AI fueling a transformative shift')
 
 There are many drivers for migrating SAP to the cloud.  This graphic illustrates some of these drivers.
 ![Diagram illustrating drivers for migrating SAP to the cloud.](media/drivers-for-migrating-sap-to-cloud.png 'Drivers for migrating SAP to the cloud')
 
-When migrating to Azure, there are different drivers that optimize your costs. Some of the key factors are on this graphic.
+When migrating to Azure, there are different drivers that optimize your costs. Some of the key factors are in this graphic.
 
 ![Diagram illustrating cost savings with Azure.](media/optimize-cost-with-azure.png 'Optimize cost with Azure')
 
@@ -201,7 +201,7 @@ _Personalized marketing_
 
 1. How would you improve personalized marketing for Contoso customers?
 
-2. Which Azure services would allow you to enhance personalize marketing experience for Contoso customers?
+2. Which Azure services would allow you to enhance personalized marketing experience for Contoso customers?
 
 **Prepare**
 
