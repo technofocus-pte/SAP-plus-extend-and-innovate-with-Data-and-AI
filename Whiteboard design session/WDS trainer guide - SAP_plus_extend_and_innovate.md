@@ -18,7 +18,7 @@ Microsoft may have patents, patent applications, trademarks, copyrights, or othe
 
 The names of manufacturers, products, or URLs are provided for informational purposes only and Microsoft makes no representations and warranties, either expressed, implied, or statutory, regarding these manufacturers or the use of the products with any Microsoft technologies. The inclusion of a manufacturer or product does not imply endorsement of Microsoft of the manufacturer or product. Links may be provided to third party sites. Such sites are not under the control of Microsoft and Microsoft is not responsible for the contents of any linked site or any link contained in a linked site, or any changes or updates to such sites. Microsoft is not responsible for webcasting or any other form of transmission received from any linked site. Microsoft is providing these links to you only as a convenience, and the inclusion of any link does not imply endorsement of Microsoft of the site or the products contained therein.
 
-© 2021 Microsoft Corporation. All rights reserved.
+© 2022 Microsoft Corporation. All rights reserved.
 
 Microsoft and the trademarks listed at https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/Usage/General.aspx are trademarks of the Microsoft group of companies. All other trademarks are property of their respective owners.
 
@@ -179,7 +179,7 @@ To remedy these challenges, Contoso has asked you to design and implement a solu
 
 Contoso has determined that to optimize their environment, the following key success criteria must be met.  They would like a highly available SAP landscape with the ability to minimize cost through right-sizing and optimized resource allocation.  They need data integration and analytics capabilities that include the ability to provide a comprehensive view of logistical and operational data, including sensor data from IoT devices in warehouses, stores, and manufacturing plants.  Contoso would like to utilize social media sentiment analytics and personalized marketing.  In addition, they would like to improve delivery route planning and scheduling, leveraging external data feeds that account for such factors as road closures or inclement weather.  They also would like optimized demand forecasting with automatic anomaly detection within their supply chain.
 
-Your primary objective is to provide integration across all data to be used for analysis and reporting, bringing together manufacturing, supply chain, and sales. Your solution should help the customer, represented by the Chief Marketing Officer, Chief Digital Officer, the Chief Data Officer, and the Customer Experience Manager, deliver a 360 degree view of the Contoso's business operations and to optimize them through data analytics.
+Your primary objective is to provide integration across all data to be used for analysis and reporting, bringing together manufacturing, supply chain, and sales. Your solution should help the customer, represented by the Chief Marketing Officer, Chief Digital Officer, the Chief Data Officer, and the Customer Experience Manager, deliver a 360-degree view of the Contoso's business operations and to optimize them through data analytics. The Chief Executive Officer (CEO), Chief Financial Officer (CFO, and Chief Informtion Officer (CIO believe that providing this level of customer insights will increase revenue and deliver a competitive advantage to Contoso.
 
 ## Step 1: Review the customer case study 
 
@@ -213,7 +213,7 @@ Contoso has brought together a group of SAP, Azure, Applications, and Data and A
 *   They would like to utilize social media sentiment analytics for inventory recommendations.
 *   Contoso would like to use external feeds with such information as road closures and inclement weather to manage deliveries efficiently.
 
-Contoso wants to take control of their supply chain to ensure that their customers can easily locate and purchase the products they are interested in and that their stores are prepared to keep up with the actual demand. To accomplish this, Contoso will need to establish a 360-degree view of the supply chain, with data analysis and reporting that provides the business with the ability to address manufacturing and service issues, plan and schedule deliveries of products according to forecasted needs, and gauge these needs based on customer sentiment and up-to-date buying trends.
+Contoso wants to take control of their supply chain to ensure that their customers can easily locate and purchase the products they are interested in and that their stores are prepared to keep up with the actual demand. To accomplish this, Contoso will need to establish a 360-degree view of the supply chain, with data analysis and reporting that provides the business with the ability to address manufacturing and service issues, plan, and schedule deliveries of products according to forecasted needs, and gauge these needs based on customer sentiment and up-to-date buying trends.
 
 As part of its business plan, Contoso is looking to implement the following objectives:
 
@@ -230,7 +230,7 @@ As part of its business plan, Contoso is looking to implement the following obje
 
 ### Customer needs
 
-1.  Contoso wants to minimize the cost by right-sizing the SAP landscape implementation and optimize the use of compute resources.
+1.  Contoso wants to minimize the cost by right sizing the SAP landscape implementation and optimize the use of compute resources.
 
 2. They would like to leverage Azure services to extend and innovate data collection and analysis (including sensor data from IoT devices, web site and app telemetry, as well as social networking feeds reflecting customer behavior, sentiment, and purchasing patterns).
 
@@ -248,20 +248,20 @@ As part of its business plan, Contoso is looking to implement the following obje
 
 3.  How will this solution help us to create a better process for getting our products from the manufacturing to the warehouses and then to the stores any quicker? Our staff is already working overtime and trucks won't be able to physically drive any faster while maintaining safety standards. 
 
-4.  How can we ensure that privacy of our customers is sufficiently protected if we pursue targeted advertising by leveraging Azure services?
+4.  How can we ensure the privacy of our customers is sufficiently protected if we pursue targeted advertising by leveraging Azure services?
 
 ### Infographic for common scenarios
 
-SAP on Azure provides many potential scenarios and benefits that are show in this illustration.
+SAP on Azure provides many potential scenarios and benefits that are shown in this illustration.
 ![Diagram illustrating SAP on Azure scenarios and benefits.](media/sap-on-azure-scenarios-benefits.png 'SAP on Azure Scenarios and Benefits')
 
-Cloud, data and AI provide ways to shift how data is utilized. This graphic highlights some of these capabilities.
+Cloud, data, and AI provide ways to shift how data is utilized. This graphic highlights some of these capabilities.
 ![Diagram illustrating a transformative shift fueled by cloud, data, and AI.](media/cloud-data-ai-transformative-shift.png 'Cloud, Data, and AI fueling a transformative shift')
 
 There are many drivers for migrating SAP to the cloud.  This graphic illustrates some of these drivers.
 ![Diagram illustrating drivers for migrating SAP to the cloud.](media/drivers-for-migrating-sap-to-cloud.png 'Drivers for migrating SAP to the cloud')
 
-When migrating to Azure, there are different drivers that optimize your costs. Some of the key factors are on this graphic.
+When migrating to Azure, there are different drivers that optimize your costs. Some of the key factors are in this graphic.
 
 ![Diagram illustrating cost savings with Azure.](media/optimize-cost-with-azure.png 'Optimize cost with Azure')
 
@@ -328,7 +328,7 @@ _Personalized marketing_
 
 1. How would you improve personalized marketing for Contoso customers?
 
-2. Which Azure services would allow you to enhance personalize marketing experience for Contoso customers?
+2. Which Azure services would allow you to enhance personalized marketing experience for Contoso customers?
 
 **Prepare**
 
@@ -448,10 +448,10 @@ Directions: Reconvene with the larger group to hear the facilitator/SME share th
 
 _High-level architecture_
 
-The proposed solutions takes advantage of a wide range of Azure services in order to enhance the agility, resiliency, and resiliency of the customer's SAP landscape, as well as to deliver additional data integration capabilities. In particular, it provides the following functionality:
+The proposed solutions take advantage of a wide range of Azure services in order to enhance the agility, resiliency, and resiliency of the customer's SAP landscape, as well as to deliver additional data integration capabilities. In particular, it provides the following functionality:
 
-- Support for in-region and cross-region redundancy, providing the high availability and disaster recovery capabilities.
-- A development and test environment, which cost can be minimized through an optimal resource sizing and snoozing.
+- Support for in-region and cross-region redundancy, providing high availability and disaster recovery capabilities.
+- A development and test environment, where costs can be minimized through an optimal resource sizing and snoozing.
 - Hot and cold paths for ingesting, processing, and storing data generated by IoT devices, implemented by using Azure IoT Intelligent Edge.
 - Hot and cold paths for ingesting, processing, and storing data generated by social media, implemented by a range of native Azure services.
 - Integration with Azure Machine Learning and Azure Cognitive Services.
@@ -472,7 +472,7 @@ _Data ingestion and integration_
     IoT Edge consists of the following components:
 
     - Azure IoT Hub, which provides a cloud-hosted backend to connect IoT devices with Azure cloud services. IoT Hub enables highly secure and reliable bi-directional communication, management, and provisioning (by using Device Provisioning Service, aka DPS) for IoT Edge devices.
-    - Azure Storage provides flexible, scalable, secure, and inexpensive data store. The solution can use Azure Blob Storage or Azure Data Lake to store massive amounts of unstructured data.
+    - Azure Storage provides flexible, scalable, secure, and inexpensive data stores. The solution can use Azure Blob Storage or Azure Data Lake to store massive amounts of unstructured data.
     - Azure Cognitive Services are a family of AI services and cognitive APIs that help build intelligent apps. For example, the solution could provide image recognition by leveraging Computer Vision and Custom Vision services.
     - Machine Learning (ML) uses algorithms to automatically improve predictions or decisions through a self-learning process. Machine learning algorithms help ensure that the modules deployed to IoT devices remain accurate despite changing data trends.
 
@@ -482,7 +482,7 @@ _Data ingestion and integration_
 
 3. What data integration options would Contoso benefit from?
    
-    In addition, business and customer data from sources such as social media postings, third party applications, and external sites can be ingested by using services such as Event Hub, parsed by Stream Analytics, aggregated into Azure Blob Storage or Azure Data Lake, and, subsequently, processed and analyzed by Azure Synapse Analytics, Azure HDInsight, or Azure Data Lake Analytics. At various points of the data path, you have the option to leverage Cognitive Services and Azure Machine Learning models to offer even deeper understanding of what customers might be interested in, based on such criteria as consumer sentiment or social media trending.
+    In addition, business, and customer data from sources such as social media postings, third party applications, and external sites can be ingested by using services such as Event Hub, parsed by Stream Analytics, aggregated into Azure Blob Storage or Azure Data Lake, and, subsequently, processed and analyzed by Azure Synapse Analytics, Azure HDInsight, or Azure Data Lake Analytics. At various points of the data path, you have the option to leverage Cognitive Services and Azure Machine Learning models to offer even deeper understanding of what customers might be interested in, based on such criteria as consumer sentiment or social media trending.
 
     For integration purposes, you can take advantage of Azure Logic Apps or use Azure Data Factory as part of pipeline for social media feeds, transferring and manipulating data between Azure Blob Storage, Data Lake Store, or delivering it directly to SAP HANA. 
 
@@ -528,14 +528,14 @@ _Data analytics_
 
       Another option that helps your further innovate the way you manage business data is Azure Anomaly Detector, which is part of Azure Cognitive Services. Anomaly Detector allows you to evaluate transactions, represented by time series data, across your entire SAP landscape in order to detect potential issues before they might have a negative impact. Based on incoming telemetry sources, the Anomaly Detector solution detects if there is a sudden change in creation or update processes. The detection algorithm can detect these issues automatically, in real time, and notify you in order to initiate a corrective action.
 
-      For example, Contoso could use Anomaly Detector to monitor changes to the Master Data Management (MDM) space, hosting objects representing business entities such as customers and business partners to detect and, optionally, remediate any unusual patterns. Similarly, Contoso could leverage Anomaly Detector to detect a sudden increase in online purchases of a particular product on its e‑commerce website. This would allow to take immediate actions to ensure product availability. 
+      For example, Contoso could use Anomaly Detector to monitor changes to the Master Data Management (MDM) space, hosting objects representing business entities such as customers and business partners to detect and, optionally, remediate any unusual patterns. Similarly, Contoso could leverage Anomaly Detector to detect a sudden increase in online purchases of a particular product on its e‑commerce website. This would allow them to take immediate actions to ensure product availability. 
 
       Contoso could implement Anomaly Detector with native Azure services composing decoupled business logic and the presentation layers. These services include: 
 
       - An Azure web app, which forms the presentation layer. Its purpose is to allow users to call the anomaly-detection service by using the prepared time-series data. The choice of Azure Web App Service gives Contoso's developers the option to work in their preferred language, including .NET, .NET Core, Java, Ruby, Node.js, PHP, or Python. In addition, the application endpoint can be protected by leveraging Azure Active Directory for authentication and authorization.
       - Two Azure function apps, which host all business-logic functionality. The first is used to connect to Azure Application Insights and capture SAP telemetry, such as customer or business-partner processes that are target of anomaly detection. This function app transforms target data into JavaScript Object Notation (JSON) format with time-series sub formatting. The second function app captures the precompiled time-series data from the first function app, makes a call to the Anomaly Detector service, and then retrieves the result. At that point, the web app presentation layer displays the results in a graph format. 
       - Application Insights, which stores all SAP log data. This log data is captured from various business processes, including Customer Master Data creation, Business Partner Creation and updates, and batch program logs. These logs serve as the source for anomaly detection.
-      - Azure Anomaly Detector, which exposes API to detect and returns all anomaly points based on time-series data sent by the function app. It is possible to interact with Anomaly Detector either by using directly the HTTP REST API or by relying on client SDK.  
+      - Azure Anomaly Detector, which exposes API to detect and returns all anomaly points based on time-series data sent by the function app. It is possible to interact with Anomaly Detector either by directly using the HTTP REST API or by relying on client SDK.  
 
       ![Diagram illustrating an Anomaly Detector solution.](media/sap-extend-innovate-anomaly-detector.png 'Anomaly Detector architecture')
 
@@ -545,22 +545,22 @@ _Personalized marketing_
    
     Personalized marketing focuses on targeting marketing initiatives and messaging to specific individuals that are either current or prospective customers. For this approach to be effective, Contoso needs to have access to customers' data and employ data analysis and artificial intelligence.
 
-2. Which Azure services would allow you to enhance personalize marketing experience for Contoso customers?
+2. Which Azure services would allow you to enhance personalized marketing experience for Contoso customers?
    
     Furthermore, SAP applications can leverage Azure Cognitive Services for a number of purposes, including face recognition, text recognition, and natural language understanding. By deploying Cognitive Services, SAP will be able to analyze information closer to the physical world where the data resides and deliver real-time insights and immersive experiences that are highly responsive and contextually aware. For example, SAP Conversational AI can be implemented in combination with Azure bot channels to enhance conversational experience for online customers, including the ability to communicate via Microsoft Teams.
 
 ### Customer Needs
 
-1. Contoso wants to minimize the cost by right-sizing the SAP landscape implementation and optimize the use of compute resources.
+1. Contoso wants to minimize the cost by right sizing the SAP landscape implementation and optimize the use of compute resources.
 
-    The proposed solutions takes advantage of the hyper-scale and agility offered by Azure in order to optimize the efficiency and minimize cost of implementing and maintaining the customer's SAP landscape. Azure is SAP certified to run your mission-critical SAP applications. It offers is the industry's most performant and scalable SAP cloud infrastructure, including 25+ configurations that span virtual machines and purpose-built bare metal instances with memory ranging from 192GB to 24TB, in more regions than any other public cloud provider. Its capabilities extend beyond production workloads, expediting setup of a development and test environment, which cost can be minimized through resource proper sizing and snoozing.
+    The proposed solutions take advantage of the hyper-scale and agility offered by Azure in order to optimize efficiency and minimize cost of implementing and maintaining the customer's SAP landscape. Azure is SAP certified to run your mission-critical SAP applications. It offers is the industry's most performant and scalable SAP cloud infrastructure, including 25+ configurations that span virtual machines and purpose-built bare metal instances with memory ranging from 192GB to 24TB, in more regions than any other public cloud provider. Its capabilities extend beyond production workloads, expediting setup of a development and test environment, which cost can be minimized through resource proper sizing and snoozing.
 
-    A Forrester study published in 2019 found that organizations which migrate SAP to Azure can expect more than a 100% return on investment within 3 years. According to the same study, by the second year, organizations will typically be able to reduce staff required to manage SAP infrastructure by 50% and accelerate SAP releases by 100% due to the ability to rapidly provision test environments. Effectively, organizations can accelerate development cycles, run test marketing campaigns and validate new product opportunities much faster, greatly reducing time to market. Similarly, financial and human resources previously dedicated to IT overhead can be allocated to pursuing product and business innovation and new market growth initiatives.
+    A Forrester study published in 2019 found that organizations which migrate SAP to Azure can expect more than a 100% return on investment within 3 years. According to the same study, by the second year, organizations will typically be able to reduce staff required to manage SAP infrastructure by 50% and accelerate SAP releases by 100% due to the ability to rapidly provision test environments. Effectively, organizations can accelerate development cycles, run test marketing campaigns, and validate new product opportunities much faster, greatly reducing time to market. Similarly, financial, and human resources previously dedicated to IT overhead can be allocated to pursuing product and business innovation and new market growth initiatives.
 
 
 2. They would like to leverage Azure services to extend and innovate data collection and analysis (including sensor data from IoT devices, web site and app telemetry, as well as social networking feeds reflecting customer behavior, sentiment, and purchasing patterns).
 
-    The proposed solutions takes advantage of a wide range of Azure services in order to enhance data integration capabilities. In particular, it provides the following functionality:
+    The proposed solutions take advantage of a wide range of Azure services in order to enhance data integration capabilities. In particular, it provides the following functionality:
 
    - Hot and cold paths for ingesting, processing, and storing data generated by IoT devices, implemented by using Azure IoT Intelligent Edge.
    - Hot and cold paths for ingesting, processing, and storing data generated by social media, implemented by a range of native Azure services.
@@ -587,11 +587,11 @@ _Personalized marketing_
 
 1.  We currently have all the data we need, why do we need to do anything else?
 
-    The traditional approach to data integration is no longer sufficient in the modern marketplace. Retailers can now derive meaningful benefits from end-to-end visibility of supply and demand signals across the value chain. This starts at a store aisle, where smart sensors powered by Azure IoT Edge can detect movement of physical products on shelves and automatically trigger restocking processes. Real time inventory fluctuations can be processed by Azure Stream Analytics and fed into the SAP Forecasting and Replenishment (SAP F&R) solution to automate and accelerate the supply chain cycle. In parallel, retailers could leverage external data that represents external conditions in order to evaluate how they may affect local demand patterns. The ability to account for external data such as breaking news, weather, or sporting events can help detect and align to shifts in customer demand within hours. Predictive intelligence provided by Microsoft and SAP analytics tools, AI and machine learning models facilitates implementing such solutions, resulting in optimized procurement cycles, minimizing waste and maximizing profits.
+    The traditional approach to data integration is no longer sufficient in the modern marketplace. Retailers can now derive meaningful benefits from end-to-end visibility of supply and demand signals across the value chain. This starts at a store aisle, where smart sensors powered by Azure IoT Edge can detect movement of physical products on shelves and automatically trigger restocking processes. Real time inventory fluctuations can be processed by Azure Stream Analytics and fed into the SAP Forecasting and Replenishment (SAP F&R) solution to automate and accelerate the supply chain cycle. In parallel, retailers could leverage external data that represents external conditions in order to evaluate how they may affect local demand patterns. The ability to account for external data such as breaking news, weather, or sporting events can help detect and align to shifts in customer demand within hours. Predictive intelligence provided by Microsoft and SAP analytics tools, AI and machine learning models facilitate implementing such solutions, resulting in optimized procurement cycles, minimizing waste, and maximizing profits.
 
     Similarly, companies can use Azure analytics and Power BI dashboards to monitor supplier status, inbound materials flows and logistics in real time. Through Azure, they can overlay operating status with external data such as road closures or inclement weather to predict problems before they can impact production schedules or customer deliveries. 
 
-    By combining SAP- and Azure-based analytics, it becomes easier to uncover sales trend and customer preferences, resulting in optimized production targets and increased revenues. By expediting planning cycles in coordination with supplier networks and logistics providers, retailers can get products to market faster and deliver tailored products at scale. 
+    By combining SAP- and Azure-based analytics, it becomes easier to uncover sales trends and customer preferences, resulting in optimized production targets and increased revenues. By expediting planning cycles in coordination with supplier networks and logistics providers, retailers can get products to market faster and deliver tailored products at scale. 
 
     In addition, retailers can leverage new sources of customer and market data such as social network postings or review sites from outside the organization. This provides even deeper understanding of customers buying patterns and helps track their changes in real time. Such data can be ingested, aggregated, and analyzed by leveraging Azure AI and ML models to predict what offers and experiences will have the most significant impact. At the same time, availability of such data helps build highly accurate and granular profiles for each customer to understand their unique interests and buying patterns. This, in turn, makes it more likely to be able to effectively capture customers' attention, improving their satisfaction and the likelihood of making an actual purchase. 
 
@@ -603,23 +603,23 @@ _Personalized marketing_
 
 2.  We've spent a lot of money and time building out the systems we have, why should we start over in Azure rather than upgrade our existing hardware?
 
-    While it is possible to leverage Azure services in hybrid scenarios with your on-premises SAP landscape, by migrating it to Azure you will be able to fully realize the benefits that the cloud environment has to offer. These benefits go beyond increased agility, resiliency, and scalability, resulting also in meaningful cost savings. A Forrester study published in 2019 found that organizations which migrate SAP to Azure can expect more than a 100% return on investment within 3 years. According to the same study, by the second year, organizations will typically be able to reduce staff required to manage SAP infrastructure by 50% and accelerate SAP releases by 100% due to the ability to rapidly provision test environments. Effectively, organizations can accelerate development cycles, run test marketing campaigns and validate new product opportunities much faster, greatly reducing time to market. Similarly, financial and human resources previously dedicated to IT overhead can be allocated to pursuing product and business innovation and new market growth initiatives.
+    While it is possible to leverage Azure services in hybrid scenarios with your on-premises SAP landscape, by migrating it to Azure you will be able to fully realize the benefits that the cloud environment has to offer. These benefits go beyond increased agility, resiliency, and scalability, resulting also in meaningful cost savings. A Forrester study published in 2019 found that organizations which migrate SAP to Azure can expect more than a 100% return on investment within 3 years. According to the same study, by the second year, organizations will typically be able to reduce staff required to manage SAP infrastructure by 50% and accelerate SAP releases by 100% due to the ability to rapidly provision test environments. Effectively, organizations can accelerate development cycles, run test marketing campaigns, and validate new product opportunities much faster, greatly reducing time to market. Similarly, financial, and human resources previously dedicated to IT overhead can be allocated to pursuing product and business innovation and new market growth initiatives.
 
     Azure is SAP certified to run your mission-critical SAP applications. It offers is the industry's most performant and scalable SAP cloud infrastructure, including 25+ configurations that span virtual machines and purpose-built bare metal instances with memory ranging from 192GB to 24TB, in more regions than any other public cloud provider. You also benefit from Azure security services and the industry's largest compliance portfolio for workloads in the cloud and on-premises. 
 
-    In addition, Azure facilitate innovation, with a wide range of services that support different data ingestion, integration, transformation, processing and visualization services. Your new solution will not only leverage the data that is currently in place, but you will be able to further enrich it by taking advantage of such functionality as cloud-native machine learning and artificial intelligence, including virtual and augmented reality, image recognition, and natural language processing. 
+    In addition, Azure facilitates innovation, with a wide range of services that support different data ingestion, integration, transformation, processing, and visualization services. Your new solution will not only leverage the data that is currently in place, but you will be able to further enrich it by taking advantage of such functionality as cloud-native machine learning and artificial intelligence, including virtual and augmented reality, image recognition, and natural language processing. 
 
 3.  How will this solution help us to create a better process for getting our products from the manufacturing to the warehouses and then to the stores any quicker? Our staff is already working overtime and trucks won't be able to physically drive any faster while maintaining safety standards. 
 
     The solution will help Contoso with optimizing this process. The objective is to improve efficiency rather than increasing speed or the amount of effort. This means having trucks that are fully loaded with the correct products and warehouses that are staffed with the staff best equipped to handle the task at hand. To accomplish this, you will take advantage of predictive analytics that take into account historical data and combine it with Azure AI and ML services to derive the most likely future outcome. You will also benefit from the availability of external data, such as road closures or inclement weather to identify potential problems before they might impact production schedules or customer deliveries. 
 
-4.  How can we ensure that privacy of our customers is sufficiently protected if we pursue targeted advertising by leveraging Azure services?
+4.  How can we ensure the privacy of our customers is sufficiently protected if we pursue targeted advertising by leveraging Azure services?
 
     Microsoft fully understands that its customers need to comply with their national, regional, and industry-specific requirements and offers full transparency regarding provisions it offers in this area. These provisions include strict standards regarding the privacy and protection of customer data. For more information regarding this topic, refer to [Azure Cognitive Services](https://azure.microsoft.com/en-us/support/legal/cognitive-services-compliance-and-privacy/).
 
 
 ## Customer quote (to be read back to the attendees at the end)
 
-"We are truly satisfied with the results offered through the provided solution. By migrating our SAP landscape to Azure, we have not only increased its agility and resiliency, but also realized meaningful cost savings and, through integration with Azure services, gained an extra competitive advantage. Now we are able to reliably base our tactical and strategic planning on end-to-end business data that incorporates interconnected operations and leverages cutting-edge technologies like AI, machine learning, and IoT. We also got to know better our customers and improved their satisfaction by taking advantage of social networking and Azure Cognitive Services."
+"We are truly satisfied with the results offered through the solution provided. By migrating our SAP landscape to Azure, we have not only increased its agility and resiliency, but also realized meaningful cost savings and, through integration with Azure services, gained an extra competitive advantage. Now we are able to reliably base our tactical and strategic planning on end-to-end business data that incorporates interconnected operations and leverages cutting-edge technologies like AI, machine learning, and IoT. We also got to know our customers better and improved their satisfaction by taking advantage of social networking and Azure Cognitive Services."
 
 Guy Information, CIO, Contoso
