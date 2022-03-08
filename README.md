@@ -41,7 +41,7 @@ In this whiteboard design session, you will use the Azure Cloud Adoption and Wel
 - AI
 
 ## Related references
-- [MCW](https://github.com/Microsoft/MCW)
+- [MCW](https://microsoftcloudworkshop.com/)
 - [SAP on Azure](https://azure.microsoft.com/en-us/solutions/sap/azure-solutions/)
 - [Azure Cloud Adoption Framework](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/)
 - [Azure Well-architected Framework](https://docs.microsoft.com/en-us/azure/architecture/framework/)
