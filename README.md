@@ -8,7 +8,7 @@ Contoso needs the ability to collect and analyze data from within SAP in order t
 
 The improved ability to meet customer demand will be accomplished by establishing a 360-degree view of the supply chain. With data analysis and reporting, stores will be able to plan and schedule product deliveries based on customer sentiment and current buying trends.
 
-July 2021
+March 2022
 
 ## Target audience
 - SAP Specialists
@@ -41,7 +41,7 @@ In this whiteboard design session, you will use the Azure Cloud Adoption and Wel
 - AI
 
 ## Related references
-- [MCW](https://github.com/Microsoft/MCW)
+- [MCW](https://microsoftcloudworkshop.com/)
 - [SAP on Azure](https://azure.microsoft.com/en-us/solutions/sap/azure-solutions/)
 - [Azure Cloud Adoption Framework](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/)
 - [Azure Well-architected Framework](https://docs.microsoft.com/en-us/azure/architecture/framework/)
