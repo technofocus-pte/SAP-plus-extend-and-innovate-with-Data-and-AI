@@ -69,13 +69,13 @@ Duration: X minutes
 
 3. Either register for a new account, or log in with your existing credentials.
 
-4. On the SAP Cloud Appliance Library **Solutions** screen, search for and locate the **SAP S/4HANA 2021, Fully-Activated Appliance** item, and select the **Create Instance** button in the search results.
+4. On the SAP Cloud Appliance Library **Appliance Templates** screen, search for and locate the **SAP S/4HANA 2021, Fully-Activated Appliance** item, and select the **Create Appliance** button in the search results.
 
-    ![The Solutions screen displays with SAP S/4Hana 2021, Fully-Activated Appliance entered in the search box, and the Create Instance button highlighted in the search results listing.](media/locate_sap_appliance_create_instance_button.png "Create SAP S4/HANA instance")
+    ![The Appliance Templates screen displays with SAP S/4Hana 2021, Fully-Activated Appliance entered in the search box, and the Create Appliance button highlighted in the search results listing.](media/locate_sap_appliance_create_instance_button.png "Create SAP S4/HANA instance")
 
 5. On the **Terms and Conditions** screen, read the conditions of the 30-day trial license, and select the **I Accept** button to continue.
 
-6. On the **Basic Mode: Create Instance - Account Details** screen, enter the following values, then select the **Authorize** button:
+6. On the **Basic Mode: Create Appliance - Account Details** screen, enter the following values, then select the **Authorize** button:
 
     | Field | Value |
     |-------|-------|
@@ -91,7 +91,7 @@ Duration: X minutes
 
     ![A Permissions requested modal dialog displays with the Consent on behalf of your organization checkbox checked and the Accept button highlighted.](media/sapcal_consent_modal.png "SAP Cloud Appliance Library Permissions Requested")
 
-8. Returning to the **Basic Mode: Create Instance** screen fill the **Instance Details** form as follows and select **Create**:
+8. Returning to the **Basic Mode: Create Appliance** screen fill the **Appliance Details** form as follows and select **Create**:
 
     | Field | Value |
     |-------|-------|
@@ -130,7 +130,7 @@ Duration: X minutes
 
     ![The HANA studio icon.](media/sapvm_hanastudioicon.png "HANA Studio icon")
 
-5. In the **Select a directory as workspace** dialog, keep the default value and select **Launch**.
+5. In the **Select a directory as workspace** dialog, keep the default value and select **Launch**. Launching will take a few moments, please be patient.
 
     ![The Select a directory as workspace dialog displays with the Launch button highlighted.](media/sapvm_hanastudioworkspace_prompt.png "Select a directory as workspace dialog")
 
@@ -222,11 +222,11 @@ Duration: X minutes
     } where SDDocumentCategory = 'C'
     ```
 
-13. In the **Project Explorer**, expand the **S4H_100_s4h_ext_en** folder, then **Local Objects ($TMP)**, then **S4H_EXT**, then **Core Data Services**, and **Data Definitions**. Right-click on the **ZBD_ISALESDOCUMENT_E** view and select **Activate**.
+13. Right-click in the whitespace of the **ZBD_ISALESDOCUMENT_E** view code window and select **Activate**.
 
     ![The ZBD_ISALESDOCUMENT_E view displays a context menu with the **Activate** item selected.](media/sapvm_activatezbd_isalesdocument_e.png "Activate the ZBD_ISALESDOCUMENT_E view")
 
-14. Right-click the **ZBD_ISALESDOCUMENT_E** view once more, this time select **Open With** and choose **Data Preview**. This will display the raw data of the view.
+14. Right-click in the whitespace of the **ZBD_ISALESDOCUMENT_E** view once more, this time select **Open With** and choose **Data Preview**. This will display the raw data of the view.
 
     ![The ZBD_ISALESDOCUMENT_E view displays a context menu with the Open With and Data Preview items selected.](media/sapvm_preview_menuitem_zbd_isalesdocument_e.png "Preview ZBD_ISALESDOCUMENT_E view")
 
