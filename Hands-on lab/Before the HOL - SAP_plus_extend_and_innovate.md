@@ -31,8 +31,8 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 1: Obtain the desired Azure Subscription Id value](#task-1-obtain-the-desired-azure-subscription-id-value)
     - [Task 2: Create a SAP Cloud Appliance](#task-2-create-a-sap-cloud-appliance)
     - [Task 3: Populate SAP data](#task-3-populate-sap-data)
-    - [Task 4: Deploy Azure Resources](#task-4-deploy-azure-resources)
-    - [Task 5: Populate sales data](#task-5-populate-sales-data)
+    - [Task 4: Expose SAP sales data as an OData service](#task-4-expose-sap-sales-data-as-an-odata-service)
+    - [Task 5: Deploy Azure Resources](#task-5-deploy-azure-resources)
 
 # SAP plus extend and innovate before the hands-on lab setup guide
 
@@ -125,7 +125,7 @@ Duration: X minutes
 
 3. Open the downloaded RDP file and log into the instance using the username `Administrator` and the password used when deploying the instance.
 
-4. From the desktop double-click the **HANA Studio** icon.
+4. From the desktop double-click the **HANA Studio** icon. This will open the Eclipse development environment.
 
     ![The HANA studio icon.](media/sapvm_hanastudioicon.png "HANA Studio icon")
 
@@ -139,13 +139,13 @@ Duration: X minutes
 
 7. In the left panel, select the **Project Explorer** tab then double-click the **S4H_100_s4h_ext_en** folder.
 
-    ![The left panel of HANA Studio displays with the Project Explorer tab and S4H_100_s4h_ext_en folder selected.](media/sapvm_projectexplorer.png "Project Explorer)
+    ![The left panel of HANA Studio displays with the Project Explorer tab and S4H_100_s4h_ext_en folder selected.](media/sapvm_projectexplorer.png "Project Explorer")
 
 8. When prompted for a password, enter `Welcome1` and select **OK**.
 
     ![A logon dialog displays with the Password text box and OK button highlighted.](media/sapvm_logins4h_ext.png "Logon dialog")
 
-9. Expand the **File** menu, then **New** and select the **Other** item.
+9.  Expand the **File** menu, then **New** and select the **Other** item.
 
     ![The File and New menus are expanded with the Other item selected.](media/sapvm_file_new_other.png "Create new file")
 
@@ -231,7 +231,96 @@ Duration: X minutes
 
     ![Raw data for the ZBD_ISALESDOCUMENT_E view displays in tabular format.](media/sapvm_previewsalesdocuments.png "Raw data preview of ZBD_ISALESDOCUMENT_E view")
 
-### Task 4: Deploy Azure Resources
+15. Keep the virtual machine with the Eclipse development environment open for the next task.
+
+### Task 4: Expose SAP sales data as an OData service
+
+1. Add the following code immediately preceding the `define view` line of code of the **ZBD_ISALESDOCUMENT_E** file and save the file.
+
+    ```ABAL
+    @OData.publish: true
+    ```
+
+    ![A portion of a code window displays with the preceding line of code highlighted.](media/sapvm_addodataannotation.png "Add OData publish annotation")
+
+2. Right-click in the whitespace of the **ZBD_ISALESDOCUMENT_E** file, and select **Activate**.
+
+3. Minimize the Eclipse development environment, and double-click the **SAP Logon** icon located on the desktop of the virtual machine. This will open the SAP GUI application.
+
+    ![The SAP Logon icon located on the virtual machine desktop displays.](media/sapvm_saplogonicon.png "SAP Logon icon")
+
+4. From the top toolbar menu, select the **Logon** button.
+
+    ![A portion of the SAP GUI toolbar displays with the Logon button highlighted.](media/sapvm_sapguilogonbutton.png "Logon")
+
+5. Log in with the username `S4H_EXT` and the password `Welcome1`, press <kbd>Enter</kbd> to submit the form.
+
+    ![The SAP GUI logon form displays populated with the preceding values.](media/sapvm_sapguilogonform.png "SAP GUI Logon form")
+
+6. Once logged on, type `/n/IWFND/MAINT_SERVICE` in the toolbar menu transaction combo box and press <kbd>Enter</kbd>. This opens the **Activate and Maintain Services** window.
+
+    ![The SAP GUI toolbar displays with the transaction combo box highlighted. The n/IFWND/MAINT_SERVICE transaction is entered in the transaction combo box.](media/sapvm_sapgui_transactioncombobox.png "SAP GUI transaction combo box")  
+
+7. From the toolbar menu of the **Activate and Maintain Services** window, select the **Add Service** button.
+
+    ![A portion of the Activate and Maintain Services toolbar displays with the Add service button highlighted.](media/sapvm_sapgui_maintsvcs_addservicebutton.png "Add Service")
+
+8. Populate the **Add Selected Services** filter form as follows and press <kbd>Enter</kbd>.
+
+    | Field | Value |
+    |-------|-------|
+    | System Alias | Enter `Local`. |
+    | Technical Service Name | Enter `ZBD_*`. |
+
+    ![The filter form displays populated with the preceding values.](media/sapvm_sapgui_svcfilterform.png "Filter form")
+
+9. From the list of results, select the **ZBD_I_SALESDOCUMENT_E_CDS** item.
+
+    ![The filter results display with the ZBD_I_SALESDOCUMENT_E_CDS item highlighted.](media/sapvm_sapgui_svcresults.png "Filter results list")
+
+10. In the **Add Service** dialog, select the **Local Object** button located in the **Creation Information** section. This will populate the **$TMP** value, and press <kbd>Enter</kbd>. An information dialog indicating success will display, dismiss this dialog.
+
+    ![The Add Service dialog displays with the Local Object button highlighted.](media/sapvm_sapgui_addservicedialog.png "Add Service dialog")
+
+11. On the **Add Selected Services** screen, select the **Back** button on the toolbar menu. This will open the **Activate and Maintan Services** window once more.
+
+    ![A portion of the Add Selected Services toolbar displays with the Back button highlighted.](media/sapvm_sapgui_backbuttonaddservices.png "Back button")
+
+12. On the **Activate and Maintain Services** screen, select the **Filter** button from the toolbar menu.
+
+    ![A portion of the Activate and Maintain Services toolbar menu displays with the Filter button highlighted](media/sapvm_sapgui_activateandmaintainfilterbutton.png "Filter services")
+
+13. In the **Filter for Service Catalog** dialog, type `ZBD_*` in the **Technical Service Name** field and press <kbd>Enter</kbd>.
+
+    ![The Filter for Service Catalog displays with ZBD_* entered in the Technical Service Name field.](media/sapvm_sapgui_svccatalogfilterdialog.png "Filter for Service Catalog dialog")
+
+14. This action filters the **Activate and Maintain Services** screen to a single service. In the **ICF Nodes** pane, select the **SAP Gateway Client** button. If the **SAP GUI Security** dialog displays, check the **Remember My Decision** checkbox and select **Allow**.
+
+    ![The ICF Nodes pane displays with the SAP Gateway Client button highlighted on the toolbar menu.](media/sapvm_sapgui_icfnodessapgatewayclientbutton.png "ICF Nodes SAP Gateway Client")
+
+15. On the **SAP Gateway Client** window, select the **Execute** button from the toolbar menu. This tests the OData service. Verify in the **HTTP Response** pane that the status code indicates **200**.
+
+    ![The SAP Gateway Client window displays with the Execute button highlighted on the toolbar menu and the HTTP Response status code indicating 200.](media/sapvm_sapgui_sapgatewayclientexecution.png "SAP Gateway Client")
+
+16. On the **SAP Gateway Client** window, select the **EntitySets** button on the toolbar menu.
+
+    ![The SAP Gateway window displays with the EntitySets button highlighted.](media/sapvm_sapgui_sapgatewaycliententitysetsbutton.png "EntitySets")
+
+17. On the **EntitySets** dialog, double-click the **ZBD_I_Salesdocument_E** item.
+
+    ![The Entity Sets dialog displays with teh ZBD_I_Salesdocument_E item highlighted.](media/sapvm_sapgui_entitysetsdialog.png "EntitySets dialog") 
+
+18. On the **SAP Gateway Client** window, select **Execute**. This service retrieves the sales documents via the OData endpoint. Verify the HTTP Response status code value is **200**.
+
+    ![The SAP Gateway Client window displays with the Execute button highlighted. The HTTP Response status code is 200.](media/sapvm_sapgui_entitysetodataresult.png "EntitySet OData service execution results")
+
+19. On the **SAP Gateway Client** window, select the **Back** button to return to the **Activate and Maintain Services** screen.
+
+20. On the **ICF Node** pane, select the **Call Browser** button. This will bring up the **Security GUI** dialog once more. Copy the URL value for future use in the lab. After recording the value, close the dialog. This URL is the service endpoint for the sales document OData service.
+
+    ![The SAP GUI Security dialog displays with the URL value highlighted.](media/sapvm_sapgui_sapguisecuritydialog.png "Service endpoint")
+
+### Task 5: Deploy Azure Resources
 
 This lab utilizes Terraform Infrastructure as Code to deploy the necessary Azure resources.
 
@@ -268,37 +357,13 @@ This lab utilizes Terraform Infrastructure as Code to deploy the necessary Azure
     ```PowerShell
     terraform init
     ```
-7. 
 
-### Task 5: Populate sales data
+7. Deploy the lab resources by executing the following command. When prompted to perform the actions, type `yes` and press <kbd>Enter</kbd>. It will take approximately 15 minutes for the deployment to complete.
 
-1. In the Azure portal, open the **mcw_sap_plus_extend_and_innovate** resource group.
+    ```PowerShell
+    terraform apply
+    ```
 
-2. In the list of resources, select the **mcw-sap-gw-vm** Virtual machine resource.
+8. Close the Cloud Shell panel if desired.
 
-    ![The Azure portal displays the resource listing screen of the mcw_sap_plus_extend_and_innovate resource group. The mcw-sap-gw-vm resource is selected from the list of resources.](media/portal_locatevm.png "mcw_sap_plus_extend_and_innovate resource group")
-
-3. Select **Configuration** from the left menu, below the Settings header.
-
-4. From the top toolbar menu, expand the **Connect** button and select **RDP**.
-
-    ![The Connect button on the toolbar menu is expanded with RDP selected.](media/portal_vm_connectmenu.png "Connect options")
-
-5. On the **Connect** screen, select **Download RDP file**.
-
-    ![The Connect screen displays with the Download RDP File button highlighted.](media/portal_downloadrdpfile.png "Download RDP File")
-
-6. Double-click the downloaded RDP file. Connect using the username `azureadmin` and the password `Sapdata!pass123`.
-
-7. Once connected to the virtual machine, open the **Microsoft Edge** browser. You can bring this up by typing into the search box on the task bar.
-
-   ![Microsoft Edge is entered in the toolbar search box. Microsoft Edge displays as a filtered result.](media/vm_searchedge.png "Locating Microsoft Edge")
-
-8. In the web browser, copy the following URL then paste it in the address bar and press Enter. <https://support.sap.com/en/product/connectors/msnet.html>
-
-9. Locate and download the **SAP Connector for Microsoft .NET 3.0.24.0 for Windows 64bit(x64)** located in the **Downloads and Documentation** section. If prompted to log in, log in with the same credentials you used for the SAP CAL portion of this setup.
-
-    ![The Downloads and Documentation section of the webpage displays with the SAP Connector for Microsoft .NET 3.0.24.0 for Windows 64bit(x64) highlighted.](media/vm_connectordownloadpage.png "SAP Connector for .NET download")
-
-10. 
 You should follow all steps provided *before* performing the Hands-on lab.
