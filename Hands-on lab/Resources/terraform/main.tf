@@ -10,6 +10,10 @@ locals {
 
 data "azurerm_client_config" "current" {}
 
+data "external" "azaccount" {
+  program = ["az","ad","signed-in-user","show","--query","{displayName: displayName,objectId: objectId,objectType: objectType}"]
+}
+
 resource "random_string" "service_suffix" {
   length  = 6
   special = false
