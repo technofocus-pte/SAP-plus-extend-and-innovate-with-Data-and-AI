@@ -1,5 +1,5 @@
 locals {
-  currentuserobjectid   = data.azurerm_client_config.current.object_id
+  currentuserobjectid   =  data.azurerm_client_config.current.object_id == "" ? data.external.azaccount.result.objectId : data.azurerm_client_config.current.object_id
   sqladminpwd           = random_password.sqladmin_pwd.result
   sqladminuser          = "sqladminuser"
   subscription_id       = data.azurerm_client_config.current.subscription_id
