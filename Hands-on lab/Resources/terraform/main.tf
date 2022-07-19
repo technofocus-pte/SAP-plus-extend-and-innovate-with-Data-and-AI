@@ -2,12 +2,13 @@ locals {
   currentuserobjectid   = data.azuread_client_config.current.object_id
   sqladminpwd           = random_password.sqladmin_pwd.result
   sqladminuser          = "sqladminuser"
-  subscription_id       = data.azuread_client_config.current.subscription_id
+  subscription_id       = data.azurerm_client_config.current.subscription_id
   suffix                = random_string.service_suffix.result
   synapsefilesystemname = "defaultfs"
-  tenant_id             = data.azuread_client_config.current.tenant_id
+  tenant_id             = data.azurerm_client_config.current.tenant_id
 }
 
+data "azurerm_client_config" "current" {}
 data "azuread_client_config" "current" {}
 
 resource "random_string" "service_suffix" {
