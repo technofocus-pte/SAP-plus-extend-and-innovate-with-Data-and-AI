@@ -32,7 +32,6 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 2: Create a SAP Cloud Appliance](#task-2-create-a-sap-cloud-appliance)
     - [Task 3: Populate SAP data](#task-3-populate-sap-data)
     - [Task 4: Deploy Azure Resources](#task-4-deploy-azure-resources)
-      - [Todo: Add Terraform steps](#todo-add-terraform-steps)
     - [Task 5: Populate sales data](#task-5-populate-sales-data)
 
 # SAP plus extend and innovate before the hands-on lab setup guide
@@ -234,7 +233,42 @@ Duration: X minutes
 
 ### Task 4: Deploy Azure Resources
 
-#### Todo: Add Terraform steps
+This lab utilizes Terraform Infrastructure as Code to deploy the necessary Azure resources.
+
+1. In the Azure portal, select the cloud shell button from the upper-right toolbar menu options.
+
+    ![The upper right toolbar displays with the cloud shell button highlighted.](media/cloudshell_icon.png "Cloud Shell")
+  
+2. In the Cloud Shell pane, ensure the PowerShell language is selected. Clone the source code repository by issuing the following command.
+
+    ```PowerShell
+    git clone https://github.com/codingbandit/MCW-SAP-plus-extend-and-innovate.git
+    ```
+
+3. Navigate to the Terraform directory by executing the following command.
+
+    ```PowerShell
+    cd 'MCW-SAP-plus-extend-and-innovate/Hands-on lab/Resources/terraform'
+    ```
+
+4. Set the desired subscription by executing the following code, replace **SUBSCRIPTION_ID** with the value you recorded earlier in the lab setup.
+
+    ```PowerShell
+    az account set --subscription SUBSCRIPTION_ID
+    ```
+
+5. Establish a user context by executing the following command. Follow the prompts to authenticate to the Azure Cloud Shell.
+
+    ```PowerShell
+    az login
+    ```
+
+6. Initialize the Terraform code using the following command.
+
+    ```PowerShell
+    terraform init
+    ```
+7. 
 
 ### Task 5: Populate sales data
 

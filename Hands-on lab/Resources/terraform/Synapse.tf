@@ -3,14 +3,13 @@
 #######################################################################
 
 resource "azurerm_storage_account" "adlsaccount" {
-    name                        = "sapadls${lower(random_id.id.hex)}"
-    resource_group_name         = azurerm_resource_group.rg.name
-    location                    = azurerm_resource_group.rg.location
-    account_tier                = "Standard"
-    account_replication_type    = "LRS"
-    account_kind                = "StorageV2"
-    is_hns_enabled              = "true"
-    tags                        = var.tags
+  name                     = "sapadls${local.suffix}"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = azurerm_resource_group.rg.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+  account_kind             = "StorageV2"
+  is_hns_enabled           = "true"
 }
 
 #######################################################################
@@ -18,8 +17,8 @@ resource "azurerm_storage_account" "adlsaccount" {
 #######################################################################
 
 resource "azurerm_storage_data_lake_gen2_filesystem" "adls" {
-  name                  = "${var.prefix}-adls"
-  storage_account_id    = azurerm_storage_account.adlsaccount.id
+  name               = "sap-mcw-adls"
+  storage_account_id = azurerm_storage_account.adlsaccount.id
 }
 
 #######################################################################
@@ -27,10 +26,10 @@ resource "azurerm_storage_data_lake_gen2_filesystem" "adls" {
 #######################################################################
 
 resource "azurerm_storage_data_lake_gen2_path" "staging" {
-  path                  = "staging"
-  filesystem_name       = azurerm_storage_data_lake_gen2_filesystem.adls.name
-  storage_account_id    = azurerm_storage_account.adlsaccount.id
-  resource              = "directory"
+  path               = "staging"
+  filesystem_name    = azurerm_storage_data_lake_gen2_filesystem.adls.name
+  storage_account_id = azurerm_storage_account.adlsaccount.id
+  resource           = "directory"
 }
 
 #######################################################################
@@ -38,17 +37,16 @@ resource "azurerm_storage_data_lake_gen2_path" "staging" {
 #######################################################################
 
 resource "azurerm_synapse_workspace" "synapse" {
-    name                                    = "sapdatasynws${lower(random_id.id.hex)}"
-    resource_group_name                     = azurerm_resource_group.rg.name
-    location                                = azurerm_resource_group.rg.location
-    storage_data_lake_gen2_filesystem_id    = azurerm_storage_data_lake_gen2_filesystem.adls.id
-    sql_administrator_login                 = var.username
-    sql_administrator_login_password        = var.password
-    tags                                    = var.tags
+  name                                 = "sapdatasynws${local.suffix}"
+  resource_group_name                  = azurerm_resource_group.rg.name
+  location                             = azurerm_resource_group.rg.location
+  storage_data_lake_gen2_filesystem_id = azurerm_storage_data_lake_gen2_filesystem.adls.id
+  sql_administrator_login              = local.sqladminuser
+  sql_administrator_login_password     = local.sqladminpwd
 
-    identity {
-      type = "SystemAssigned"
-    }
+  identity {
+    type = "SystemAssigned"
+  }
 }
 
 #######################################################################
@@ -67,10 +65,10 @@ resource "azurerm_synapse_firewall_rule" "allowall" {
 #######################################################################
 
 resource "azurerm_synapse_sql_pool" "sqlpool" {
-  name                  = "sapdatasynsql"
-  synapse_workspace_id  = azurerm_synapse_workspace.synapse.id
-  sku_name              = "DW100c"
-  create_mode           = "Default"
+  name                 = "sapdatasynsql"
+  synapse_workspace_id = azurerm_synapse_workspace.synapse.id
+  sku_name             = "DW100c"
+  create_mode          = "Default"
 }
 
 #######################################################################
@@ -78,7 +76,7 @@ resource "azurerm_synapse_sql_pool" "sqlpool" {
 #######################################################################
 
 resource "azurerm_role_assignment" "synapsetoadls" {
-  scope = azurerm_resource_group.rg.id
+  scope                = azurerm_resource_group.rg.id
   role_definition_name = "Storage Blob Data Contributor"
-  principal_id = azurerm_synapse_workspace.synapse.identity[0].principal_id
+  principal_id         = azurerm_synapse_workspace.synapse.identity[0].principal_id
 }

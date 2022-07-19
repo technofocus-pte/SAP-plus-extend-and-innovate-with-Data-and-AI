@@ -3,7 +3,7 @@
 #######################################################################
 
 resource "azurerm_cosmosdb_account" "cosmos" {
-  name                      = "${var.prefix}-cosmos-${lower(random_id.id.hex)}"
+  name                      = "sap-mcw-cosmos-${local.suffix}"
   resource_group_name       = azurerm_resource_group.rg.name
   location                  = azurerm_resource_group.rg.location
   offer_type                = "Standard"
@@ -27,7 +27,7 @@ resource "azurerm_cosmosdb_account" "cosmos" {
 #######################################################################
 
 resource "azurerm_cosmosdb_sql_database" "db" {
-  name                = "SAP${var.SID}"
+  name                = "SAPS4D"
   resource_group_name = azurerm_cosmosdb_account.cosmos.resource_group_name
   account_name        = azurerm_cosmosdb_account.cosmos.name
   throughput          = 400
