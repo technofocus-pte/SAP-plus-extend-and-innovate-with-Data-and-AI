@@ -1,18 +1,14 @@
 locals {
-  currentuserobjectid   =  data.azurerm_client_config.current.object_id == "" ? data.external.azaccount.result.objectId : data.azurerm_client_config.current.object_id
+  currentuserobjectid   = data.azuread_client_config.current.object_id
   sqladminpwd           = random_password.sqladmin_pwd.result
   sqladminuser          = "sqladminuser"
-  subscription_id       = data.azurerm_client_config.current.subscription_id
+  subscription_id       = data.azuread_client_config.current.subscription_id
   suffix                = random_string.service_suffix.result
   synapsefilesystemname = "defaultfs"
-  tenant_id             = data.azurerm_client_config.current.tenant_id
+  tenant_id             = data.azuread_client_config.current.tenant_id
 }
 
-data "azurerm_client_config" "current" {}
-
-data "external" "azaccount" {
-  program = ["az","ad","signed-in-user","show","--query","{displayName: displayName,objectId: objectId,objectType: objectType}"]
-}
+data "azuread_client_config" "current" {}
 
 resource "random_string" "service_suffix" {
   length  = 6
