@@ -32,7 +32,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 2: Create a SAP Cloud Appliance](#task-2-create-a-sap-cloud-appliance)
     - [Task 3: Populate SAP data](#task-3-populate-sap-data)
     - [Task 4: Expose SAP sales data as an OData service](#task-4-expose-sap-sales-data-as-an-odata-service)
-    - [Task 5: Deploy Azure Resources](#task-5-deploy-azure-resources)
+    - [Task 5: Deploy the Azure Resources](#task-5-deploy-the-azure-resources)
 
 # SAP plus extend and innovate before the hands-on lab setup guide
 
@@ -320,7 +320,7 @@ Duration: X minutes
 
     ![The SAP GUI Security dialog displays with the URL value highlighted.](media/sapvm_sapgui_sapguisecuritydialog.png "Service endpoint")
 
-### Task 5: Deploy Azure Resources
+### Task 5: Deploy the Azure Resources
 
 This lab utilizes Terraform Infrastructure as Code to deploy the necessary Azure resources.
 
