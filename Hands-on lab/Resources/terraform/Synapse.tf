@@ -44,7 +44,7 @@ resource "azurerm_storage_container" "payment_data_container" {
 resource "azurerm_storage_blob" "payment_data_file" {
   name                   = "paymentData_CAL2021.csv"
   storage_account_name   = azurerm_storage_account.adlsaccount.name
-  storage_container_name = azurerm_storage_container.payment_data_container
+  storage_container_name = azurerm_storage_container.payment_data_container.name
   type                   = "Block"
   source                 = "${path.module}/data/paymentData_CAL2021.csv"
 }
