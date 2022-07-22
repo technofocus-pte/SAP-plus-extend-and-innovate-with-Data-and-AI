@@ -33,6 +33,23 @@ resource "azurerm_storage_data_lake_gen2_path" "staging" {
 }
 
 #######################################################################
+## Move payments data
+#######################################################################
+resource "azurerm_storage_container" "payment_data_container" {
+  container_access_type = "private"
+  name                  = "payment-data-csv"
+  storage_account_name  = azurerm_storage_account.adlsaccount.name
+}
+
+resource "azurerm_storage_blob" "payment_data_file" {
+  name                   = "paymentData_CAL2021.csv"
+  storage_account_name   = azurerm_storage_account.adlsaccount.name
+  storage_container_name = azurerm_storage_container.payment_data_container
+  type                   = "Block"
+  source                 = "${path.module}/data/paymentData_CAL2021.csv"
+}
+
+#######################################################################
 ## Create Synapse Workspace
 #######################################################################
 
