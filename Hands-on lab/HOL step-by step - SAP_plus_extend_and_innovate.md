@@ -26,25 +26,22 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
 **Contents** 
 
 <!-- TOC -->
-
-- [\[insert workshop name here\] hands-on lab step-by-step](#insert-workshop-name-here-hands-on-lab-step-by-step)
+- [SAP plus extend and innovate hands-on lab step-by-step](#sap-plus-extend-and-innovate-hands-on-lab-step-by-step)
   - [Abstract and learning objectives](#abstract-and-learning-objectives)
   - [Overview](#overview)
   - [Solution architecture](#solution-architecture)
   - [Requirements](#requirements)
   - [Before the hands-on lab](#before-the-hands-on-lab)
-  - [Exercise 1: Exercise name](#exercise-1-exercise-name)
+  - [Exercise 1: Prepare sales data in SAP](#exercise-1-prepare-sales-data-in-sap)
+    - [Task 1: Populate SAP data](#task-1-populate-sap-data)
+    - [Task 2: Expose SAP sales data as an OData service](#task-2-expose-sap-sales-data-as-an-odata-service)
+  - [Exercise 2: Prepare payment data in Cosmos DB](#exercise-2-prepare-payment-data-in-cosmos-db)
+    - [Task 1: Create linked services in Azure Synapse Analytics](#task-1-create-linked-services-in-azure-synapse-analytics)
+    - [Task 2: Create source and sink integration datasets](#task-2-create-source-and-sink-integration-datasets)
+    - [Task 3: Create pipeline to ingest payment data into Cosmos DB](#task-3-create-pipeline-to-ingest-payment-data-into-cosmos-db)
+  - [After the hands-on lab](#after-the-hands-on-lab)
     - [Task 1: Task name](#task-1-task-name)
     - [Task 2: Task name](#task-2-task-name)
-  - [Exercise 2: Exercise name](#exercise-2-exercise-name)
-    - [Task 1: Task name](#task-1-task-name-1)
-    - [Task 2: Task name](#task-2-task-name-1)
-  - [Exercise 3: Exercise name](#exercise-3-exercise-name)
-    - [Task 1: Task name](#task-1-task-name-2)
-    - [Task 2: Task name](#task-2-task-name-2)
-  - [After the hands-on lab](#after-the-hands-on-lab)
-    - [Task 1: Task name](#task-1-task-name-3)
-    - [Task 2: Task name](#task-2-task-name-3)
 
 <!-- /TOC -->
 
@@ -70,11 +67,11 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
 
 Refer to the Before the hands-on lab setup guide manual before continuing to the lab exercises.
 
-## Exercise 1: Prepare Sales Data in SAP
+## Exercise 1: Prepare sales data in SAP
 
 Duration: X minutes
 
-\[insert your custom Hands-on lab content here . . . \]
+This exercise demonstrates creating a sales view in SAP and exposing it as an OData service for consumption by external services.
 
 ### Task 1: Populate SAP data
 
@@ -284,51 +281,154 @@ Duration: X minutes
     ![The SAP GUI Security dialog displays with the URL value highlighted.](media/sapvm_sapgui_sapguisecuritydialog.png "Service endpoint")
 
 
-## Exercise 2: Prepare Sales Data in Cosmos DB
+## Exercise 2: Prepare payment data in Cosmos DB
 
 Duration: X minutes
 
-\[insert your custom Hands-on lab content here . . . \]
+Raw payment data is available in Azure Data Lake storage. This exercise walks through loading raw payment data into Cosmos DB by leveraging Azure Synapse Analytics. First, linked services are created - these act as the connection strings to external compute resources. Next, integration datasets are created, these indicate the location and shape of the data being used in the migration. Finally, a pipeline is created to orchestrate moving data from Azure Data Lake Storage Gen2 to Cosmos DB.
 
-### Task 1: Task name
+### Task 1: Create linked services in Azure Synapse Analytics
 
-1.  Number and insert your custom workshop content here . . . 
+1. In the [Azure Portal](https://portal.azure.com), open the **mcw_sap_plus_extend_and_innovate** resource group.
 
-    -  Insert content here
+2. From the list of resources, locate and select the Synapse Workspace item named **sapdatasynws{SUFFIX}**.
 
-        -  
+    ![The resource group list displays with the Synapse Workspace item highlighted.](media/ap_rg_synapseworkspace.png "Locate Synapse Workspace")
 
-### Task 2: Task name
+3. On the Synapse workspace screen, select **Open Synapse Studio**.
 
-1.  Number and insert your custom workshop content here . . . 
+    ![The Synapse workspace screen displays with the Open Synapse Studio card highlighted.](media/ap_opensynapsestudiocard.png "Open Synapse Studio")
 
-    -  Insert content here
+4. In Synapse Studio, select the **Manage** hub from the left menu.
 
-        -  
+    ![Synapse Studio displays with the Manage hub selected in the left menu.](media/ss_managehub_menu.png "Manage hub")
 
+5. Beneath the **External connections** section, select **Linked services**. Then select **+ New** from the Linked services toolbar menu.
 
-## Exercise 3: Exercise name
+    ![The Manage Hub displays with the Linked services item selected. The + New button is highlighted on the Linked services screen toolbar.](media/ss_newlinkedservicemenu.png "New Linked service")
 
-Duration: X minutes
+6. In the New linked service blade, search for and select **Azure Data Lake Storage Gen2**. Select **Continue**.
 
-\[insert your custom Hands-on lab content here . . .\]
+    ![The New linked service blade displays with the Azure Data Lake Storage Gen2 item highlighted.](media/ss_newlinkedsvc_adlsgen2search.png "New ADLS Gen2 Linked service")  
 
-### Task 1: Task name
+7. In the New linked service - Azure Data Lake Storage Gen2 form, fill it in as follows and select **Create**. Unspecified fields retain their default values.
+    
+    | Field | Value |
+    |-------|-------|
+    | Name | Enter `datalake`. |
+    | Authentication type | Select **System Assigned Managed Identity**. |
+    | Azure subscription | Select your Azure subscription. |
+    | Storage account name | Select **sapadls{SUFFIX}**. |
 
-1.  Number and insert your custom workshop content here . . .
+    ![The New Linked service form for ADLS Gen2 displays populated with the preceding values.](media/ss_newlinkedservice_adlsgen2_form.png "New ADLS Gen2 Linked service form")
 
-    -  Insert content here
+8. On the Linked services screen, select **+ New** from the toolbar menu. On the New Linked service blade search for and select **Azure Cosmos DB (SQL API)**. Select **Continue**.
 
-        -  
-        
-### Task 2: Task name
+    ![The New linked service blade displays with Azure Cosmos DB (SQL API) selected. The Continue button is highlighted.](media/ss_linkedservice_cosmosdbsql.png "New Cosmos DB Linked Service")
 
-1.  Number and insert your custom workshop content here . . .
+9. In the New linked service - Azure Cosmos DB form, fill it as follows then select the **Create** button. Unspecified fields retain their default values.
+    
+    | Field | Value |
+    |-------|-------|
+    | Name | Enter `payment_data_cosmosdb`. |
+    | Authentication type | Select **Account key**. |
+    | Azure subscription | Select your Azure subscription. |
+    | Azure Cosmos DB account name | Select **sap-mcw-cosmos-{SUFFIX}**. |
+    | Database name | Select **SAPS4D**. |
 
-    -  Insert content here
+    ![The new Linked service form for Cosmos DB displays populated with the preceding values.](media/ss_newlinkedservice_cosmosdb_form.png "New Cosmos DB Linked service form")
 
-        -  
-        
+10. On the Synapse Studio toolbar menu, select **Publish all**. Select **Publish** on the verification blade.
+
+    ![The Synapse Studio toolbar menu displays with the Publish all button highlighted.](media/ss_publishall.png "Publish all")
+
+### Task 2: Create source and sink integration datasets
+
+The source data is payment data that is located in Azure Data Lake Storage Gen2 in CSV format. The sink is the paymentData Cosmos DB collection.
+
+1. In Synapse Studio, select the **Data** hub.
+   
+   ![The left menu of Synapse Studio displays with the Data hub highlighted.](media/ss_datahub_menu.png "Data hub")
+
+2. From the center pane, select the **Linked** tab. Expand the **Azure Data Lake Storage Gen2** item, followed by teh **datalake** item, and select the **payment-data-csv** container. From the **payment-data-csv** tab, select the **paymentData_CAL2021.csv** file. Next, select **New integration dataset** from the toolbar menu.
+
+    ![The Data hub displays with the Linked tab selected and the Azure Datalake Storage Gen2 item expanded along with the datalake item. The payment-data-csv container is selected. The paymentData_CAL2021.csv file is selected with the New integration dataset menu item highlighted in the toolbar menu.](media/ss_paymentdata_newdatasetmenu.png "Data hub new integration dataset")
+
+3. On the New integration dataset blade, enter `payment_data_csv` for the name and select **DelimitedText** for the format. Select **Create**.
+
+    ![The New integration dataset blade displays populated with the preceding values.](media/ss_newintegrationdataset_paymentdatacsv.png "New integration dataset for payment data")
+
+4. On the **payment-data-csv** integration dataset tab, change the **Column delimiter** value to **Semicolon (;)** and check the checkbox for the **First row as header** field.
+   
+   ![The payment-data-csv integration dataset form displays with the column delimiter value changed to semicolon and the first row as header field checked.](media/ss_paymentdata_dataset_form.png)
+
+5. If desired, select the **Preview data** button to view a sample of the data.
+
+6. Remaining in the Data hub, expand the **+** menu in the center pane and select **Integration dataset** beneath the **Linked** header.
+
+    ![The Data hub displays with the + menu expanded and the Integration dataset option highlighted.](media/ss_datahub_newintegrationdataset.png "New Integration dataset")
+
+7. On the New integration dataset blade, search for and select **Azure Cosmos DB (SQL API)**. Select **Continue**.
+
+    ![The New integration dataset blade displays with the Azure Cosmos DB (SQL API) item selected.](media/ss_newintegrationdataset_comsosdbsearch.png "New Azure Cosmos DB integration dataset")
+
+8. On the **Set properties** blade, fill the form as follows, then select **OK**.
+
+    | Field | Value |
+    |-------|-------|
+    | Name | Enter `payments_cosmosdb`. |
+    | Linked service | Select **payment_data_cosmosdb**. |
+    | Container | Select **paymentData**. |
+    | Import schema | Select **None**. |
+
+    ![The Set properties blade displays populated with the preceding values.](media/ss_cosmosdbintegrationdataset_setpropertiesform.png "Set Cosmos DB integration dataset properties")
+
+9. On the Synapse Studio toolbar menu, select **Publish all**. Select **Publish** on the verification blade.
+
+    ![The Synapse Studio toolbar menu displays with the Publish all button highlighted.](media/ss_publishall.png "Publish all")
+
+### Task 3: Create pipeline to ingest payment data into Cosmos DB
+
+1. In Synapse Studio, select the **Integrate** hub from the left menu. Then from the center pane menu, expand the **+** button and choose **Pipeline**.
+
+    ![Synapse Studio displays with the Integrate hub selected in the left menu and the + menu expanded in the center panel. The pipeline item is selected.](menu/ss_newpipelinemenu.png "New pipeline")
+
+2. In the **Properties** blade of the new pipeline, set the name field to **UploadPaymentsToCosmosDB**. If desired, press the **Properties** button in the pipeline toolbar to collapse this blade.
+
+    ![The Properties blade displays with the name set to UploadPaymentsToCosmosDB and the Properties button is highlighted.](media/ss_paymentspipeline_propertiespane.png "Pipeline properties")
+
+3. In the Activities pane, expand the **Move & Transform** item then drag and drop a **Copy data** activity to the pipeline canvas.
+
+    ![The pipeline editor displays with the Move & Transform item expanded in the Activities panel and an arrow indicates the drag and drop operation of the Copy data activity to the pipeline canvas.](media/ss_paymentspipeline_copydata_movetocanvas.png "Add Copy data activity to pipeline")
+
+4. With the Copy data activity selected in the pipeline editor, select the **Source** tab. Select **payment_data_csv** as the **Source dataset**.
+
+    ![The Copy data activity Source tab displays with payment_data_csv selected as the Source dataset.](media/ss_paymentpipeline_copysource.png "Source dataset")
+
+5. With the Copy data activity selected in the pipeline editor, select the **Sink** tab. Select **payments_cosmosdb** as the Sink dataset.
+
+    ![The Copy data activity Sink tab displays with the payments_cosmosdb selected as the Sink dataset.](media/ss_paymentpipeline_copysink.png "Sink dataset")
+
+6. On the Synapse Studio toolbar menu, select **Publish all**. Select **Publish** on the verification blade.
+
+    ![The Synapse Studio toolbar menu displays with the Publish all button highlighted.](media/ss_publishall.png "Publish all")
+
+7. Once published, expand the **Add trigger** toolbar item and choose **Trigger now**. Select **OK** on the Pipeline run blade. This will run the pipeline to copy the payments data to Cosmos DB.
+
+    ![The payments pipeline Add trigger item is expanded with the Trigger now item selected.](media/ss_paymentpipeline_triggernow.png "Trigger payments pipeline")
+
+8. In Synapse Studio, select the **Monitor** hub. Beneath the Integration header of the center pane, select **Pipeline runs**. Monitor the payments pipeline run until it has completed. The Refresh button in the toolbar may be used to update the monitoring table.
+
+    ![Synapse Studio displays with the Monitor hub selected from the left menu, the Pipeline runs selected in the center panel, and the payment pipeline listed as in progress. The Refresh button is highlighted.](media/ss_monitorpaymentspipeline.png "Monitor hub")
+
+9. Verify the data by returning to the Azure Portal, opening the **mcw_sap_plus_extend_and_innovate** resource group, then locating and opening the **sap-mcw-cosmos-{SUFFIX}** Cosmos DB resource.
+
+    ![A portion of the mcw_sap_plus_extend_and_innovate resources displays with the Cosmos DB resource selected.](media/portal_cosmosdb_resource.png "Cosmos DB resource")
+
+10. On the Azure Cosmos DB account screen, select **Data Explorer** from the left menu. In the SQL API panel, expand the **SAPS4D** and **paymentData** items. Select **Items**, then choose an item from the **paymentData** tab. This will display the contents of the selected document for review.
+
+    ![The Azure Cosmos DB account screen displays with the Data Explorer item highlighted in the left menu. In the SQL API pane, the SAPS4D database is expanded along with the paymentData collection. The items option is selected beneath the collection. One document is highlighted in the paymentData tab and the screen displays the selected document's content.](media/portal_cosmosdb_paymentdatapreview.png "View document in Cosmos DB")
+
 ## After the hands-on lab 
 
 Duration: X minutes
