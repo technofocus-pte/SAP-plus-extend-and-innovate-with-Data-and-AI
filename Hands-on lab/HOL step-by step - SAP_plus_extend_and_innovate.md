@@ -39,6 +39,8 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 1: Create linked services in Azure Synapse Analytics](#task-1-create-linked-services-in-azure-synapse-analytics)
     - [Task 2: Create source and sink integration datasets](#task-2-create-source-and-sink-integration-datasets)
     - [Task 3: Create pipeline to ingest payment data into Cosmos DB](#task-3-create-pipeline-to-ingest-payment-data-into-cosmos-db)
+  - [Exercise 3: Install the self-hosted integration runtime on the SAP virtual machine](#exercise-3-install-the-self-hosted-integration-runtime-on-the-sap-virtual-machine)
+    - [Task 1: Download and install the self-hosted integration runtime](#task-1-download-and-install-the-self-hosted-integration-runtime)
   - [After the hands-on lab](#after-the-hands-on-lab)
     - [Task 1: Task name](#task-1-task-name)
     - [Task 2: Task name](#task-2-task-name)
@@ -49,19 +51,35 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
 
 ## Abstract and learning objectives 
 
-\[Insert what is trying to be solved for by using this workshop. . . \]
+In this hands-on lab you will:
+
+1. Extract (historical) Sales Orders from SAP S/4HANA using Azure Synapse Analytics pipelines
+
+2. Extract historical payments from a non-SAP system, in this example Cosmos DB using Azure Synapse Analytics pipelines
+
+3. Visualize the extracted Sales Orders and invoice data with Power BI
+
+4. Predict incoming cash flow for Sales Orders using Azure Machine Learning
+
+5. Trigger actions in SAP based on insights gained from the prediction
 
 ## Overview
 
-\[insert your custom workshop content here . . . \]
+When customers buy goods, the corresponding payments are not completed immediately. Some customers will pay directly while other customers will pay at the end of their payment terms. This makes it difficult for companies to predict the incoming cashflow. In this simplified exercise, Azure tooling is used to predict the incoming cashflow. To predict cash flow, historical Sales Orders and payments data is required. Contoso Retail also needs a way to flag risky customers in the SAP system whose payments tend to arrive late.
 
 ## Solution architecture
 
-\[Insert your end-solution architecture here. . .\]
+![The solution architecture diagram displays.](media/solution_architecture.png "Solution architecture")
+
+ Sales Order information is stored in an S/4HANA system and payments data is stored in Cosmos DB. Synapse Pipelines are used to ingest historical data from both sources. Power BI is used to visualize historical data and to create reports. Azure Machine Learning is used to create a model to predict incoming cash flow. Finally, a data alert is established to identify risky payers whose payments are typically late. This alert triggers a Power Automate process that will in-turn flag the risky payers in SAP.
 
 ## Requirements
 
-1.  Number and insert your custom workshop content here . . . 
+1.  Azure Subscription with Owner role
+
+2.  SAP CAL account
+
+3.  Power Platform account or membership in the [Microsoft 365 Developer Program](https://developer.microsoft.com/microsoft-365/dev-program)
 
 ## Before the hands-on lab
 
@@ -428,6 +446,51 @@ The source data is payment data that is located in Azure Data Lake Storage Gen2 
 10. On the Azure Cosmos DB account screen, select **Data Explorer** from the left menu. In the SQL API panel, expand the **SAPS4D** and **paymentData** items. Select **Items**, then choose an item from the **paymentData** tab. This will display the contents of the selected document for review.
 
     ![The Azure Cosmos DB account screen displays with the Data Explorer item highlighted in the left menu. In the SQL API pane, the SAPS4D database is expanded along with the paymentData collection. The items option is selected beneath the collection. One document is highlighted in the paymentData tab and the screen displays the selected document's content.](media/portal_cosmosdb_paymentdatapreview.png "View document in Cosmos DB")
+ 
+## Exercise 3: Install the self-hosted integration runtime on the SAP virtual machine
+
+In order for Azure Synapse Analytics to utilize the locally hosted OData services on the 
+SAP virtual machine, a self-hosted integration runtime must be installed. The self-hosted integration runtime is used to establish connectivity between Azure Synapse Analytics and other non-public internet facing compute resources. These can be on-premises resources or those protected by virtual networks and firewalls.
+
+### Task 1: Download and install the self-hosted integration runtime
+
+1. On the **SAP VM**, open the Chrome browser and log into the [Azure Portal](https://portal.azure.com). 
+
+2. Open the **mcw_sap_plus_extend_and_innovate** resource group then locate and open the **sapdatasynws{SUFFIX}** Synapse workspace resource.
+
+3. Open Synapse Studio.
+
+4. Select the **Manage** hub, then choose **Integration runtimes** from beneath the Integration header. From the Integration runtimes screen, select **+ New** from the toolbar menu.
+
+    ![Synapse Studio displays with the Manage hub selected from the left menu. Integration runtimes is selected in the center pane and the + New button is highlighted in the toolbar menu of the Integration runtimes screen.](media/ss_managehub_newirmenu.png "New integration runtime")
+
+5. On the Integration runtime setup blade, select the **Azure, Self-Hosted** card. Select **Continue**.
+
+    ![The Integration runtime setup blade displays with the Azure, Self-Hosted item selected.](media/ss_ir_azureselfhostedcard.png "Azure, Self-hosted integration runtime")
+
+6. Select **Self-Hosted** as the network environment. Select **Continue**.
+
+    ![The Integration runtim setup blade displays with the Self-Hosted option selected.](media/ss_ir_selfhostedcard.png "Self-Hosted integration runtime")  
+
+7. Enter `SAPVM-SHIR` in the Name field and select **Create**.
+
+    ![A form displays on teh Integration runtime setup blade with SAPVM-SHIR entered in the Name field.](media/ss_shir_name.png "Naming the Self-Hosted integration runtime")
+
+8. Select the link below the **Option 1: Express setup** header. This will download an executable file.
+
+    ![The link below Option 1: Express setup is highlighted.](media/ss_shir_expresssetuplink.png "Express setup")
+
+9. Run the downloaded executable. The Express Setup will download, install, and register the self-hosted integration runtime. Select the **Close** button once all the steps have completed.
+
+    ![The Microsoft Integration Runtime Express Setup executable displays indicating the current installation progress.](media/ss_shir_install.png "Express Setup Executable")
+
+10. Close the Integration runtime setup blade.
+
+11. The Integration runtimes list should now display **SAPVM-SHIR** in the list.
+
+    ![The Integration runtimes list displays with teh SAPVM-SHIR item highlighted.](media/ss_irlisting_withshir.png "Integration runtimes list")
+
+12. Optionally close Chrome and minimize the SAP VM.
 
 ## After the hands-on lab 
 
