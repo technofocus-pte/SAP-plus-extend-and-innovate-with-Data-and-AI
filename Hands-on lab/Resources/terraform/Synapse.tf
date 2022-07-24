@@ -25,11 +25,10 @@ resource "azurerm_storage_data_lake_gen2_filesystem" "adls" {
 ## Create ADLS path
 #######################################################################
 
-resource "azurerm_storage_data_lake_gen2_path" "staging" {
-  path               = "staging"
-  filesystem_name    = azurerm_storage_data_lake_gen2_filesystem.adls.name
-  storage_account_id = azurerm_storage_account.adlsaccount.id
-  resource           = "directory"
+resource "azurerm_storage_container" "staging" {
+  container_access_type = "private"
+  name                  = "staging"
+  storage_account_name  = azurerm_storage_account.adlsaccount.name
 }
 
 #######################################################################

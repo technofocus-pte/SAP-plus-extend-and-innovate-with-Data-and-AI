@@ -41,6 +41,13 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 3: Create pipeline to ingest payment data into Cosmos DB](#task-3-create-pipeline-to-ingest-payment-data-into-cosmos-db)
   - [Exercise 3: Install the self-hosted integration runtime on the SAP virtual machine](#exercise-3-install-the-self-hosted-integration-runtime-on-the-sap-virtual-machine)
     - [Task 1: Download and install the self-hosted integration runtime](#task-1-download-and-install-the-self-hosted-integration-runtime)
+  - [Exercise 4: Ingest sales order information from SAP into Azure Synapse Analytics](#exercise-4-ingest-sales-order-information-from-sap-into-azure-synapse-analytics)
+    - [Task 1: Create dedicated SQL pool tables to hold sales data](#task-1-create-dedicated-sql-pool-tables-to-hold-sales-data)
+    - [Task 2: Create a linked service to the SAP OData endpoint for sales order header information](#task-2-create-a-linked-service-to-the-sap-odata-endpoint-for-sales-order-header-information)
+    - [Task 3: Create a linked service to the SAP OData endpoint for sales order item information](#task-3-create-a-linked-service-to-the-sap-odata-endpoint-for-sales-order-item-information)
+    - [Task 4: Create a linked service to the dedicated SQL pool database](#task-4-create-a-linked-service-to-the-dedicated-sql-pool-database)
+    - [Task 5: Create integration datasets for sales order header and sales order items](#task-5-create-integration-datasets-for-sales-order-header-and-sales-order-items)
+    - [Task 6: Create a pipeline to ingest sales data from S/4HANA](#task-6-create-a-pipeline-to-ingest-sales-data-from-s4hana)
   - [After the hands-on lab](#after-the-hands-on-lab)
     - [Task 1: Task name](#task-1-task-name)
     - [Task 2: Task name](#task-2-task-name)
@@ -53,19 +60,19 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
 
 In this hands-on lab you will:
 
-1. Extract (historical) Sales Orders from SAP S/4HANA using Azure Synapse Analytics pipelines
+1. **Extract** (historical) Sales Orders from SAP S/4HANA using Azure Synapse Analytics pipelines
 
-2. Extract historical payments from a non-SAP system, in this example Cosmos DB using Azure Synapse Analytics pipelines
+2. **Extract** historical payments from a non-SAP system, in this case Cosmos DB using Azure Synapse Analytics pipelines
 
-3. Visualize the extracted Sales Orders and invoice data with Power BI
+3. **Visualize** the extracted Sales Orders and invoice data with Power BI
 
-4. Predict incoming cash flow for Sales Orders using Azure Machine Learning
+4. **Predict** incoming cash flow for Sales Orders using Azure Machine Learning
 
-5. Trigger actions in SAP based on insights gained from the prediction
+5. **Trigger actions** in SAP based on insights gained from the prediction model
 
 ## Overview
 
-When customers buy goods, the corresponding payments are not completed immediately. Some customers will pay directly while other customers will pay at the end of their payment terms. This makes it difficult for companies to predict the incoming cashflow. In this simplified exercise, Azure tooling is used to predict the incoming cashflow. To predict cash flow, historical Sales Orders and payments data is required. Contoso Retail also needs a way to flag risky customers in the SAP system whose payments tend to arrive late.
+When customers buy goods, the corresponding payments are not completed immediately. Some customers will pay directly while other customers will pay at the end of their payment terms. This makes it difficult for companies to predict the incoming cashflow. In this lab, Azure tooling is used to predict the incoming cashflow. To predict cash flow, historical Sales Orders and payments data is required. Contoso Retail also needs a way to flag risky customers in the SAP system whose payments tend to arrive late.
 
 ## Solution architecture
 
@@ -409,7 +416,7 @@ The source data is payment data that is located in Azure Data Lake Storage Gen2 
 
 1. In Synapse Studio, select the **Integrate** hub from the left menu. Then from the center pane menu, expand the **+** button and choose **Pipeline**.
 
-    ![Synapse Studio displays with the Integrate hub selected in the left menu and the + menu expanded in the center panel. The pipeline item is selected.](menu/ss_newpipelinemenu.png "New pipeline")
+    ![Synapse Studio displays with the Integrate hub selected in the left menu and the + menu expanded in the center panel. The pipeline item is selected.](media/ss_newpipelinemenu.png "New pipeline")
 
 2. In the **Properties** blade of the new pipeline, set the name field to **UploadPaymentsToCosmosDB**. If desired, press the **Properties** button in the pipeline toolbar to collapse this blade.
 
@@ -450,7 +457,7 @@ The source data is payment data that is located in Azure Data Lake Storage Gen2 
 ## Exercise 3: Install the self-hosted integration runtime on the SAP virtual machine
 
 In order for Azure Synapse Analytics to utilize the locally hosted OData services on the 
-SAP virtual machine, a self-hosted integration runtime must be installed. The self-hosted integration runtime is used to establish connectivity between Azure Synapse Analytics and other non-public internet facing compute resources. These can be on-premises resources or those protected by virtual networks and firewalls.
+SAP virtual machine, a self-hosted integration runtime must be installed. The self-hosted integration runtime is used to establish connectivity between Azure Synapse Analytics and other non-public internet facing compute resources. These can be on-premises resources and those protected by virtual networks and firewalls.
 
 ### Task 1: Download and install the self-hosted integration runtime
 
@@ -491,6 +498,263 @@ SAP virtual machine, a self-hosted integration runtime must be installed. The se
     ![The Integration runtimes list displays with teh SAPVM-SHIR item highlighted.](media/ss_irlisting_withshir.png "Integration runtimes list")
 
 12. Optionally close Chrome and minimize the SAP VM.
+
+## Exercise 4: Ingest sales order information from SAP into Azure Synapse Analytics
+
+Historical sales order information resides in S/4HANA and is exposed with OData services. The self-hosted integration runtime installed on the SAP virtual machine enables connectivity between Azure Synapse Analytics and S/4HANA, this will allow for local web calls to take place to the OData endpoints to retrieve sales data.
+
+### Task 1: Create dedicated SQL pool tables to hold sales data
+
+1. In Synapse Studio, select the **Develop** hub from the left menu, then expand the **+** menu from the center pane and choose **SQL script**.
+
+    ![Synapse Studio displays with the Develop hub selected in the left menu and the + menu expanded in the center pane. The SQL script item is highlighted.](media/ss_develophub_newsqlscript.png "New SQL script")
+
+2. In the SQL script tab, choose to connect to the **sapdatasynsql** dedicated SQL pool in the toolbar menu.
+
+    ![The SQL Script tab displays with the sapdatasynsql database chosen in the Connect to field.](media/ss_sqlscript_connectto_sapdatasynsql.png "Connect to the dedicated SQL pool database")
+
+3. In the SQL script editor, paste and run the following SQL command to create the SalesOrderHeaders table. The **Run** button is located in the SQL script toolbar menu.
+
+    ```SQL
+    CREATE TABLE SalesOrderHeaders(
+        BILLINGCOMPANYCODE nvarchar(4),
+        BILLINGDOCUMENTDATE date,
+        COUNTRY nvarchar(3),
+        CREATIONDATE date,
+        CREATIONTIME time,
+        CREDITCONTROLAREA nvarchar(4),
+        CUSTOMERACCOUNTGROUP nvarchar(4),
+        CUSTOMERGROUP nvarchar(2),
+        CUSTOMERNAME nvarchar(80),
+        DISTRIBUTIONCHANNEL nvarchar(2),
+        LASTCHANGEDATE date,
+        LASTCHANGEDATETIME datetimeoffset,       
+        ORGANIZATIONDIVISION nvarchar(2),
+        PRICINGDATE date,
+        PURCHASEORDERBYCUSTOMER nvarchar(35),
+        SALESDISTRICT nvarchar(6),
+        SALESDOCUMENT nvarchar(10) NOT NULL,
+        SALESDOCUMENTPROCESSINGTYPE nvarchar(1),
+        SALESDOCUMENTTYPE nvarchar(4),
+        SALESGROUP nvarchar(3),
+        SALESOFFICE nvarchar(4),
+        SALESORGANIZATION nvarchar(4),
+        SDDOCUMENTCATEGORY nvarchar(4),
+        SOLDTOPARTY nvarchar(10),
+        TOTALNETAMOUNT decimal(15, 2),
+        TRANSACTIONCURRENCY nvarchar(5),
+        CITYNAME nvarchar(35),
+        POSTALCODE nvarchar(10)
+    )
+    ```
+
+4. Replace the code in the script window with the following command to create the SalesOrderItems table. Run this script.
+
+    ```SQL
+    CREATE TABLE SalesOrderItems(
+        SalesOrder nvarchar(10),
+        SalesOrderItem nvarchar(6),
+        SalesOrderItemText nvarchar(40),
+        SoldToParty nvarchar(10),
+        MaterialByCustomer nvarchar(35),
+        MaterialName nvarchar(40),
+        Material nvarchar(40),
+        ShipToParty nvarchar(10),
+        FullName nvarchar(80),
+        SDProcessStatus nvarchar(1),
+        DeliveryStatus nvarchar(1),
+        SDDocumentRejectionStatus nvarchar(1),
+        SalesDocumentRjcnReason nvarchar(2),
+        RequestedQuantity decimal(15,3),
+        RequestedQuantityUnit nvarchar(3),
+        TransactionCurrency nvarchar(5),
+        NetAmount decimal(16, 3),
+        MaterialGroup nvarchar(9),
+        Batch nvarchar(10),
+        ProductionPlant nvarchar(4),
+        StorageLocation nvarchar(4),
+        ShippingPointName nvarchar(30),
+        ShippingPoint nvarchar(4),
+        SalesOrderItemCategory nvarchar(4),
+        BillingBlockCriticality tinyint,
+        ItemBillingBlockReason nvarchar(2),
+        OrderRelatedBillingStatus nvarchar(1),
+        RequestedDeliveryDate date,
+        HigherLevelItem nvarchar(6),
+        SalesOrderProcessingType nvarchar(1),
+        RequirementSegment nvarchar(40)
+    )
+    ```
+
+### Task 2: Create a linked service to the SAP OData endpoint for sales order header information
+
+A linked service describes connectivity to external resources. In this case, an authenticated OData-based linked service is required to pull sales order data from SAP.
+
+1. In Synapse Studio, select the **Manage** hub, then choose **Linked services** from the center menu. Select **+ New** in the Linked services screen toolbar menu.
+
+    ![The Manage Hub displays with the Linked services item selected. The + New button is highlighted on the Linked services screen toolbar.](media/ss_newlinkedservicemenu.png "New Linked service")
+
+2. In the New linked service blade, search for and select **OData**. Select **Continue**.
+
+    ![The New linked service blade displays with OData in the search box and in the filtered search results.](media/ss_newlinkedservice_odatasel.png "New OData Linked service")
+
+4. Fill the New linked service form as follows, then test connection. Select **Create**.
+
+    | Field | Value |   
+    |-------|-------|
+    | Name | Enter `sap_salesorderheader_odata`. |
+    | Connect via integration runtime | Select **SAPVM-SHIR**. |
+    | Service URL | Use the SAP OData URL recorded in the from Exercise 1. |
+    | Authentication type | Select **Basic authentication**. |
+    | User name | Enter `S4H_EXT`. |
+    | Password | Enter `Welcome1`. |
+    
+    ![The New linked service OData form displays populated with the preceding values. The Test connection button is highlighted.](media/ss_salesorderheader_linkedserviceform.png "New Linked service - OData")
+
+### Task 3: Create a linked service to the SAP OData endpoint for sales order item information
+
+1. In Synapse Studio, select the **Manage** hub, then choose **Linked services** from the center menu. Select **+ New** in the Linked services screen toolbar menu.
+
+    ![The Manage Hub displays with the Linked services item selected. The + New button is highlighted on the Linked services screen toolbar.](media/ss_newlinkedservicemenu.png "New Linked service")
+
+2. In the New linked service blade, search for and select **OData**. Select **Continue**.
+
+    ![The New linked service blade displays with OData in the search box and in the filtered search results.](media/ss_newlinkedservice_odatasel.png "New OData Linked service")
+
+4. Fill the New linked service form as follows, then test connection. Select **Create**.
+
+    | Field | Value |   
+    |-------|-------|
+    | Name | Enter `sap_salesorderitems_odata`. |
+    | Connect via integration runtime | Select **SAPVM-SHIR**. |
+    | Service URL | Use the SAP OData URL recorded in the from Exercise 1. Replace **ZBD_I_SALESDOCUMENT_E_CDS** with `sd_f1814_so_fs_srv` in the URL value. |
+    | Authentication type | Select **Basic authentication**. |
+    | User name | Enter `S4H_EXT`. |
+    | Password | Enter `Welcome1`. |
+    
+    ![The New linked service OData form displays populated with the preceding values. The Test connection button is highlighted.](media/ss_salesorderitems_linkedserviceform.png "New Linked service - OData")
+
+### Task 4: Create a linked service to the dedicated SQL pool database
+
+1. In Synapse Studio, select the **Manage** hub, then choose **Linked services** from the center menu. Select **+ New** in the Linked services screen toolbar menu.
+
+    ![The Manage Hub displays with the Linked services item selected. The + New button is highlighted on the Linked services screen toolbar.](media/ss_newlinkedservicemenu.png "New Linked service")
+
+2. In the New linked service blade, search for and select **Azure Synapse Analytics**. Select **Continue**.
+
+    ![The New linked service blade displays with Azure Synapse Analytics entered in the search box and Azure Synapse Analytics selected from the search results.](media/ss_linkedservice_azuresynapseanalytics_menu.png "New Azure Synapse Analytics linked service")
+
+3. In the New linked service Azure Synapse Analytics blade, populate the form as follows then select **Create**.
+    
+    | Field | Value |   
+    |-------|-------|
+    | Name | Enter `sales_order_data_sql`. |
+    | Azure subscription | Select the Azure subscription for the lab. |
+    | Server name | Select **sapdatasynws{SUFFIX}**. |
+    | Database name | Select **sapdatasynsql**. |
+    | Authentication type | Select **System Assigned Managed Identity**. |
+
+    ![The New linked service Azure Synapase Analytics blade form displays populated with the preceding values.](media/ss_linkedservice_azuresynapseanalytics_form.png "New Azure Synapse Analytics linked service form")
+
+4. On the Synapse Studio toolbar menu, select **Publish all**. Select **Publish** on the verification blade.
+
+    ![The Synapse Studio toolbar menu displays with the Publish all button highlighted.](media/ss_publishall.png "Publish all")
+
+### Task 5: Create integration datasets for sales order header and sales order items
+
+The Copy activity in Azure Synapse Analytics requires the usage of integration datasets to describe both the source and sink data sources. In this task, four integration datasets are defined representing sales order headers and sales order item data (source in S/4HANA OData and sink in dedicated SQL pool tables).
+
+1. In Synapse Studio, select the **Data** hub from the left menu and expand the **+** menu in the center pane.
+
+    ![The Data hub displays with the + menu expanded and the Integration dataset option highlighted.](media/ss_datahub_newintegrationdataset.png "New Integration dataset")
+
+2. In the New integration dataset blade, search for and select **OData**
+
+    ![The New integration dataset blade displays with OData entered in the search box and OData shown in the search results.](media/ss_newintegrationdataset_odatamenu.png "OData integration dataset")
+
+3. On the **Set properties** blade, fill the form as follows and select **OK**. This will create the integration dataset representing sales order header information.
+
+    | Field | Value |   
+    |-------|-------|
+    | Name | Enter `sales_order_headers_odata`. |
+    | Linked service | Select **sap_salesorderheader_odata**. |
+    | Path | Select **ZBD_I_Salesdocument_E**. |
+
+    ![The Set properties blade displays populated with the preceding values.](media/ss_salesorderheader_dataset_form.png "Sales order headers integration dataset details")
+
+4. Repeat steps 1 and 2 to create a new integration dataset. On the **Set properties** blade, fill the form as follows and select **OK**. This creates the integration dataset for sales item information.
+
+    | Field | Value |   
+    |-------|-------|
+    | Name | Enter `sales_order_items_odata`. |
+    | Linked service | Select **sap_salesorderitems_odata**. |
+    | Path | Select **C_Salesorderitemfs**. |
+
+    ![The Set properties blade displays populated with the preceding values.](media/ss_salesorderitems_dataset_form.png "Sales order items integration dataset details")
+
+5. Now it is time to create the integration datasets for the sales order tables created in the dedicated SQL pool. In Synapse Studio, select the **Data** hub from the left menu and expand the **+** menu in the center pane.
+
+    ![The Data hub displays with the + menu expanded and the Integration dataset option highlighted.](media/ss_datahub_newintegrationdataset.png "New Integration dataset")
+
+6. In the New integration dataset blade, search for and select **Azure Synapse Analytics**. Select **Continue**.
+
+    ![The New integration dataset blade displays with Azure Synapse Analytics entered in the search box and Azure Synapse Analytics shown in the search results.](media/ss_newintegrationdataset_azuresynapseanalyticsmenu.png "New Azure Synapse Analytics integration dataset")
+
+7. On the **Set properties** blade, populate the form as follows and select **OK**.
+
+    | Field | Value |   
+    |-------|-------|
+    | Name | Enter `sales_order_headers_sql`. |
+    | Linked service | Select **sales_order_data_sql**. |
+    | Table name | Select **dbo.SalesOrderHeaders**. |
+    | Import schema | Select **From connection/store**. |
+
+    ![The Set properties blade displays populated with the preceding values.](media/ss_azuresynapseanalytics_salesorderheaders_dataset_form.png "New Azure Synapse Analytics Sales headers integration dataset form")
+
+8. Repeat steps 5 and 6 to create a new Azure Synapse Analytics integration dataset. On the **Set properties** blade, populate the form as follows and select **OK**.
+
+    | Field | Value |   
+    |-------|-------|
+    | Name | Enter `sales_order_items_sql`. |
+    | Linked service | Select **sales_order_data_sql**. |
+    | Table name | Select **dbo.SalesOrderItems**. |
+    | Import schema | Select **From connection/store**. |
+
+    ![The Set properties blade displays populated with the preceding values.](media/ss_azuresynapseanalytics_salesorderitems_dataset_form.png "New Azure Synapse Analytics Sales items integration dataset form")
+
+9. On the Synapse Studio toolbar menu, select **Publish all**. Select **Publish** on the verification blade.
+
+    ![The Synapse Studio toolbar menu displays with the Publish all button highlighted.](media/ss_publishall.png "Publish all")
+
+### Task 6: Create a pipeline to ingest sales data from S/4HANA
+
+An Azure Synapse Analytics pipeline can be used to move data from source to sink. The Copy data activity moves data from a source dataset to a sink dataset. This task creates a pipeline with two Copy data activities to move sales order header and sales order items data from S/4HANA into the dedicated SQL pool tables in Azure Synapse Analytics.
+
+1. In Synapse Studio, select the **Integrate** hub from the left menu. Expand the **+** menu from the center pane, and choose **Pipeline**.
+
+    ![Synapse Studio displays with the Integrate hub selected in the left menu and the + menu expanded in the center panel. The pipeline item is selected.](media/ss_newpipelinemenu.png "New pipeline")
+
+2. In the Properties blade, enter the name `IngestSalesOrderData`. Optionally collapse the Properties blade using the button on the toolbar of the pipeline.
+
+    ![The Properties blade of the pipeline displays with the name button and the collapse properties button highlighted.](media/ss_ingestsalesorderdata_pipeline_properties.png "Pipeline properties")
+
+3. From the Activities menu, expand the **Move & transform** section, then drag-and-drop a **Copy data** activity to the pipeline visual canvas. With the Copy data activity selected, enter `copy_sales_order_headers` in the **Name** field.
+
+    ![The pipeline tab displays with the Move & transform item expanded in the Activities menu. An arrow indicates a drag-and-drop operation of a Copy data activity to the pipeline visual canvas. The Copy data activity is active and copy_sales_order_headers is entered in the Name field of the General tab.](media/ss_salespipeline_copyactivity_salesorderheaders.png "Copy data activity")
+
+4. With the **copy_sales_order_headers** activity selected, select the **Source** tab. In the **Source dataset** tab, select **sales_order_headers_odata**.
+
+    ![The Source tab is highlighted with sales_order_headers_odata selected as the Source dataset.](media/ss_copydata_salesheader_source.png "Copy data activity Source tab")
+
+5. With the **copy_sales_order_headers** activity selected, select the **Sink** tab. Select **sales_order_headers_sql** as the Sink dataset.
+
+    ![The Sink tab is highlighted with sales_order_headers_sql selected as the Sink dataset.](media/ss_copydata_salesheader_sink.png "Copy data activity Sink tab")
+
+6. With the **copy_sales_order_headers** activity selected, select the **Mapping** tab. Select the **Import schemas** button to review the data mapping.
+
+    ![The Mapping tab is highlighted with the Import schemas button selected.](media/ss_copydata_salesheader_mapping.png "Copy data activity Mapping tab")
+
+7. asdf
 
 ## After the hands-on lab 
 
