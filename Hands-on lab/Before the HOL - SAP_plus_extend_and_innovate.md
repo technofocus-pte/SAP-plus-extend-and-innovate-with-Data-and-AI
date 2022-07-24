@@ -32,7 +32,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 2: Create a SAP Cloud Appliance](#task-2-create-a-sap-cloud-appliance)
     - [Task 3: Deploy the Azure Resources](#task-3-deploy-the-azure-resources)
     - [Task 4: Prepare sales data in SAP](#task-4-prepare-sales-data-in-sap)
-  - [Task 5: Prepare payment data in Cosmos DB](#task-5-prepare-payment-data-in-cosmos-db)
+    - [Task 5: Prepare payment data in Cosmos DB](#task-5-prepare-payment-data-in-cosmos-db)
       - [Step 1: Create linked services in Azure Synapse Analytics](#step-1-create-linked-services-in-azure-synapse-analytics)
       - [Step 2: Create source and sink integration datasets](#step-2-create-source-and-sink-integration-datasets)
       - [Step 3: Create pipeline to ingest payment data into Cosmos DB](#step-3-create-pipeline-to-ingest-payment-data-into-cosmos-db)
@@ -370,7 +370,7 @@ This task demonstrates creating a sales view in SAP and exposing it as an OData 
     ![The SAP GUI Security dialog displays with the URL value highlighted.](media/sapvm_sapgui_sapguisecuritydialog.png "Service endpoint")
 
 
-## Task 5: Prepare payment data in Cosmos DB
+### Task 5: Prepare payment data in Cosmos DB
 
 Raw payment data is available in Azure Data Lake storage. This exercise walks through loading raw payment data into Cosmos DB by leveraging Azure Synapse Analytics. First, linked services are created - these act as the connection strings to external compute resources. Next, integration datasets are created, these indicate the location and shape of the data being used in the migration. Finally, a pipeline is created to orchestrate moving data from Azure Data Lake Storage Gen2 to Cosmos DB.
 

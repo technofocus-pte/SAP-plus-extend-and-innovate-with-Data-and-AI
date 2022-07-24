@@ -42,7 +42,9 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 5: Create integration datasets for sales order header and sales order items](#task-5-create-integration-datasets-for-sales-order-header-and-sales-order-items)
     - [Task 6: Create a pipeline to ingest sales data from S/4HANA](#task-6-create-a-pipeline-to-ingest-sales-data-from-s4hana)
   - [Exercise 3: Ingest payment information from Cosmos DB into Azure Synapse Analytics](#exercise-3-ingest-payment-information-from-cosmos-db-into-azure-synapse-analytics)
-    - [Task 1: Create payment information integration datasets](#task-1-create-payment-information-integration-datasets)
+    - [Task 1: Create a dedicated SQL pool table to hold payment information](#task-1-create-a-dedicated-sql-pool-table-to-hold-payment-information)
+    - [Task 2: Create the Payments table integration dataset](#task-2-create-the-payments-table-integration-dataset)
+    - [Task 3: Create the Payments ingestion pipeline](#task-3-create-the-payments-ingestion-pipeline)
   - [After the hands-on lab](#after-the-hands-on-lab)
     - [Task 1: Task name](#task-1-task-name)
     - [Task 2: Task name](#task-2-task-name)
@@ -297,7 +299,7 @@ A linked service describes connectivity to external resources. In this case, an 
 
 The Copy activity in Azure Synapse Analytics requires the usage of integration datasets to describe both the source and sink data sources. In this task, four integration datasets are defined representing sales order headers and sales order item data (source in S/4HANA OData and sink in dedicated SQL pool tables).
 
-1. In Synapse Studio, select the **Data** hub from the left menu and expand the **+** menu in the center pane.
+1. In Synapse Studio, select the **Data** hub from the left menu and expand the **+** menu in the center pane. Select **Integration dataset**.
 
     ![The Data hub displays with the + menu expanded and the Integration dataset option highlighted.](media/ss_datahub_newintegrationdataset.png "New Integration dataset")
 
@@ -325,7 +327,7 @@ The Copy activity in Azure Synapse Analytics requires the usage of integration d
 
     ![The Set properties blade displays populated with the preceding values.](media/ss_salesorderitems_dataset_form.png "Sales order items integration dataset details")
 
-5. Now it is time to create the integration datasets for the sales order tables created in the dedicated SQL pool. In Synapse Studio, select the **Data** hub from the left menu and expand the **+** menu in the center pane.
+5. Now it is time to create the integration datasets for the sales order tables created in the dedicated SQL pool. In Synapse Studio, select the **Data** hub from the left menu and expand the **+** menu in the center pane. Select **Integration dataset**.
 
     ![The Data hub displays with the + menu expanded and the Integration dataset option highlighted.](media/ss_datahub_newintegrationdataset.png "New Integration dataset")
 
@@ -436,12 +438,109 @@ An Azure Synapse Analytics pipeline can be used to move data from source to sink
 
 ## Exercise 3: Ingest payment information from Cosmos DB into Azure Synapse Analytics
 
-Payment history data is needed in creating the cash flow prediction model. This data resides in Cosmos DB. In this exercise, a pipeline is created to move payment history data from a Cosmos DB collection into a table in a dedicated SQL pool in Azure Synapse Analytics.
+Payment history data is required when creating the cash flow prediction model. This data resides in Cosmos DB. In this exercise, a pipeline is created to move payment history data from a Cosmos DB collection into a table in a dedicated SQL pool in Azure Synapse Analytics. In the steps taken in the Before the hands-on lab steps, a linked service for Cosmos DB (payment_data_cosmosdb) and an integration dataset for the paymentData collection (payments_cosmosdb) were created. These assets will be reused in this exercise to implement the payment ingestion pipeline.
 
-### Task 1: Create payment information integration datasets
+### Task 1: Create a dedicated SQL pool table to hold payment information
 
-In the steps taken in the Before the hands-on lab steps, a dataset for the 
+1. In Synapse Studio, select the **Develop** hub from the left menu, then expand the **+** menu from the center pane and choose **SQL script**.
 
+    ![Synapse Studio displays with the Develop hub selected in the left menu and the + menu expanded in the center pane. The SQL script item is highlighted.](media/ss_develophub_newsqlscript.png "New SQL script")
+
+2. In the SQL script tab, choose to connect to the **sapdatasynsql** dedicated SQL pool.
+
+    ![The SQL Script tab displays with the sapdatasynsql database chosen in the Connect to field.](media/ss_sqlscript_connectto_sapdatasynsql.png "Connect to the dedicated SQL pool database")
+
+3. In the SQL script editor, paste and run the following SQL command to create the Payments table. The Run button is located in the SQL script toolbar menu.
+
+    ```SQL
+    CREATE TABLE Payments(
+        PaymentNr nvarchar(10),
+        SalesOrderNr nvarchar(10),
+        CustomerNr nvarchar(10),
+        CustomerName nvarchar(80),
+        PaymentDate date,
+        PaymentValue decimal(15,2),
+        Currency nvarchar(5)
+    )
+    ```
+### Task 2: Create the Payments table integration dataset
+
+1. In Synapse Studio, select the **Data** hub from the left menu and expand the **+** menu in the center pane. Select **Integration dataset**.
+
+    ![The Data hub displays with the + menu expanded and the Integration dataset option highlighted.](media/ss_datahub_newintegrationdataset.png "New Integration dataset")
+
+2. In the New integration dataset blade, search for and select **Azure Synapse Analytics**. Select **Continue**.
+
+    ![The New integration dataset blade displays with Azure Synapse Analytics entered in the search box and Azure Synapse Analytics shown in the search results.](media/ss_newintegrationdataset_azuresynapseanalyticsmenu.png "New Azure Synapse Analytics integration dataset")
+
+7. On the **Set properties** blade, populate the form as follows and select **OK**.
+
+    | Field | Value |   
+    |-------|-------|
+    | Name | Enter `payments_sql`. |
+    | Linked service | Select **sales_order_data_sql**. |
+    | Table name | Select **dbo.Payments**. |
+    | Import schema | Select **From connection/store**. |
+
+    ![The Set properties blade displays populated with the preceding values.](media/ss_payments_sql_dataset_set_properties.png "Set properties pane")
+
+8. On the Synapse Studio toolbar menu, select **Publish all**. Select **Publish** on the verification blade.
+
+    ![The Synapse Studio toolbar menu displays with the Publish all button highlighted.](media/ss_publishall.png "Publish all")
+
+### Task 3: Create the Payments ingestion pipeline
+
+1. In Synapse Studio, select the **Integrate** hub from the left menu. Expand the **+** menu from the center pane, and choose **Pipeline**.
+
+    ![Synapse Studio displays with the Integrate hub selected in the left menu and the + menu expanded in the center panel. The pipeline item is selected.](media/ss_newpipelinemenu.png "New pipeline")
+
+2. In the Properties blade, enter the name `IngestPaymentsData`. Optionally collapse the Properties blade using the button on the toolbar of the pipeline.
+
+    ![The Properties blade of the pipeline displays with IngestPaymentsData entered in the Name field and the Properties button highlighted.](media/ss_paymentspipeline_properties.png "Pipeline properties blade")
+
+3. From the Activities menu, expand the **Move & transform** section then drag-and-drop a **Copy data** activity to the pipeline visual canvas. With the Copy data activity selected, enter **copy_payments_data** in the **Name** field.
+
+    ![The Pipeline editor displays with an arrow indicating a drag-and-drop motion of adding a Copy data activity to the pipeline visual canvas. The value copy_payments_data is entered in the Name field.](media/ss_paymentspipeline_copydata_general.png "New Copy data activity")
+
+4. With the **copy_payments_data** Copy data activity selected, select the **Source** tab. Select **payments_cosmosdb** as the **Source dataset**.
+
+    ![The Copy data Source tab displays with payments_cosmosdb selected as the Source dataset.](media/ss_paymentspipeline_copydata_source.png "Copy data Source tab")
+
+5. With the **copy_payments_data** Copy data activity selected, select the **Sink** tab. Select **payments_sql** as the Sink dataset.
+
+    ![The Copy data Sink tab displays with payments_sql selected as the Sink dataset.](media/ss_paymentspipeline_copydata_sink.png "Copy data Sink tab")
+
+6. With the **copy_payments_data** Copy data activity selected, select the **Mapping** tab. Select the **Import schemas** button.
+
+    ![The Copy data Mapping tab displays with the Import schemas button highlighted.](media/ss_paymentspipeline_mappingtab.png "Copy data Mapping tab")
+
+7. On the Mapping tab, locate the field with the name **Value**, and use the dropdown to assign it to the Column name **PaymentValue**. Uncheck the **Include** checkboxes for the **id** field as well as all the fields whose name is prefixed with and underscore (_).
+
+    ![The Mapping tab displays with the Value field mapping to the PaymentValue column. The include checkboxes are cleared for the id field and all fields prefixed with an underscore.](media/ss_paymentspipeline_mapping_edits.png "Updated mapping table")
+
+8. With the **copy_payments_data** Copy data activity selected, select the **Settings** tab. Check the **Enable staging** checkbox, then select **datalake** for the **Staging account linked service** and enter `staging` in the **Storage Path** field.
+
+    ![The Settings tab is highlighted with the Enable staging checkbox checked and datalake selected as the Storage account linked service. The Storage Path field is populated with the value staging.](media/ss_copydata_enablestaging.png "Copy data Settings tab")
+
+9. On the Synapse Studio toolbar menu, select **Publish all**. Select **Publish** on the verification blade.
+
+    ![The Synapse Studio toolbar menu displays with the Publish all button highlighted.](media/ss_publishall.png "Publish all")
+
+10. Once published, expand the **Add trigger** item on the pipeline toolbar and select **Trigger now**. Select **OK** on the Pipeline run blade.
+    
+    ![The pipeline toolbar menu displays with the Add trigger menu expanded and the Trigger now item selected.](media/ss_pipelinetriggernow.png "Trigger pipeline")
+
+11. On the left menu of Synapse Studio, select the **Monitor** hub. Ensure **Pipeline runs** is selected from the center menu. Observe the IngestPaymentsData pipeline status over time. Use the **Refresh** button to update the table.
+
+    ![The IngestSalesOrderData pipeline shows as in progress in the Pipeline runs Monitor hub table.](mmedia/ss_paymentsingestionpipeline_monitor.png "Monitor Pipeline runs")
+    
+
+12. Upon successful completion of the pipeline run, verify data was copied by accessing the **Develop** hub from the left menu, expanding the **+** menu and selecting **SQL script**. In the **Connect to** field of the SQL script, select **sapdatasynsql**. In the query window, paste the following SQL command and run the query. Ensure the value returned is non-zero.
+
+    ```sql
+    select count(*) from Payments;
+    
+    ```
 
 ## After the hands-on lab 
 
