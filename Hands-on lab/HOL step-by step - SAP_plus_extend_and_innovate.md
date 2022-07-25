@@ -45,6 +45,10 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 1: Create a dedicated SQL pool table to hold payment information](#task-1-create-a-dedicated-sql-pool-table-to-hold-payment-information)
     - [Task 2: Create the Payments table integration dataset](#task-2-create-the-payments-table-integration-dataset)
     - [Task 3: Create the Payments ingestion pipeline](#task-3-create-the-payments-ingestion-pipeline)
+  - [Exercise 4: Visualize historical data with Power BI](#exercise-4-visualize-historical-data-with-power-bi)
+    - [Task 1: Retrieve the database connection information for the dedicated SQL pool](#task-1-retrieve-the-database-connection-information-for-the-dedicated-sql-pool)
+    - [Task 2: Import data into Power BI](#task-2-import-data-into-power-bi)
+    - [Task 3: Create the relational model](#task-3-create-the-relational-model)
   - [After the hands-on lab](#after-the-hands-on-lab)
     - [Task 1: Task name](#task-1-task-name)
     - [Task 2: Task name](#task-2-task-name)
@@ -84,6 +88,8 @@ When customers buy goods, the corresponding payments are not completed immediate
 2.  SAP CAL account
 
 3.  Power Platform account or membership in the [Microsoft 365 Developer Program](https://developer.microsoft.com/microsoft-365/dev-program)
+
+4.  [Power BI Desktop](https://powerbi.microsoft.com/desktop/)
 
 ## Before the hands-on lab
 
@@ -539,9 +545,81 @@ Payment history data is required when creating the cash flow prediction model. T
 
     ```sql
     select count(*) from Payments;
-    
     ```
 
+## Exercise 4: Visualize historical data with Power BI
+
+Contoso Retail would like to gain insights into historical sales order and payments data.
+
+### Task 1: Retrieve the database connection information for the dedicated SQL pool
+
+1. In Synapse Studio, open the **Manage** hub from the left menu, choose **SQL pools** from the center menu and select the **sapdatasynsql** dedicated SQL pool from the list.
+
+    ![Synapse Studio displays with the SQL pools item selected in the center pane. The sapdatasynsql dedicated SQL pool item is highlighted in the database listing.](media/ss_sqlpools_list.png "SQL pools listing")
+
+2. On the Properties blade, record the values for the **Name** and **Workspace SQL endpoint** fields.
+
+    ![The Properties blade of the dedicated SQL pool displays with the Name field value highlighted and the copy button selected next to the Workspace SQL endpoint field.](media/ss_dedicatedsqlpool_properties.png "Dedicated SQL pool properties")
+
+### Task 2: Import data into Power BI
+
+1. Open **Power BI Desktop**. On the splash screen, select the **Get Data** item.
+   
+    ![A portion of the Power BI Desktop splash screen displays with the Get Data item highlighted.](media/pbi_getdatamenu_splash.png "Power BI Desktop splash screen")
+
+2. On the Get Data dialog, select **Azure** from the left menu and select **Azure Synapse Analytics SQL** from the listing. Select the **Connect** button.
+   
+    ![The Get Data dialog displays with Azure selected from the left menu and the Azure Synapse Analytics SQL item chosen from the listing. The Connect button is highlighted.](media/pbi_getdata_synapsemenu.png "Get Data")
+
+3. On the SQL Server database dialog, populate the form as follows and select **OK**.
+
+    | Field | Value |   
+    |-------|-------|
+    | Server | Enter the **Workspace SQL endpoint** value recorded in the previous task. |
+    | Database | Enter the **Name** value recorded in the previous step. |
+    | Data Connectivity mode | Select **Import**. |
+
+    ![The SQL Server database dialog displays populated with the preceding value.](media/pbi_sqlserverconn_dialog.png "SQL Server database connection information")
+
+4. An authentication dialog displays, select **Microsoft account** from the left menu, then select the **Sign in** button. Authenticate with your Azure credentials.
+
+    ![The SQL Server database authentication window displays with Microsoft account selected from the left menu and the Sign in button highlighted.](media/pbi_sqlauth_dialog_signin.png "Sign in with Microsoft account")
+
+5. Once signed in, select the **Connect** button on the dialog.
+
+6. On the Navigator dialog, check the box next to all three tables, then select the **Transform Data** button.
+
+    ![The Navigator dialog displays with the checkbox checked next to all three tables. The Transform Data button is highlighted.](media/pbi_navigatorseltables_transform.png "Navigator dialog")
+
+7. The columns in the tables representing sales order numbers were incorrectly interpreted as strings by Power BI. In the Power Query editor screen, select **SalesOrderItems** from the Queries pane, then right-click on the **SalesOrder** field and expand the **Change Type** item and choose **Whole Number**.
+
+    ![The Power Query editor screen displays with the SalesOrderItems table selected in the Queries pane and the context menu displaying for the SalesOrder field. The Change Type item is expanded in the context menu with the Whole Number item selected.](media/pbi_changetype_menu.png "Change column type")
+
+8. Repeat the previous step, this time changing the type of the following table columns to Whole Number.
+
+    | Table (Queries pane) | Column |   
+    |-------|-------|
+    | SalesOrderHeaders | SALESDOCUMENT |
+    | Payments | SalesOrderNr |
+
+9. Select **Close & Apply** in the Power Query editor toolbar.
+
+    ![A portion of the Power Query editor toolbar displays with teh Close & Apply button highlighted.](media/pbi_closeapply_powerqueryeditor.png "Close & Apply")
+
+### Task 3: Create the relational model
+
+1. From the left menu, select the **Model** item. This will switch to the Model view.
+
+    ![The left menu of Power BI Desktop diaplays with the Model item highlighted.](media/pbi_modelmenuitem.png "Switch to Model view")
+
+2. On the Model design canvas, drag the SALESDOCUMENT field from the SalesOrderHeaders table and drop it on the SalesOrder field of the SalesOrderItems table. This establishes a one-to-many relationship (1:*) between the tables.
+
+    ![The Model design canvas displays with the SALESDOCUMENT field highlighted in the SalesOrderHeaders table and the SalesOrder field highlighted in the SalesOrderItems table. A one-to-many relationship displays between the two tables.](media/pbi_rel_headertoitems.png "One-to-many relationship between SalesOrderHeaders and SalesOrderItems")
+
+3. On the Model design canvas, drag the SalesOrderNr field from the Payments table and drop it on the SALESDOCUMENT field in the SalesOrderHeaders table. This establishes a one-to-one relationship (1:1) between the tables.
+   
+   ![The Model design canvas displays with the SalesOrderNr field highlighted in the Payments table and the SALESDOCUMENT field highlighted in the SalesOrderHeaders table. A one-to-one relationship displays between the two tables.](media/pbi_rel_paytoheader.png "One-to-one relationship between Payments and SalesOrderHeaders")
+   
 ## After the hands-on lab 
 
 Duration: X minutes
