@@ -49,6 +49,12 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 1: Retrieve the database connection information for the dedicated SQL pool](#task-1-retrieve-the-database-connection-information-for-the-dedicated-sql-pool)
     - [Task 2: Import data into Power BI](#task-2-import-data-into-power-bi)
     - [Task 3: Create the relational model](#task-3-create-the-relational-model)
+    - [Task 4: Create a sales per data and customer group visualization](#task-4-create-a-sales-per-data-and-customer-group-visualization)
+    - [Task 5: Create a sales per region and customer group visualization](#task-5-create-a-sales-per-region-and-customer-group-visualization)
+    - [Task 6: Create a payments per date and customer group visualization](#task-6-create-a-payments-per-date-and-customer-group-visualization)
+    - [Task 7: Create a sales per customer group and material group visualization](#task-7-create-a-sales-per-customer-group-and-material-group-visualization)
+    - [Task 8: Create a payment offset per customer group visualization](#task-8-create-a-payment-offset-per-customer-group-visualization)
+    - [Task 9: Create a payment offset per customer group box plot visualization (Optional)](#task-9-create-a-payment-offset-per-customer-group-box-plot-visualization-optional)
   - [After the hands-on lab](#after-the-hands-on-lab)
     - [Task 1: Task name](#task-1-task-name)
     - [Task 2: Task name](#task-2-task-name)
@@ -620,6 +626,144 @@ Contoso Retail would like to gain insights into historical sales order and payme
    
    ![The Model design canvas displays with the SalesOrderNr field highlighted in the Payments table and the SALESDOCUMENT field highlighted in the SalesOrderHeaders table. A one-to-one relationship displays between the two tables.](media/pbi_rel_paytoheader.png "One-to-one relationship between Payments and SalesOrderHeaders")
    
+### Task 4: Create a sales per data and customer group visualization
+
+1. In the Visualizations pane, select **Stacked column chart**. 
+
+2. From the **Fields** pane, drag-and-drop the SalesOrderHeaders.CREATIONDATE field to the X-axis box, the SalesOrderHeaders.TOTALNETAMOUNT field to the Y-axis box and the SalesOrderHeaders.CUSTOMERGROUP field to the Legend box. 
+
+    ![The Power BI Visualization pane displays with Stacked column chart selected as the selected visualization and the settings populated with the previously mentioned values.](media/pbi_visualizationspane_salesbyyearandcustomergroup.png "Visualization pane")
+
+3. Adjust the sizing of the chart on the report canvas as desired.
+
+    ![The report canvas displays with a stacked column chart representation of the total sales by customer group.](media/pbi_salesbydataandcustomergroup_chart.png "Total sales by customer group chart")
+
+### Task 5: Create a sales per region and customer group visualization
+
+1. In the Visualizations pane, select **Map**. 
+
+2. From the **Fields** pane, drag-and-drop the SalesOrderHeaders.CITYNAME field to the Location box, the SalesOrderHeaders.CUSTOMERGROUP field to the Legend box and the SalesOrderHeaders.TOTALNETAMOUNT to the Bubble size box. 
+
+   ![The Visualizations pane displays with the Map visualization selected, the associated form is populated as described above.](media/pbi_mapvispane.png "Map visualization settings")
+
+    > **Note**: Map visuals are disabled by default, access File -> Options and Settings -> Options -> Global - Security to enable. After updating Options in Power BI, you may need to close and reopen the report for the settings change to take effect.
+    > ![Power BI Options display with Security selected beneath the Global heading and the Map and Filled Map visuals option checked. The OK button is highlighted.](media/pbi_optionsenablemap.png "Power BI Options")
+
+3. Adjust the sizing and zoom of the map on the report canvas as desired.
+
+    ![The total sales by city name and customer group map visualization displays.](media/pbi_salesbycitybycustomergroup_map.png "Map visualization")
+
+### Task 6: Create a payments per date and customer group visualization
+
+1. In the Visualizations pane, select **Stacked Column Chart**.
+
+2. From the **Fields** pane, drag-and-drop the Payments.PaymentDate field to the X-axis box, the Payments.PaymentValue field to the Y-axis box and the SalesOrderHeaders.CUSTOMERGROUP field to the Legend box. 
+   
+    ![The Power BI Visualization pane displays with Stacked column chart selected as the selected visualization and the settings populated with the previously mentioned values.](media/pbi_vispane_paymetnsbydatebycustomergroup.png "Visualization pane")
+
+3.  Adjust the sizing of the chart on the report canvas as desired.
+
+    ![The payments per date and customer group chart.](media/pbi_paymentsperdateandcustomergroup.png "Stacked column chart visualization")
+
+### Task 7: Create a sales per customer group and material group visualization
+
+1. In the Visualizations pane, select **Stacked Bar Chart**.
+
+2. From the **Fields** pane, drag-and-drop the SalesOrderHeaders.CUSTOMERGROUP field to the Y-axis box, the SalesOrderItems.NetAmount field to the Y-axis box and the SalesOrderItems.MaterialGroup field to the Legend box. 
+   
+    ![The Power BI Visualization pane displays with Stacked bar chart selected as the selected visualization and the settings populated with the previously mentioned values.](media/pbi_stackedbar_vispane.png "Visualization pane")
+
+3.  Adjust the sizing of the chart on the report canvas as desired.
+
+    ![The sales per customer group and material group chart.](media/pbi_stackedbarchart.png "Stacked bar chart visualization")
+
+### Task 8: Create a payment offset per customer group visualization
+
+This report shows the average number of days by which each customer group pays their SalesOrders. Afterwards a comparison can be made with the outcome of the Machine Learning Model built in the next exercise. SalesOrderHeaders and the Payment data are combined to calculate the number of days between the billing date and the payment date.
+
+1. In Power BI Desktop, expand the **Transform data** item on Home tab toolbar menu. Select **Transform data**.
+   
+   ![The Home tab is selected with the Transform data item expanded. The Transform data item is selected from the expanded menu.](media/pbi_transformdatamenu.png)
+
+2. In the Power Query Editor window, select the **SalesOrderHeaders** table from the Queries pane, and expand the **Merge Queries** option on the Home toolbar menu. Select the **Merge Queries as New** option.
+
+![The Power Query Editor displays with the SalesOrderHeaders table selected in the Queries pane and the Merge Queries menu expanded with the Merge Queries as New option selected.](media/pbi_mergequeriesasnewmenu.png "Power Query Editor")  
+
+3. In the Merge window, select the SALESDOCUMENT column of the SalesOrderHeaders table. Select the **Payments** table as the second table, and select the SalesOrderNr field. Select **OK**.
+
+    ![The Merge window displays with the SALESDOCUMENT column selected. The Payments table is selected as the second table with the SalesOrderNr field highlighted. The OK button is highlighted.](media/pbi_mergequerieswindow.png "Merge Queries Window")
+
+4. Rename the Merge query by right-clicking the Merge query in the Queries pane, and selecting **Rename**. Name the merged query **SalesOrderPayments**.
+
+5. With the SalesOrderPayments query selected, scroll the table completely to the right. Expand the **Payments** column menu, and choose to include the following fields: **PaymentNr**, **PaymentDate**, **PaymentValue** and **Currency**. Select **OK**.
+
+    ![The Power Query Editor screen displays with the SalesOrderPayments query selected in the Queries pane. The data table is scrolled to the right, and the Payments column menu is expanded with the previously mentioned columns checked. The OK button is highlighted.](media/pbi_includepaymentscolumns.png "Include columns")
+
+6. Select **Close & Apply** in the Power Query editor toolbar.
+
+    ![A portion of the Power Query editor toolbar displays with teh Close & Apply button highlighted.](media/pbi_closeapply_powerqueryeditor.png "Close & Apply")
+
+7. From the report designer, expand the **Transform data** item on Home tab toolbar menu. Select **Transform data**.
+   
+   ![The Home tab is selected with the Transform data item expanded. The Transform data item is selected from the expanded menu.](media/pbi_transformdatamenu.png)
+
+8. In the Power Query Editor window, select the **SalesOrderPayments** table from the Queries pane. A new column is required to calculate the difference between the billing date and the actual payment data. Select the **Add Column** tab and select the **Custom Column** button on the toolbar menu.
+
+    ![The Power Query Editor window displays with the Add Column tab selected and the Custom Column button highlighted. The SalesOrderPayments table is selected in the Queries pane.](media/pbi_customcolumnmenu.png "Add Custom Column")
+
+9. In the Custom Column window, enter `Offset` for the New column name. In the Custom column formula field, enter the following formula. Select **OK**.
+
+    ```vb
+    Duration.Days([PaymentDate] - [BILLINGDOCUMENTDATE])
+    ```
+
+    ![The Custom Column window displays with the new column name of Offset. The previously mentioned formula is populated in the Custom column formula textbox.](media/pbi_customcolumn_offset.png)
+
+10. In the table, right-click on the newly created Offset field and expand the **Change Type** option. Select **WholeNumber** to convert this column to integer.
+
+    ![The context menu of the Offset column displays with the Change Type option expanded. Whole Number is selected from the expanded menu.](media/pbi_changeoffsetcolumntoint.png "Convert Offset column to integer")
+   
+11. Return to the Home tab and select **Close & Apply** in the Power Query editor toolbar.
+
+    ![A portion of the Power Query editor toolbar displays with teh Close & Apply button highlighted.](media/pbi_closeapply_powerqueryeditor.png "Close & Apply")
+
+12. On the report canvas, add a **Stacked Column** chart. Drag-and-drop the SalesOrderPayments.CUSTOMERGROUP to the X-axis box and SalesOrderPayments.Offset to the Y-axis box. Expand the chevron menu next to the Offset column and choose to report the **Average**.
+
+    ![The Visualization pane displays with the Stacked Column visualization selected. CUSTOMERGROUP is found the X-axis field and the Average of Offset is found in the Y-axis field. The chevron is expanded on the Offset field to show Average is selected from the list of options.](media/pbi_offset_vispane.png "Stacked Column chart settings")
+
+13. Adjust the sizing of the chart on the report canvas as desired.
+
+    ![The Average of Offset by CUSTOMERGROUP stacked column chart displays.](media/pbi_avgoffsetbycustomergroup_chart.png "Stacked column chart")
+
+### Task 9: Create a payment offset per customer group box plot visualization (Optional)
+
+A box plot can provide a more detailed view of the payment offset by customer group data.
+
+1. In the Visualizations pane, expand the ellipsis menu and select **Get more visuals**.
+
+    ![The Visualizations pane displays with the ellipsis menu expanded and the Get more visuals option selected.](media/pbi_visualizationspane_ellipsis_getmorevisuals.png "Get more visuals")
+
+2. On the Power BI visuals window, search for **Box and Whisker**. Then choose the **Box and Whisker chart** by DataScenarios.
+
+    ![The Power BI visuals window displays with Box and Whisker entered in the search box and the Box and Whisker chart by DataScenarios highlighted.](media/pbi_boxandwhisker_search.png "Search for Box and Whisker")
+
+3. On the AppSource window, select the **Add** button to add the Box and Whisker chart.
+
+    ![The AppSource window displays with the Add button highlighted.](media/pbi_addboxandwhisker.png "Add Box and Whisker chart")
+
+4. On the Visualizations pane, select the newly added **Box and Whisker** chart. In the Category field, drag-and-drop the SalesOrderPayments.CUSTOMERGROUP, SalesOrderPayments.Offset into the Sampling field, and SalesOrderPayments.Offset into the Value field. Expand the chevron menu in the Value field and select the **Average** option.
+
+    ![The Visulization pane displays with the Box and Whisker visual selected. SalesOrderPayments.CUSTOMER group is found in the Category box, SalesOrderPayments.Offset is found in the Sampling and Value boxes. The chevron menu next to the Value field is expanded with Average selected from the options.](media/pbi_boxwhisker_settings.png "Box and Whisker chart")
+
+5. Adjust the sizing of the chart on the report canvas as desired.
+
+    ![The box plot chart displays.](media/pbi_boxplot.png "Box plot visualization")
+
+    > **Note**: From this diagram you can see that:
+    > - CustomerGroup1 pays within 70 days +/- 10 days
+    > - CustomerGroup2 pays within 30days +/- 5 days
+    > - Other customergroups pay after 10 days
+
 ## After the hands-on lab 
 
 Duration: X minutes
