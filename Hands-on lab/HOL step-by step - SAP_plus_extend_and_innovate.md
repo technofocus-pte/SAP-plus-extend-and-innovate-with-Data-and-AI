@@ -771,24 +771,6 @@ A box plot can provide a more detailed view of the payment offset by customer gr
 
 Contoso Retail would like to take advantage of the historical sales order and payment data to create a machine learning model that predicts incoming cashflow.
 
-### Task 1: Create a linked service to the Azure Machine Learning workspace
-
-1. In Synapse Studio, select the **Manage** hub, then choose **Linked services** from the center menu. Select **+ New** in the Linked services screen toolbar menu.
-
-    ![The Manage Hub displays with the Linked services item selected. The + New button is highlighted on the Linked services screen toolbar.](media/ss_newlinkedservicemenu.png "New Linked service")
-
-2. In the New linked service blade, search for and select **Azure Machine Learning**. Select **Continue**.
-
-    ![The New linked service blade displays with Azure Machine Learning entered in the search box and the Azure Machine Learning card selected from the list of results.](media/ss_newlinkedservice_azuremachinelearning_menu.png "New Azure Machine Learning linked service")
-
-3. In the New linked service - Azure Machine Learning blade, fill the form as follows, then select **Create**.
-    
-    | Field | Value |   
-    |-------|-------|
-    | Name | Enter `cashflow_aml`. |
-    | Azure subscription | Select the lab subscription. |
-    | Azure Machine Learning workspace name | Select **sap-mcw-ml-ws**. |
-
 ### Task 1: Create a SQL view that combines sales orders with payments data
 
 1. In Synapse Studio, select the **Develop** hub from the left menu, then expand the **+** menu from the center pane and choose **SQL script**.
@@ -824,6 +806,8 @@ Contoso Retail would like to take advantage of the historical sales order and pa
     FROM [dbo].[SalesOrderHeaders] as s
     JOIN [dbo].[Payments] as p ON REPLACE(LTRIM(REPLACE(s.[SALESDOCUMENT], '0', ' ')), ' ', '0') = p.[SalesOrderNr]
    ```
+
+
 ## After the hands-on lab 
 
 Duration: X minutes

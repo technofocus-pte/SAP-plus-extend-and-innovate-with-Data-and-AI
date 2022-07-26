@@ -88,42 +88,11 @@ resource "azurerm_synapse_sql_pool" "sqlpool" {
 }
 
 #######################################################################
-## Create Synapse Spark Pool
-#######################################################################
-resource "azurerm_synapse_spark_pool" "sparkpool" {
-  name                           = "SparkPoolSmall"
-  node_size                      = "Small"
-  node_size_family               = "MemoryOptimized"
-  session_level_packages_enabled = true
-  spark_version                  = 3.2
-  synapse_workspace_id           = azurerm_synapse_workspace.synapse.id
-
-  auto_scale {
-    max_node_count = 10
-    min_node_count = 3
-  }
-
-  auto_pause {
-    delay_in_minutes = 15
-  }
-}
-
-#######################################################################
 ## Authorize Synapse to ADLS Account (set at the resource group level)
 #######################################################################
 
 resource "azurerm_role_assignment" "synapsetoadls" {
   scope                = azurerm_resource_group.rg.id
   role_definition_name = "Storage Blob Data Contributor"
-  principal_id         = azurerm_synapse_workspace.synapse.identity[0].principal_id
-}
-
-#######################################################################
-## Authorize Synapse to Azure Machine Learning Workspace (set at the resource group level)
-#######################################################################
-
-resource "azurerm_role_assignment" "synapsetoaml" {
-  scope                = azurerm_resource_group.rg.id
-  role_definition_name = "Contributor"
   principal_id         = azurerm_synapse_workspace.synapse.identity[0].principal_id
 }
