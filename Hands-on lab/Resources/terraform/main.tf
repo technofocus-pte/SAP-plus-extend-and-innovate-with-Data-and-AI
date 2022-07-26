@@ -47,59 +47,6 @@ resource "azurerm_role_assignment" "storagerole" {
 }
 
 #######################################################################
-## Create Virtual Networks
-#######################################################################
-
-resource "azurerm_virtual_network" "vnet" {
-  name                = "sap-mcw-vnet"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  address_space       = ["10.20.0.0/16"]
-}
-
-#######################################################################
-## Create Subnet
-#######################################################################
-
-resource "azurerm_subnet" "subnet" {
-  name                 = "sap-mcw-subnet"
-  resource_group_name  = azurerm_resource_group.rg.name
-  virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = ["10.20.1.0/24"]
-}
-
-#######################################################################
-## Create Network Security Group
-#######################################################################
-
-resource "azurerm_network_security_group" "nsg" {
-  name                = "sap-mcw-nsg"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-
-  security_rule {
-    name                       = "RDP"
-    priority                   = 1001
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "3389"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
-  }
-}
-
-#######################################################################
-## Associate the subnet with the NSG
-#######################################################################
-
-resource "azurerm_subnet_network_security_group_association" "nsg-assoc" {
-  subnet_id                 = azurerm_subnet.subnet.id
-  network_security_group_id = azurerm_network_security_group.nsg.id
-}
-
-#######################################################################
 ## Create Key Vault
 #######################################################################
 

@@ -55,6 +55,9 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 7: Create a sales per customer group and material group visualization](#task-7-create-a-sales-per-customer-group-and-material-group-visualization)
     - [Task 8: Create a payment offset per customer group visualization](#task-8-create-a-payment-offset-per-customer-group-visualization)
     - [Task 9: Create a payment offset per customer group box plot visualization (Optional)](#task-9-create-a-payment-offset-per-customer-group-box-plot-visualization-optional)
+  - [Exercise 4: Create a machine learning model to predict incoming cashflow](#exercise-4-create-a-machine-learning-model-to-predict-incoming-cashflow)
+    - [Task 1: Create a linked service to the Azure Machine Learning workspace](#task-1-create-a-linked-service-to-the-azure-machine-learning-workspace)
+    - [Task 1: Create a SQL view that combines sales orders with payments data](#task-1-create-a-sql-view-that-combines-sales-orders-with-payments-data)
   - [After the hands-on lab](#after-the-hands-on-lab)
     - [Task 1: Task name](#task-1-task-name)
     - [Task 2: Task name](#task-2-task-name)
@@ -764,6 +767,63 @@ A box plot can provide a more detailed view of the payment offset by customer gr
     > - CustomerGroup2 pays within 30days +/- 5 days
     > - Other customergroups pay after 10 days
 
+## Exercise 4: Create a machine learning model to predict incoming cashflow
+
+Contoso Retail would like to take advantage of the historical sales order and payment data to create a machine learning model that predicts incoming cashflow.
+
+### Task 1: Create a linked service to the Azure Machine Learning workspace
+
+1. In Synapse Studio, select the **Manage** hub, then choose **Linked services** from the center menu. Select **+ New** in the Linked services screen toolbar menu.
+
+    ![The Manage Hub displays with the Linked services item selected. The + New button is highlighted on the Linked services screen toolbar.](media/ss_newlinkedservicemenu.png "New Linked service")
+
+2. In the New linked service blade, search for and select **Azure Machine Learning**. Select **Continue**.
+
+    ![The New linked service blade displays with Azure Machine Learning entered in the search box and the Azure Machine Learning card selected from the list of results.](media/ss_newlinkedservice_azuremachinelearning_menu.png "New Azure Machine Learning linked service")
+
+3. In the New linked service - Azure Machine Learning blade, fill the form as follows, then select **Create**.
+    
+    | Field | Value |   
+    |-------|-------|
+    | Name | Enter `cashflow_aml`. |
+    | Azure subscription | Select the lab subscription. |
+    | Azure Machine Learning workspace name | Select **sap-mcw-ml-ws**. |
+
+### Task 1: Create a SQL view that combines sales orders with payments data
+
+1. In Synapse Studio, select the **Develop** hub from the left menu, then expand the **+** menu from the center pane and choose **SQL script**.
+
+    ![Synapse Studio displays with the Develop hub selected in the left menu and the + menu expanded in the center pane. The SQL script item is highlighted.](media/ss_develophub_newsqlscript.png "New SQL script")
+
+2. In the SQL script tab, choose to connect to the **sapdatasynsql** dedicated SQL pool in the toolbar menu.
+
+    ![The SQL Script tab displays with the sapdatasynsql database chosen in the Connect to field.](media/ss_sqlscript_connectto_sapdatasynsql.png "Connect to the dedicated SQL pool database")
+
+3. In the SQL script editor, paste and run the following SQL command to create the SalesPaymentsFull view that joins the SalesOrderHeaders and Payments data. The **Run** button is located in the SQL script toolbar menu.
+   
+   ```SQL
+   CREATE VIEW [dbo].[SalesPaymentsFull]
+        AS SELECT s.[SALESDOCUMENT]
+        , s.[CUSTOMERNAME]
+        , s.[CUSTOMERGROUP]
+        , s.[BILLINGCOMPANYCODE]
+        , s.[BILLINGDOCUMENTDATE]
+        , p.[PaymentDate] as PAYMENTDATE
+        , s.[CUSTOMERACCOUNTGROUP]
+        , s.[CREDITCONTROLAREA]
+        , s.[DISTRIBUTIONCHANNEL]
+        , s.[ORGANIZATIONDIVISION]
+        , s.[SALESDISTRICT]
+        , s.[SALESGROUP]
+        , s.[SALESOFFICE]
+        , s.[SALESORGANIZATION]
+        , s.[SDDOCUMENTCATEGORY]
+        , s.[CITYNAME]
+        , s.[POSTALCODE]
+        , DATEDIFF(dayofyear, s.BILLINGDOCUMENTDATE, p.PaymentDate) as PAYMENTDELAYINDAYS
+    FROM [dbo].[SalesOrderHeaders] as s
+    JOIN [dbo].[Payments] as p ON REPLACE(LTRIM(REPLACE(s.[SALESDOCUMENT], '0', ' ')), ' ', '0') = p.[SalesOrderNr]
+   ```
 ## After the hands-on lab 
 
 Duration: X minutes
