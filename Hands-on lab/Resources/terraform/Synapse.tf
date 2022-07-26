@@ -104,7 +104,7 @@ resource "azurerm_synapse_spark_pool" "synapse_poc" {
   node_size                      = "Small"
   node_size_family               = "MemoryOptimized"
   session_level_packages_enabled = true
-  spark_version                  = 3.2
+  spark_version                  = 2.4
   synapse_workspace_id           = azurerm_synapse_workspace.synapse.id
 
   auto_scale {

@@ -58,6 +58,8 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
   - [Exercise 4: Create a machine learning model to predict incoming cashflow](#exercise-4-create-a-machine-learning-model-to-predict-incoming-cashflow)
     - [Task 1: Create a SQL view that combines sales orders with payments data](#task-1-create-a-sql-view-that-combines-sales-orders-with-payments-data)
     - [Task 2: Move the view data to a parquet file in Azure Data Lake Storage Gen2](#task-2-move-the-view-data-to-a-parquet-file-in-azure-data-lake-storage-gen2)
+    - [Task 3: Create the SalesPaymentsFull Spark table from the parquet file](#task-3-create-the-salespaymentsfull-spark-table-from-the-parquet-file)
+    - [Task 4: Train a new regression model for incoming cash flow](#task-4-train-a-new-regression-model-for-incoming-cash-flow)
   - [After the hands-on lab](#after-the-hands-on-lab)
     - [Task 1: Task name](#task-1-task-name)
     - [Task 2: Task name](#task-2-task-name)
@@ -769,7 +771,7 @@ A box plot can provide a more detailed view of the payment offset by customer gr
 
 ## Exercise 4: Create a machine learning model to predict incoming cashflow
 
-Contoso Retail would like to take advantage of the historical sales order and payment data to create a machine learning model that predicts incoming cashflow.
+Contoso Retail would like to take advantage of the historical sales order and payment data to create a machine learning model that predicts incoming cashflow. In this exercise, a Sales Order and Payments data are combined in a SQL view whose data is then stored as a parquet file in Azure Data Lake Storage Gen2. This parquet file is then used to create a Spark table that is used as the data source for training the incoming cashflow regression model.
 
 ### Task 1: Create a SQL view that combines sales orders with payments data
 
@@ -892,6 +894,28 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
 17. Use the **Monitor** hub to ensure the pipeline run successful completion.
 
     ![The Monitor hub pipeline runs displays indicating the successful completion of the CreateSalesPaymentsParquet pipeline.](media/ss_createsalespaymentsparquet_pipelinesucceeded.png "Successfully completed pipeline")
+
+### Task 3: Create the SalesPaymentsFull Spark table from the parquet file
+
+1. In Synapse Studio, select the **Data** hub, then choose the **Linked** tab from the center pane. Expand the **Azure Data Lake Storage Gen2** item followed by the **datalake** account. Select the **sales-payment-parquet** container. In the data explorer tab, right-click on the **dbo.SalesPaymentsFull.parquet** and expand **New notebook** then choose the **New Spark table** item.
+
+    ![Synapse Studio displays with the Data hub selected. The Linked tab is selected from the center pane. The Azure Data Lake Storage Gen2 and datalake items are expanded. The sales-payments-parquet container is selected. In the data explorer tab the context menu on the dbo.SalesPaymentsFull.parquet file displays with the New notebook item expanded and New Spark table selected.](media/ss_datahub_newsparktable.png "New Spark table")
+
+2. This will open a notebook with some code scaffolded. In the Notebook toolbar, select to Attach to **SparkPoolSmall**. In the code cell, change the table name that is being saved to `default.SalesPaymentsFull`. Select the **Run all** button from the toolbar. **Note**: It will take a few minutes for the Spark cluster to be provisioned.
+
+    ![A Synapse notebook displays with code to create a new Spark table scaffolded.](media/ss_createsparktablenotebook.png "Spark notebook")
+
+### Task 4: Train a new regression model for incoming cash flow
+
+1. In Synapse Studio, select the **Data** hub, select the **Workspace** tab. Expand the **Lake database** section. Expand the **default** database and **Tables**. Right-click on the **salespaymentsfull** table, and expand the **Machine Learning** item and choose **Train a new model**.
+
+    ![Synapse Studio displays with the Data Hub selected. The Workspace tab is selected with the Lake database, default, and Tables items expanded. The context menu on the ssalespaymentsfull table is expanded with Machine Learning expanded and Train a new model item selected.](media/ss_mltrainmodel_menu.png "Train a new model from a Spark table")
+
+2. In the Train a new model blade, select **Regression** then **Continue**.
+   
+    ![The Train a new model blade displays with the Regression item highlighted.](media/ss_trainanewmodel_regressionselection.png "Train a new Regression model")
+    
+3. asdf
 
 ## After the hands-on lab 
 
