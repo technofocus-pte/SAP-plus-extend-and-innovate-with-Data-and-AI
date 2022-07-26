@@ -57,10 +57,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 9: Create a payment offset per customer group box plot visualization (Optional)](#task-9-create-a-payment-offset-per-customer-group-box-plot-visualization-optional)
   - [Exercise 4: Create a machine learning model to predict incoming cashflow](#exercise-4-create-a-machine-learning-model-to-predict-incoming-cashflow)
     - [Task 1: Create a SQL view that combines sales orders with payments data](#task-1-create-a-sql-view-that-combines-sales-orders-with-payments-data)
-    - [Task 2: Retrieve the access key for the Azure Data Lake Storage account](#task-2-retrieve-the-access-key-for-the-azure-data-lake-storage-account)
-    - [Task 3: Generate a SAS token for the Azure Data Lake Storage account](#task-3-generate-a-sas-token-for-the-azure-data-lake-storage-account)
-    - [Task 2: Retrieve the sql server password from the Azure Key Vault](#task-2-retrieve-the-sql-server-password-from-the-azure-key-vault)
-    - [Task 2: Create an Azure Machine Learning datastore](#task-2-create-an-azure-machine-learning-datastore)
+    - [Task 2: Move the view data to a parquet file in Azure Data Lake Storage Gen2](#task-2-move-the-view-data-to-a-parquet-file-in-azure-data-lake-storage-gen2)
   - [After the hands-on lab](#after-the-hands-on-lab)
     - [Task 1: Task name](#task-1-task-name)
     - [Task 2: Task name](#task-2-task-name)
@@ -810,81 +807,92 @@ Contoso Retail would like to take advantage of the historical sales order and pa
     JOIN [dbo].[Payments] as p ON REPLACE(LTRIM(REPLACE(s.[SALESDOCUMENT], '0', ' ')), ' ', '0') = p.[SalesOrderNr]
    ```
 
-### Task 2: Retrieve the access key for the Azure Data Lake Storage account
+### Task 2: Move the view data to a parquet file in Azure Data Lake Storage Gen2
 
-1. In the Azure Portal, open the lab resource group **mcw_sap_plus_extend_and_innovate** then search for and select the Storage account **sapadls{SUFFIX}**.
+In this task, a pipeline is created to copy the SalesPaymentsFull view to a parquet file in storage. To implement this pipeline, two additional integration datasets are required, one that points to the SalesPaymentFull view, and one that points to the desired location of the parquet file in Azure Data Lake Storage Gen2.
 
-    ![The resource group listing displays with the sapadls{SUFFIX} Storage account resource selected.](media/ap_adlsrglist.png "Resource group listing")
+1. In Synapse Studio, select the **Data** hub from the left menu and expand the **+** menu in the center pane. Select **Integration dataset**.
 
-2. From the left menu, select **Access keys**. Below the **key1** heading, select the **Show** button next to the Key field. Use the Copy button in the field to record this value for a future task.
+    ![The Data hub displays with the + menu expanded and the Integration dataset option highlighted.](media/ss_datahub_newintegrationdataset.png "New Integration dataset")
 
-    ![The Access keys screen displays for the storage account with the copy button next to the key1 Key field highlighted.](media/ap_adlsaccesskeycopy.png "Copy key1 Key value")
+2. In the New integration dataset blade, search for and select **Azure Synapse Analytics**. Select **Continue**.
 
-### Task 3: Generate a SAS token for the Azure Data Lake Storage account
+    ![The New integration dataset blade displays with Azure Synapse Analytics entered in the search box and Azure Synapse Analytics shown in the search results.](media/ss_newintegrationdataset_azuresynapseanalyticsmenu.png "New Azure Synapse Analytics integration dataset")
 
-1. Remaining in the **sapadls{SUFFIX}** storage account resource, select **Shared access signature** from the left menu. Check all checkboxes for the **Allowed resource types** field. Set the expiry **End** field to one year in the future. All other fields can retain their default values. Select **Generate SAS and connection string**.
- 
-    ![The Shared access signature screen displays with a form populated as described above. The Generate SAS and connection string button is highlighted.](media/ap_adlssasgen.png "Shared access signature screen")
-
-2. From the generated values, copy the **SAS token** value to use in a future task. **Important**: delete the question mark (?) at the beginning of this string.
-   
-   ![The Shared access signature screen displays with the generated SAS token value highlighted.](media/ap_adlssastoken_value.png "Generated SAS token")
-
-### Task 2: Retrieve the sql server password from the Azure Key Vault
-
-1. In the Azure Portal, open the lab resource group **mcw_sap_plus_extend_and_innovate** then search for and select the Azure Key Vault resource **sapkv{SUFFIX}**.
-
-    ![The resource group listing displays with the sapkv{SUFFIX} item highlighted.](media/ap_kvrglist.png "Resource Group list")
-
-2. From the left menu, select **Secrets** and from the Secrets list select **sql-admin-pwd**.
-
-    ![The Azure Key Vault Secrets screen displays with the sql-admin-pwd item highlighted.](media/ap_akvsecretslist.png "Azure Key Vault Secrets listing")
-
-3. On secret Versions screen, select the item listed as the **Current Version**.
-
-    ![The Azure Key Vault secret Versions screen displays with the item below the Current Version header highlighted.](media/ap_akvsecretcurrentversion.png "Secret current version")
-
-4. On the Secret Version screen, select the **Show Secret Value** button, then use the **Copy** button to record this value. This password is required in the next task.
-
-    ![The Secret version screen displays with the Copy button next to the Secret Value highlighted.](media/ap_secretcopy.png "Copy Secret Value")
-
-### Task 2: Create an Azure Machine Learning datastore
-
-1. In the Azure Portal, open the lab resource group **mcw_sap_plus_extend_and_innovate** then search for and select the Azure Machine Learning resource **sap-mcw-ml-ws**.
-
-    ![The resource group listing displays with the sap-mcw-ml-ws item highlighted.](media/ap_amlwsrglist.png "Resource Group list")
-
-2. On the Azure Machine Learning Overview screen, select the **Studio web URL** to open the workspace.
-
-    ![The Azure Machine Learning Overview screen displays with the Studio web URL hyperlink selected.](media/ap_launchamlworkspace.png "Launch AML Studio")
-
-3. From the left menu, select **Datastores**.
-   
-   ![AML Studio displays with Datastores selected from the left menu.](media/amls_datastoremenu.png "AML Studio menu")
-
-4. On the Datastores screen, select **+ New datastore** from the toolbar menu.
-
-    ![The Datastores screen displays with the + New datastore button highlighted.](media/amls_newdatastore_menu.png "New datastore")
-
-5. On the New datastore blade, fill the form as follows then select **Create**.
+3. On the **Set properties** blade, populate the form as follows and select **OK**.
 
     | Field | Value |   
     |-------|-------|
-    | Datastore name | Enter `sap_data_ml_ds`. |
-    | Datastore type | Select **Azure SQL Database**. |
-    | Account selection method | Select **Enter manually**. |
-    | Server name | Enter `sapdatasynws{SUFFIX}`. |
-    | Database name | Enter `sapdatasynws`. |
-    | Subscription ID | Select the lab subscription. |
-    | Resource group name of the storage resource | Select **mcw_sap_plus_extend_and_innovate**. |
-    | Save credentials with the datastore for data access | Select **Yes**. |
-    | Authentication type | Select **SQL authentication**. |
-    | User ID | Enter `sqladminuser`. |
-    | Password | Enter the password value recorded in the previous task. |
+    | Name | Enter `sales_payments_full_sql`. |
+    | Linked service | Select **sales_order_data_sql**. |
+    | Table name | Select **dbo.SalesPaymentsFull**. |
+    | Import schema | Select **From connection/store**. |
 
-    ![The New datastore blade displays with a form populated with the preceding values.](media/amls_newdatastoreform.png "New Datastore form")
+    ![The Set properties blade for the new integration dataset displays populated with the preceding values.](media/ss_salespaymentsfull_dataset_form.png "Set integration dataset properties")
 
-6. asdf
+4. Expand the **+** menu in the center pane. Select **Integration dataset**.
+
+    ![The Data hub displays with the + menu expanded and the Integration dataset option highlighted.](media/ss_datahub_newintegrationdataset.png "New Integration dataset")
+
+5. In the New integration dataset blade, search for and select **Azure Data Lake Storage Gen2**. Select **Continue**.
+
+    ![The New integration dataset blade displays with Azure Data Lake Storage Gen2 entered into the search box and selected from the results.](media/ss_newadlsgen2_integrationdataset_menu.png "New integration dataset blade")
+
+6. On the Select format blade, select **Parquet**. Select **Continue**.
+   
+   ![The Select format blade displays with the Parquet option selected.](media/ss_integration_dataset_parquet.png "Parquet file format")
+
+7. On the Set properties blade, complete the form as follows, then select **OK**.
+
+    | Field | Value |   
+    |-------|-------|
+    | Name | Enter `sales_payment_full_parquet`. |
+    | Linked service | Select **datalake**. |
+    | File path | Enter **sales-payment-parquet**. |
+    | Import schema | Select **None**. |
+
+    ![The Set properties blade for the new integration dataset displays populated with the preceding values.](media/ss_salespayment_dataset_properties.png "Set integration dataset properties")
+
+8. On the Synapse Studio toolbar menu, select **Publish all**. Select **Publish** on the verification blade.
+
+    ![The Synapse Studio toolbar menu displays with the Publish all button highlighted.](media/ss_publishall.png "Publish all")
+
+9. In Synapse Studio, select the **Integrate** hub from the left menu. Expand the **+** menu from the center pane, and choose **Pipeline**.
+
+    ![Synapse Studio displays with the Integrate hub selected in the left menu and the + menu expanded in the center panel. The pipeline item is selected.](media/ss_newpipelinemenu.png "New pipeline")
+
+10. In the Properties blade of the pipeline, name the pipeline **CreateSalesPaymentsParquet**. Optionally collapse the Properties blade.
+
+    ![The Properties pipeline blade displays with the name entered as CreateSalesPaymentsParquet. The Properties button is highlighted.](media/ss_salespaymentpipeline_properties.png "Pipeline properties")
+
+11. In the Activities menu, expand the **Move & Transform** section. Drag-and-drop the **Copy data** activity to the pipeline design canvas. In the General tab of the Copy data activity enter `CopySalesPaymentsAsParquet`.
+
+    ![The Pipeline editor displays with the Move & Transform section expanded in the Activities menu. An arrow indicating a drag-and-drop action denotes a Copy data activity being moved to the design canvas. The General tab is selected and CopySalesPaymentsAsParquet is entered in the Name field.](media/ss_salespayments_pipeline_general.png "Pipeline designer")
+
+12. With the Copy data activity selected, choose the **Source** tab. Select **sales_payments_full** as the **Source dataset**.
+
+    ![The Copy data activity Source tab displays with the Source dataset set to sales_payments_full.](media/ss_salespayments_pipeline_source.png "Copy data Source tab")
+
+13. With the Copy data activity selected, choose the **Sink** tab. Select **sales_payment_full_parquet** as the **Sink dataset**.
+
+    ![The Copy data activity Sink tab displays with the Sink dataset set to sales_payment_full_parquet.](media/ss_salespayments_pipeline_sink.png "Copy data Sink tab")
+
+14. With the Copy data activity selected, choose the **Settings** tab. Check the **Enable staging** checkbox, then select **datalake** for the **Staging account linked service** and enter `staging` in the **Storage Path** field.
+
+    ![The Settings tab is highlighted with the Enable staging checkbox checked and datalake selected as the Storage account linked service. The Storage Path field is populated with the value staging.](media/ss_copydata_enablestaging.png "Copy data Settings tab")
+
+15. On the Synapse Studio toolbar menu, select **Publish all**. Select **Publish** on the verification blade.
+
+    ![The Synapse Studio toolbar menu displays with the Publish all button highlighted.](media/ss_publishall.png "Publish all")
+
+16. Once published, expand the **Add trigger** item on the pipeline toolbar and select **Trigger now**. Select **OK** on the Pipeline run blade.
+    
+    ![The pipeline toolbar menu displays with the Add trigger menu expanded and the Trigger now item selected.](media/ss_pipelinetriggernow.png "Trigger pipeline")
+
+17. Use the **Monitor** hub to ensure the pipeline run successful completion.
+
+    ![The Monitor hub pipeline runs displays indicating the successful completion of the CreateSalesPaymentsParquet pipeline.](media/ss_createsalespaymentsparquet_pipelinesucceeded.png "Successfully completed pipeline")
+
 ## After the hands-on lab 
 
 Duration: X minutes
