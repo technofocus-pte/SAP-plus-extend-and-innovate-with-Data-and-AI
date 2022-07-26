@@ -49,6 +49,15 @@ resource "azurerm_storage_blob" "payment_data_file" {
 }
 
 #######################################################################
+## Create container for external table files
+#######################################################################
+resource "azurerm_storage_container" "salespayment_data_container" {
+  container_access_type = "private"
+  name                  = "sales-payment-parquet"
+  storage_account_name  = azurerm_storage_account.adlsaccount.name
+}
+
+#######################################################################
 ## Create Synapse Workspace
 #######################################################################
 

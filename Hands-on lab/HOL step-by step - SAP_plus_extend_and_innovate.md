@@ -56,8 +56,11 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 8: Create a payment offset per customer group visualization](#task-8-create-a-payment-offset-per-customer-group-visualization)
     - [Task 9: Create a payment offset per customer group box plot visualization (Optional)](#task-9-create-a-payment-offset-per-customer-group-box-plot-visualization-optional)
   - [Exercise 4: Create a machine learning model to predict incoming cashflow](#exercise-4-create-a-machine-learning-model-to-predict-incoming-cashflow)
-    - [Task 1: Create a linked service to the Azure Machine Learning workspace](#task-1-create-a-linked-service-to-the-azure-machine-learning-workspace)
     - [Task 1: Create a SQL view that combines sales orders with payments data](#task-1-create-a-sql-view-that-combines-sales-orders-with-payments-data)
+    - [Task 2: Retrieve the access key for the Azure Data Lake Storage account](#task-2-retrieve-the-access-key-for-the-azure-data-lake-storage-account)
+    - [Task 3: Generate a SAS token for the Azure Data Lake Storage account](#task-3-generate-a-sas-token-for-the-azure-data-lake-storage-account)
+    - [Task 2: Retrieve the sql server password from the Azure Key Vault](#task-2-retrieve-the-sql-server-password-from-the-azure-key-vault)
+    - [Task 2: Create an Azure Machine Learning datastore](#task-2-create-an-azure-machine-learning-datastore)
   - [After the hands-on lab](#after-the-hands-on-lab)
     - [Task 1: Task name](#task-1-task-name)
     - [Task 2: Task name](#task-2-task-name)
@@ -807,7 +810,81 @@ Contoso Retail would like to take advantage of the historical sales order and pa
     JOIN [dbo].[Payments] as p ON REPLACE(LTRIM(REPLACE(s.[SALESDOCUMENT], '0', ' ')), ' ', '0') = p.[SalesOrderNr]
    ```
 
+### Task 2: Retrieve the access key for the Azure Data Lake Storage account
 
+1. In the Azure Portal, open the lab resource group **mcw_sap_plus_extend_and_innovate** then search for and select the Storage account **sapadls{SUFFIX}**.
+
+    ![The resource group listing displays with the sapadls{SUFFIX} Storage account resource selected.](media/ap_adlsrglist.png "Resource group listing")
+
+2. From the left menu, select **Access keys**. Below the **key1** heading, select the **Show** button next to the Key field. Use the Copy button in the field to record this value for a future task.
+
+    ![The Access keys screen displays for the storage account with the copy button next to the key1 Key field highlighted.](media/ap_adlsaccesskeycopy.png "Copy key1 Key value")
+
+### Task 3: Generate a SAS token for the Azure Data Lake Storage account
+
+1. Remaining in the **sapadls{SUFFIX}** storage account resource, select **Shared access signature** from the left menu. Check all checkboxes for the **Allowed resource types** field. Set the expiry **End** field to one year in the future. All other fields can retain their default values. Select **Generate SAS and connection string**.
+ 
+    ![The Shared access signature screen displays with a form populated as described above. The Generate SAS and connection string button is highlighted.](media/ap_adlssasgen.png "Shared access signature screen")
+
+2. From the generated values, copy the **SAS token** value to use in a future task. **Important**: delete the question mark (?) at the beginning of this string.
+   
+   ![The Shared access signature screen displays with the generated SAS token value highlighted.](media/ap_adlssastoken_value.png "Generated SAS token")
+
+### Task 2: Retrieve the sql server password from the Azure Key Vault
+
+1. In the Azure Portal, open the lab resource group **mcw_sap_plus_extend_and_innovate** then search for and select the Azure Key Vault resource **sapkv{SUFFIX}**.
+
+    ![The resource group listing displays with the sapkv{SUFFIX} item highlighted.](media/ap_kvrglist.png "Resource Group list")
+
+2. From the left menu, select **Secrets** and from the Secrets list select **sql-admin-pwd**.
+
+    ![The Azure Key Vault Secrets screen displays with the sql-admin-pwd item highlighted.](media/ap_akvsecretslist.png "Azure Key Vault Secrets listing")
+
+3. On secret Versions screen, select the item listed as the **Current Version**.
+
+    ![The Azure Key Vault secret Versions screen displays with the item below the Current Version header highlighted.](media/ap_akvsecretcurrentversion.png "Secret current version")
+
+4. On the Secret Version screen, select the **Show Secret Value** button, then use the **Copy** button to record this value. This password is required in the next task.
+
+    ![The Secret version screen displays with the Copy button next to the Secret Value highlighted.](media/ap_secretcopy.png "Copy Secret Value")
+
+### Task 2: Create an Azure Machine Learning datastore
+
+1. In the Azure Portal, open the lab resource group **mcw_sap_plus_extend_and_innovate** then search for and select the Azure Machine Learning resource **sap-mcw-ml-ws**.
+
+    ![The resource group listing displays with the sap-mcw-ml-ws item highlighted.](media/ap_amlwsrglist.png "Resource Group list")
+
+2. On the Azure Machine Learning Overview screen, select the **Studio web URL** to open the workspace.
+
+    ![The Azure Machine Learning Overview screen displays with the Studio web URL hyperlink selected.](media/ap_launchamlworkspace.png "Launch AML Studio")
+
+3. From the left menu, select **Datastores**.
+   
+   ![AML Studio displays with Datastores selected from the left menu.](media/amls_datastoremenu.png "AML Studio menu")
+
+4. On the Datastores screen, select **+ New datastore** from the toolbar menu.
+
+    ![The Datastores screen displays with the + New datastore button highlighted.](media/amls_newdatastore_menu.png "New datastore")
+
+5. On the New datastore blade, fill the form as follows then select **Create**.
+
+    | Field | Value |   
+    |-------|-------|
+    | Datastore name | Enter `sap_data_ml_ds`. |
+    | Datastore type | Select **Azure SQL Database**. |
+    | Account selection method | Select **Enter manually**. |
+    | Server name | Enter `sapdatasynws{SUFFIX}`. |
+    | Database name | Enter `sapdatasynws`. |
+    | Subscription ID | Select the lab subscription. |
+    | Resource group name of the storage resource | Select **mcw_sap_plus_extend_and_innovate**. |
+    | Save credentials with the datastore for data access | Select **Yes**. |
+    | Authentication type | Select **SQL authentication**. |
+    | User ID | Enter `sqladminuser`. |
+    | Password | Enter the password value recorded in the previous task. |
+
+    ![The New datastore blade displays with a form populated with the preceding values.](media/amls_newdatastoreform.png "New Datastore form")
+
+6. asdf
 ## After the hands-on lab 
 
 Duration: X minutes
