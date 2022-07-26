@@ -59,7 +59,8 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 1: Create a SQL view that combines sales orders with payments data](#task-1-create-a-sql-view-that-combines-sales-orders-with-payments-data)
     - [Task 2: Move the view data to a parquet file in Azure Data Lake Storage Gen2](#task-2-move-the-view-data-to-a-parquet-file-in-azure-data-lake-storage-gen2)
     - [Task 3: Create the SalesPaymentsFull Spark table from the parquet file](#task-3-create-the-salespaymentsfull-spark-table-from-the-parquet-file)
-    - [Task 4: Train a new regression model for incoming cash flow](#task-4-train-a-new-regression-model-for-incoming-cash-flow)
+    - [Task 4: Create an Azure Machine Learning linked service](#task-4-create-an-azure-machine-learning-linked-service)
+    - [Task 5: Train a new regression model for incoming cash flow](#task-5-train-a-new-regression-model-for-incoming-cash-flow)
   - [After the hands-on lab](#after-the-hands-on-lab)
     - [Task 1: Task name](#task-1-task-name)
     - [Task 2: Task name](#task-2-task-name)
@@ -905,7 +906,31 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
 
     ![A Synapse notebook displays with code to create a new Spark table scaffolded.](media/ss_createsparktablenotebook.png "Spark notebook")
 
-### Task 4: Train a new regression model for incoming cash flow
+### Task 4: Create an Azure Machine Learning linked service
+
+1. In Synapse Studio, select the **Manage** hub, then choose **Linked services** from the center menu. Select **+ New** in the Linked services screen toolbar menu.
+
+    ![The Manage Hub displays with the Linked services item selected. The + New button is highlighted on the Linked services screen toolbar.](media/ss_newlinkedservicemenu.png "New Linked service")
+
+2. In the New linked service blade, search for and select **Azure Machine Learning**. Select **Continue**.
+
+    ![The New linked service blade displays with Azure Machine Learning entered in the search box and selected from the results.](media/ss_newamllinkedsvc_menu.png "New Azure Machine Learning linked service")
+
+3. Fill the New linked service - Azure Machine Learning form as follows, then select **Create**.
+   
+    | Field | Value |   
+    |-------|-------|
+    | Name | Enter `cashflow_aml`. |
+    | Azure Subscription | Select the lab subscription. |
+    | Azure Machine Learning workspace name | Select **sap-mcw-ml-ws** |
+
+    ![The New linked service blade displays with a form populated with the preceding values.](media/ss_linkedservice_aml_form.png "New Azure Machine Learning linked service form")
+
+4. On the Synapse Studio toolbar menu, select **Publish all**. Select **Publish** on the verification blade.
+
+    ![The Synapse Studio toolbar menu displays with the Publish all button highlighted.](media/ss_publishall.png "Publish all")
+
+### Task 5: Train a new regression model for incoming cash flow
 
 1. In Synapse Studio, select the **Data** hub, select the **Workspace** tab. Expand the **Lake database** section. Expand the **default** database and **Tables**. Right-click on the **salespaymentsfull** table, and expand the **Machine Learning** item and choose **Train a new model**.
 
@@ -915,7 +940,26 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
    
     ![The Train a new model blade displays with the Regression item highlighted.](media/ss_trainanewmodel_regressionselection.png "Train a new Regression model")
     
-3. asdf
+3. On the Train a new model (Regression) blade, select **PAYMENTDELAYINDAYS** for the **Target column** field. Ensure the Azure Machine Learning workspace is set to **sap-mcw-ml-ws** and the Apache Spark pool field is set to **SparkPoolSmall**. Select **Continue**.
+
+    ![The Train a new model (Regression) blade displays with the PAYMENTDELAYINDAYS column selected as the Target column. sap-mcw-ml-ws is selected in the Azure Machine learning workspace field and SparkPoolSmall is selected in the Apache Spark pool field.](media/ss_trainnewregressionmodel_targetcolumn.png "Regression Target Column selection")
+
+4. On the Train a new model (Regression) blade, select **Normalized root mean squared error** as the Primary metric and set the Maximum training job time (hours) to `0.25`. Enable the ONNX model compatibility option. Select **Open in notebook**.
+
+    ![The Train a new model (Regression) blade displays with a form populated as described. The Open in notebook button is highlighted.](media/ss_amlopeninnotebook.png "Open in notebook")
+
+5. In the scaffolded notebook, change the SQL query in the third code cell (line 1) to the following. This will reduce the number of columns being used to train the model.
+
+    ```SQL
+    SELECT CUSTOMERNAME, CUSTOMERGROUP, BILLINGCOMPANYCODE, CUSTOMERACCOUNTGROUP,    CREDITCONTROLAREA, DISTRIBUTIONCHANNEL, ORGANIZATIONDIVISION, SALESDISTRICT,SALESORGANIZATION, SDDOCUMENTCATEGORY, CITYNAME, POSTALCODE, PAYMENTDELAYINDAYS FROM default.salespaymentsfull
+    ```
+    ![A portion of the scaffolded notebook displays with the SQL query replaced in the third cell.](media/ss_notebook_trainregressionmodel_querycell.png "Scaffolded AML notebook")
+
+6. From the notebook toolbar menu, select **Run all** to execute all cells in the notebook. This notebook registers the dataset with Azure Machine Learning and creates an AutoML experiment to determine the best model to determine the incoming cashflow via predicting the payment delay in days. The best model is then registered with the Azure Machine Learning workspace. **Note**: this notebook will run for approximately 20 minutes.
+   
+7. Once the notebook has completed running, the output of the last cell will indicate the best model that is registered in the Azure Machine Learning workspace.
+
+    ![The output of the final cell of the Synapse notebook displays with the registered model highlighted.](media/ss_amlnotebook_regmodeloutput.png "Azure Machine Learning registered best model")  
 
 ## After the hands-on lab 
 

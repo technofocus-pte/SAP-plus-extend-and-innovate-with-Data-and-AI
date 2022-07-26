@@ -37,3 +37,17 @@ resource "azurerm_machine_learning_workspace" "mlws" {
     type = "SystemAssigned"
   }
 }
+
+resource "azurerm_key_vault_access_policy" "aml_kv_policy" {
+  key_vault_id = azurerm_key_vault.keyvault.id
+  tenant_id    = local.tenant_id
+  object_id    = azurerm_machine_learning_workspace.mlws.identity.0.principal_id
+
+  key_permissions = [
+    "Create", "Delete", "Get", "List", "Purge"
+  ]
+
+  secret_permissions = [
+    "Delete", "Get", "List", "Purge", "Recover", "Set"
+  ]
+}
