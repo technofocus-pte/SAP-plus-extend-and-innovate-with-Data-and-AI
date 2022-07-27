@@ -45,7 +45,14 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 1: Create a dedicated SQL pool table to hold payment information](#task-1-create-a-dedicated-sql-pool-table-to-hold-payment-information)
     - [Task 2: Create the Payments table integration dataset](#task-2-create-the-payments-table-integration-dataset)
     - [Task 3: Create the Payments ingestion pipeline](#task-3-create-the-payments-ingestion-pipeline)
-  - [Exercise 4: Visualize historical data with Power BI](#exercise-4-visualize-historical-data-with-power-bi)
+  - [Exercise 4: Create a machine learning model to predict incoming cashflow](#exercise-4-create-a-machine-learning-model-to-predict-incoming-cashflow)
+    - [Task 1: Create a SQL view that combines sales orders with payments data](#task-1-create-a-sql-view-that-combines-sales-orders-with-payments-data)
+    - [Task 2: Move the view data to a parquet file in Azure Data Lake Storage Gen2](#task-2-move-the-view-data-to-a-parquet-file-in-azure-data-lake-storage-gen2)
+    - [Task 3: Create the SalesPaymentsFull Spark table from the parquet file](#task-3-create-the-salespaymentsfull-spark-table-from-the-parquet-file)
+    - [Task 4: Create an Azure Machine Learning linked service](#task-4-create-an-azure-machine-learning-linked-service)
+    - [Task 5: Train a new regression model for incoming cash flow](#task-5-train-a-new-regression-model-for-incoming-cash-flow)
+    - [Task 6: Deploy and test the regression model in the dedicated SQL pool](#task-6-deploy-and-test-the-regression-model-in-the-dedicated-sql-pool)
+  - [Exercise 5: Visualize historical data with Power BI](#exercise-5-visualize-historical-data-with-power-bi)
     - [Task 1: Retrieve the database connection information for the dedicated SQL pool](#task-1-retrieve-the-database-connection-information-for-the-dedicated-sql-pool)
     - [Task 2: Import data into Power BI](#task-2-import-data-into-power-bi)
     - [Task 3: Create the relational model](#task-3-create-the-relational-model)
@@ -55,13 +62,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 7: Create a sales per customer group and material group visualization](#task-7-create-a-sales-per-customer-group-and-material-group-visualization)
     - [Task 8: Create a payment offset per customer group visualization](#task-8-create-a-payment-offset-per-customer-group-visualization)
     - [Task 9: Create a payment offset per customer group box plot visualization (Optional)](#task-9-create-a-payment-offset-per-customer-group-box-plot-visualization-optional)
-  - [Exercise 4: Create a machine learning model to predict incoming cashflow](#exercise-4-create-a-machine-learning-model-to-predict-incoming-cashflow)
-    - [Task 1: Create a SQL view that combines sales orders with payments data](#task-1-create-a-sql-view-that-combines-sales-orders-with-payments-data)
-    - [Task 2: Move the view data to a parquet file in Azure Data Lake Storage Gen2](#task-2-move-the-view-data-to-a-parquet-file-in-azure-data-lake-storage-gen2)
-    - [Task 3: Create the SalesPaymentsFull Spark table from the parquet file](#task-3-create-the-salespaymentsfull-spark-table-from-the-parquet-file)
-    - [Task 4: Create an Azure Machine Learning linked service](#task-4-create-an-azure-machine-learning-linked-service)
-    - [Task 5: Train a new regression model for incoming cash flow](#task-5-train-a-new-regression-model-for-incoming-cash-flow)
-    - [Task 6: Deploy and test the regression model in the dedicated SQL pool](#task-6-deploy-and-test-the-regression-model-in-the-dedicated-sql-pool)
+  - [Exercise 6: Integrate Azure Machine Learning and Power BI](#exercise-6-integrate-azure-machine-learning-and-power-bi)
   - [After the hands-on lab](#after-the-hands-on-lab)
     - [Task 1: Task name](#task-1-task-name)
     - [Task 2: Task name](#task-2-task-name)
@@ -559,8 +560,260 @@ Payment history data is required when creating the cash flow prediction model. T
     ```sql
     select count(*) from Payments;
     ```
+## Exercise 4: Create a machine learning model to predict incoming cashflow
 
-## Exercise 4: Visualize historical data with Power BI
+Contoso Retail would like to take advantage of the historical sales order and payment data to create a machine learning model that predicts incoming cashflow. In this exercise, a Sales Order and Payments data are combined in a SQL view whose data is then stored as a parquet file in Azure Data Lake Storage Gen2. This parquet file is then used to create a Spark table that is used as the data source for training the incoming cashflow regression model.
+
+### Task 1: Create a SQL view that combines sales orders with payments data
+
+1. In Synapse Studio, select the **Develop** hub from the left menu, then expand the **+** menu from the center pane and choose **SQL script**.
+
+    ![Synapse Studio displays with the Develop hub selected in the left menu and the + menu expanded in the center pane. The SQL script item is highlighted.](media/ss_develophub_newsqlscript.png "New SQL script")
+
+2. In the SQL script tab, choose to connect to the **sapdatasynsql** dedicated SQL pool in the toolbar menu.
+
+    ![The SQL Script tab displays with the sapdatasynsql database chosen in the Connect to field.](media/ss_sqlscript_connectto_sapdatasynsql.png "Connect to the dedicated SQL pool database")
+
+3. In the SQL script editor, paste and run the following SQL command to create the SalesPaymentsFull view that joins the SalesOrderHeaders and Payments data. The **Run** button is located in the SQL script toolbar menu.
+   
+   ```SQL
+   CREATE VIEW [dbo].[SalesPaymentsFull]
+        AS SELECT s.[SALESDOCUMENT]
+        , s.[CUSTOMERNAME]
+        , s.[CUSTOMERGROUP]
+        , s.[BILLINGCOMPANYCODE]
+        , s.[BILLINGDOCUMENTDATE]
+        , p.[PaymentDate] as PAYMENTDATE
+        , s.[CUSTOMERACCOUNTGROUP]
+        , s.[CREDITCONTROLAREA]
+        , s.[DISTRIBUTIONCHANNEL]
+        , s.[ORGANIZATIONDIVISION]
+        , s.[SALESDISTRICT]
+        , s.[SALESGROUP]
+        , s.[SALESOFFICE]
+        , s.[SALESORGANIZATION]
+        , s.[SDDOCUMENTCATEGORY]
+        , s.[CITYNAME]
+        , s.[POSTALCODE]
+        , DATEDIFF(dayofyear, s.BILLINGDOCUMENTDATE, p.PaymentDate) as PAYMENTDELAYINDAYS
+    FROM [dbo].[SalesOrderHeaders] as s
+    JOIN [dbo].[Payments] as p ON REPLACE(LTRIM(REPLACE(s.[SALESDOCUMENT], '0', ' ')), ' ', '0') = p.[SalesOrderNr]
+   ```
+
+### Task 2: Move the view data to a parquet file in Azure Data Lake Storage Gen2
+
+In this task, a pipeline is created to copy the SalesPaymentsFull view to a parquet file in storage. To implement this pipeline, two additional integration datasets are required, one that points to the SalesPaymentFull view, and one that points to the desired location of the parquet file in Azure Data Lake Storage Gen2.
+
+1. In Synapse Studio, select the **Data** hub from the left menu and expand the **+** menu in the center pane. Select **Integration dataset**.
+
+    ![The Data hub displays with the + menu expanded and the Integration dataset option highlighted.](media/ss_datahub_newintegrationdataset.png "New Integration dataset")
+
+2. In the New integration dataset blade, search for and select **Azure Synapse Analytics**. Select **Continue**.
+
+    ![The New integration dataset blade displays with Azure Synapse Analytics entered in the search box and Azure Synapse Analytics shown in the search results.](media/ss_newintegrationdataset_azuresynapseanalyticsmenu.png "New Azure Synapse Analytics integration dataset")
+
+3. On the **Set properties** blade, populate the form as follows and select **OK**.
+
+    | Field | Value |   
+    |-------|-------|
+    | Name | Enter `sales_payments_full_sql`. |
+    | Linked service | Select **sales_order_data_sql**. |
+    | Table name | Select **dbo.SalesPaymentsFull**. |
+    | Import schema | Select **From connection/store**. |
+
+    ![The Set properties blade for the new integration dataset displays populated with the preceding values.](media/ss_salespaymentsfull_dataset_form.png "Set integration dataset properties")
+
+4. Expand the **+** menu in the center pane. Select **Integration dataset**.
+
+    ![The Data hub displays with the + menu expanded and the Integration dataset option highlighted.](media/ss_datahub_newintegrationdataset.png "New Integration dataset")
+
+5. In the New integration dataset blade, search for and select **Azure Data Lake Storage Gen2**. Select **Continue**.
+
+    ![The New integration dataset blade displays with Azure Data Lake Storage Gen2 entered into the search box and selected from the results.](media/ss_newadlsgen2_integrationdataset_menu.png "New integration dataset blade")
+
+6. On the Select format blade, select **Parquet**. Select **Continue**.
+   
+   ![The Select format blade displays with the Parquet option selected.](media/ss_integration_dataset_parquet.png "Parquet file format")
+
+7. On the Set properties blade, complete the form as follows, then select **OK**.
+
+    | Field | Value |   
+    |-------|-------|
+    | Name | Enter `sales_payment_full_parquet`. |
+    | Linked service | Select **datalake**. |
+    | File path | Enter **sales-payment-parquet**. |
+    | Import schema | Select **None**. |
+
+    ![The Set properties blade for the new integration dataset displays populated with the preceding values.](media/ss_salespayment_dataset_properties.png "Set integration dataset properties")
+
+8. On the Synapse Studio toolbar menu, select **Publish all**. Select **Publish** on the verification blade.
+
+    ![The Synapse Studio toolbar menu displays with the Publish all button highlighted.](media/ss_publishall.png "Publish all")
+
+9. In Synapse Studio, select the **Integrate** hub from the left menu. Expand the **+** menu from the center pane, and choose **Pipeline**.
+
+    ![Synapse Studio displays with the Integrate hub selected in the left menu and the + menu expanded in the center panel. The pipeline item is selected.](media/ss_newpipelinemenu.png "New pipeline")
+
+10. In the Properties blade of the pipeline, name the pipeline **CreateSalesPaymentsParquet**. Optionally collapse the Properties blade.
+
+    ![The Properties pipeline blade displays with the name entered as CreateSalesPaymentsParquet. The Properties button is highlighted.](media/ss_salespaymentpipeline_properties.png "Pipeline properties")
+
+11. In the Activities menu, expand the **Move & Transform** section. Drag-and-drop the **Copy data** activity to the pipeline design canvas. In the General tab of the Copy data activity enter `CopySalesPaymentsAsParquet`.
+
+    ![The Pipeline editor displays with the Move & Transform section expanded in the Activities menu. An arrow indicating a drag-and-drop action denotes a Copy data activity being moved to the design canvas. The General tab is selected and CopySalesPaymentsAsParquet is entered in the Name field.](media/ss_salespayments_pipeline_general.png "Pipeline designer")
+
+12. With the Copy data activity selected, choose the **Source** tab. Select **sales_payments_full** as the **Source dataset**.
+
+    ![The Copy data activity Source tab displays with the Source dataset set to sales_payments_full.](media/ss_salespayments_pipeline_source.png "Copy data Source tab")
+
+13. With the Copy data activity selected, choose the **Sink** tab. Select **sales_payment_full_parquet** as the **Sink dataset**.
+
+    ![The Copy data activity Sink tab displays with the Sink dataset set to sales_payment_full_parquet.](media/ss_salespayments_pipeline_sink.png "Copy data Sink tab")
+
+14. With the Copy data activity selected, choose the **Settings** tab. Check the **Enable staging** checkbox, then select **datalake** for the **Staging account linked service** and enter `staging` in the **Storage Path** field.
+
+    ![The Settings tab is highlighted with the Enable staging checkbox checked and datalake selected as the Storage account linked service. The Storage Path field is populated with the value staging.](media/ss_copydata_enablestaging.png "Copy data Settings tab")
+
+15. On the Synapse Studio toolbar menu, select **Publish all**. Select **Publish** on the verification blade.
+
+    ![The Synapse Studio toolbar menu displays with the Publish all button highlighted.](media/ss_publishall.png "Publish all")
+
+16. Once published, expand the **Add trigger** item on the pipeline toolbar and select **Trigger now**. Select **OK** on the Pipeline run blade.
+    
+    ![The pipeline toolbar menu displays with the Add trigger menu expanded and the Trigger now item selected.](media/ss_pipelinetriggernow.png "Trigger pipeline")
+
+17. Use the **Monitor** hub to ensure the pipeline run successful completion.
+
+    ![The Monitor hub pipeline runs displays indicating the successful completion of the CreateSalesPaymentsParquet pipeline.](media/ss_createsalespaymentsparquet_pipelinesucceeded.png "Successfully completed pipeline")
+
+### Task 3: Create the SalesPaymentsFull Spark table from the parquet file
+
+1. In Synapse Studio, select the **Data** hub, then choose the **Linked** tab from the center pane. Expand the **Azure Data Lake Storage Gen2** item followed by the **datalake** account. Select the **sales-payment-parquet** container. In the data explorer tab, right-click on the **dbo.SalesPaymentsFull.parquet** and expand **New notebook** then choose the **New Spark table** item.
+
+    ![Synapse Studio displays with the Data hub selected. The Linked tab is selected from the center pane. The Azure Data Lake Storage Gen2 and datalake items are expanded. The sales-payments-parquet container is selected. In the data explorer tab the context menu on the dbo.SalesPaymentsFull.parquet file displays with the New notebook item expanded and New Spark table selected.](media/ss_datahub_newsparktable.png "New Spark table")
+
+2. This will open a notebook with some code scaffolded. In the Notebook toolbar, select to Attach to **SparkPoolSmall**. In the code cell, change the table name that is being saved to `default.SalesPaymentsFull`. Select the **Run all** button from the toolbar. **Note**: It will take a few minutes for the Spark cluster to be provisioned.
+
+    ![A Synapse notebook displays with code to create a new Spark table scaffolded.](media/ss_createsparktablenotebook.png "Spark notebook")
+
+### Task 4: Create an Azure Machine Learning linked service
+
+1. In Synapse Studio, select the **Manage** hub, then choose **Linked services** from the center menu. Select **+ New** in the Linked services screen toolbar menu.
+
+    ![The Manage Hub displays with the Linked services item selected. The + New button is highlighted on the Linked services screen toolbar.](media/ss_newlinkedservicemenu.png "New Linked service")
+
+2. In the New linked service blade, search for and select **Azure Machine Learning**. Select **Continue**.
+
+    ![The New linked service blade displays with Azure Machine Learning entered in the search box and selected from the results.](media/ss_newamllinkedsvc_menu.png "New Azure Machine Learning linked service")
+
+3. Fill the New linked service - Azure Machine Learning form as follows, then select **Create**.
+   
+    | Field | Value |   
+    |-------|-------|
+    | Name | Enter `cashflow_aml`. |
+    | Azure Subscription | Select the lab subscription. |
+    | Azure Machine Learning workspace name | Select **sap-mcw-ml-ws** |
+
+    ![The New linked service blade displays with a form populated with the preceding values.](media/ss_linkedservice_aml_form.png "New Azure Machine Learning linked service form")
+
+4. On the Synapse Studio toolbar menu, select **Publish all**. Select **Publish** on the verification blade.
+
+    ![The Synapse Studio toolbar menu displays with the Publish all button highlighted.](media/ss_publishall.png "Publish all")
+
+### Task 5: Train a new regression model for incoming cash flow
+
+1. In Synapse Studio, select the **Data** hub, select the **Workspace** tab. Expand the **Lake database** section. Expand the **default** database and **Tables**. Right-click on the **salespaymentsfull** table, and expand the **Machine Learning** item and choose **Train a new model**.
+
+    ![Synapse Studio displays with the Data Hub selected. The Workspace tab is selected with the Lake database, default, and Tables items expanded. The context menu on the ssalespaymentsfull table is expanded with Machine Learning expanded and Train a new model item selected.](media/ss_mltrainmodel_menu.png "Train a new model from a Spark table")
+
+2. In the Train a new model blade, select **Regression** then **Continue**.
+   
+    ![The Train a new model blade displays with the Regression item highlighted.](media/ss_trainanewmodel_regressionselection.png "Train a new Regression model")
+    
+3. On the Train a new model (Regression) blade, select **PAYMENTDELAYINDAYS** for the **Target column** field. Ensure the Azure Machine Learning workspace is set to **sap-mcw-ml-ws** and the Apache Spark pool field is set to **SparkPoolSmall**. Select **Continue**.
+
+    ![The Train a new model (Regression) blade displays with the PAYMENTDELAYINDAYS column selected as the Target column. sap-mcw-ml-ws is selected in the Azure Machine learning workspace field and SparkPoolSmall is selected in the Apache Spark pool field.](media/ss_trainnewregressionmodel_targetcolumn.png "Regression Target Column selection")
+
+4. On the Train a new model (Regression) blade, select **Normalized root mean squared error** as the Primary metric and set the Maximum training job time (hours) to `0.25`. Enable the ONNX model compatibility option. Select **Open in notebook**.
+
+    ![The Train a new model (Regression) blade displays with a form populated as described. The Open in notebook button is highlighted.](media/ss_amlopeninnotebook.png "Open in notebook")
+
+5. In the scaffolded notebook, change the SQL query in the third code cell (line 1) to the following. This will reduce the number of columns being used to train the model.
+
+    ```SQL
+    SELECT CUSTOMERNAME, CUSTOMERGROUP, BILLINGCOMPANYCODE, CUSTOMERACCOUNTGROUP,    CREDITCONTROLAREA, DISTRIBUTIONCHANNEL, ORGANIZATIONDIVISION, SALESDISTRICT,SALESORGANIZATION, SDDOCUMENTCATEGORY, CITYNAME, POSTALCODE, PAYMENTDELAYINDAYS FROM default.salespaymentsfull
+    ```
+    ![A portion of the scaffolded notebook displays with the SQL query replaced in the third cell.](media/ss_notebook_trainregressionmodel_querycell.png "Scaffolded AML notebook")
+
+6. From the notebook toolbar menu, select **Run all** to execute all cells in the notebook. This notebook registers the dataset with Azure Machine Learning and creates an AutoML experiment to determine the best model to determine the incoming cashflow via predicting the payment delay in days. The best model is then registered with the Azure Machine Learning workspace. 
+   
+    > **Note**: this notebook will run for approximately 20 minutes. Proceed to [Exercise 5](#exercise-5-visualize-historical-data-with-power-bi) and return here once completed.
+   
+7. Once the notebook has completed running, the output of the last cell will indicate the best model that is registered in the Azure Machine Learning workspace.
+
+    ![The output of the final cell of the Synapse notebook displays with the registered model highlighted.](media/ss_amlnotebook_regmodeloutput.png "Azure Machine Learning registered best model")  
+
+### Task 6: Deploy and test the regression model in the dedicated SQL pool
+
+1. In Synapse Studio, select the **Develop** hub from the left menu, then expand the **+** menu from the center pane and choose **SQL script**.
+
+    ![Synapse Studio displays with the Develop hub selected in the left menu and the + menu expanded in the center pane. The SQL script item is highlighted.](media/ss_develophub_newsqlscript.png "New SQL script")
+
+2. In the SQL script tab, choose to connect to the **sapdatasynsql** dedicated SQL pool in the toolbar menu.
+
+    ![The SQL Script tab displays with the sapdatasynsql database chosen in the Connect to field.](media/ss_sqlscript_connectto_sapdatasynsql.png "Connect to the dedicated SQL pool database")
+
+3. In the SQL script editor, paste and run the following SQL command to create and populate a table with model test data. The **Run** button is located in the SQL script toolbar menu.
+   
+   ```SQL
+   CREATE TABLE cashflow_prediction_tests
+    (
+        [CUSTOMERNAME] [nvarchar](80)  NULL,
+        [CUSTOMERGROUP] [nvarchar](2)  NULL,
+        [BILLINGCOMPANYCODE] [nvarchar](4)  NULL,
+        [CUSTOMERACCOUNTGROUP] [nvarchar](4)  NULL,
+        [CREDITCONTROLAREA] [nvarchar](4)  NULL,
+        [DISTRIBUTIONCHANNEL] [nvarchar](2)  NULL,
+        [ORGANIZATIONDIVISION] [nvarchar](2)  NULL,
+        [SALESDISTRICT] [nvarchar](6)  NULL,
+        [SALESORGANIZATION] [nvarchar](4)  NULL,
+        [SDDOCUMENTCATEGORY] [nvarchar](4)  NULL,
+        [CITYNAME] [nvarchar](35)  NULL,
+        [POSTALCODE] [nvarchar](10)  NULL
+    );
+
+    INSERT INTO cashflow_prediction_tests VALUES ('Westend Cycles', 'Z1', '1710', 'KUNA','A000', '10', '0', 'US0003', '1710','C', 'RALEIGH', '27603');
+    INSERT INTO cashflow_prediction_tests VALUES ('Skymart Corp', 'Z2', '1710', 'KUNA','A000', '10', '0', 'US0004', '1710','C', 'New York', '10007');
+   ```
+
+4. Select the **Data** hub from the left menu, ensure the **Workspace** tab is selected in the center pane. Expand **SQL database**, the **sapsynsql** database and the **Tables** items. Right-click the newly created **dbo.cashflow_prediction_tests** table and expand the **Machine Learning** item and select **Predict with a model**.
+
+    ![The Synapse Studio Data hub displays with the SQL database section expanded. The sapdatasynsql database is expanded with the context menu showing on the dbo.cashflow_prediction_tests table. From the context menu, the Machine Learning item is expanded with the Predict with a model item selected.](media/ss_predictwithmodelmenu.png "Predict with a model")
+
+5. On the Predict with a model blade, select the pre-trained model that was created in the previous task then select **Continue**.
+   
+   ![The pre-trained model listing displays with the model trained in the previous task selected.](media/ss_pretrianedmodelselection.png "Select pre-trained model")
+
+6. On the Predict with a model blade, keep all the mappings at their default values and select **Continue**.
+
+    ![The column mappings display on the Predict with a model blade. The Continue button is highlighted.](media/ss_modelmapping.png "Model column mappings")
+
+7. On the Predict with a model blade, fill the database form as follows then select **Deploy model + open script**. This will create a table to hold the trained models as well as encapsulate the calling of the model with a stored procedure.
+   
+    | Field | Value |   
+    |-------|-------|
+    | Script type | Select **Stored procedure**. |
+    | Stored procedure name | Enter `[dbo].[predict_cashflow]`. |
+    | Database table | Select **Create new**. |
+    | New table | Enter `[dbo].[ml_models]`. |
+
+    ![The Predict with a model blade displays with a form populated with the preceding values. The Deploy model + open script button is highlighted.](media/ss_dbmodelspec.png "Deploy model to the database")
+
+8. A script window opens with a query to create the stored procedure that leverages the trained regression model using the dbo.cashflow_prediction_tests table as input. At the end of the script the stored procedure is executed. The resulting values will include the predicted payment delay in days for each row in the **variable_out1** column. Execute the generated script and view the results.
+
+    ![The SQL Query results window displays with the variabl_out1 column highlighted.](media/ss_modelpredictresult.png "Predicted days late for each test case")
+
+## Exercise 5: Visualize historical data with Power BI
 
 Contoso Retail would like to gain insights into historical sales order and payments data.
 
@@ -771,257 +1024,21 @@ A box plot can provide a more detailed view of the payment offset by customer gr
     > - CustomerGroup2 pays within 30days +/- 5 days
     > - Other customergroups pay after 10 days
 
-## Exercise 4: Create a machine learning model to predict incoming cashflow
+6. Keep this report open in Power BI desktop for the next exercise.
 
-Contoso Retail would like to take advantage of the historical sales order and payment data to create a machine learning model that predicts incoming cashflow. In this exercise, a Sales Order and Payments data are combined in a SQL view whose data is then stored as a parquet file in Azure Data Lake Storage Gen2. This parquet file is then used to create a Spark table that is used as the data source for training the incoming cashflow regression model.
+## Exercise 6: Integrate Azure Machine Learning and Power BI
 
-### Task 1: Create a SQL view that combines sales orders with payments data
+Contoso retail would like to augment their Power BI report with data enriched with predictions from the machine learning model trained in [Exercise 4](#exercise-4-create-a-machine-learning-model-to-predict-incoming-cashflow) to predict incoming cashflow.
 
-1. In Synapse Studio, select the **Develop** hub from the left menu, then expand the **+** menu from the center pane and choose **SQL script**.
-
-    ![Synapse Studio displays with the Develop hub selected in the left menu and the + menu expanded in the center pane. The SQL script item is highlighted.](media/ss_develophub_newsqlscript.png "New SQL script")
-
-2. In the SQL script tab, choose to connect to the **sapdatasynsql** dedicated SQL pool in the toolbar menu.
-
-    ![The SQL Script tab displays with the sapdatasynsql database chosen in the Connect to field.](media/ss_sqlscript_connectto_sapdatasynsql.png "Connect to the dedicated SQL pool database")
-
-3. In the SQL script editor, paste and run the following SQL command to create the SalesPaymentsFull view that joins the SalesOrderHeaders and Payments data. The **Run** button is located in the SQL script toolbar menu.
+1. On Power BI report, expand the **Transform data** item on Home tab toolbar menu. Select **Transform data**.
    
-   ```SQL
-   CREATE VIEW [dbo].[SalesPaymentsFull]
-        AS SELECT s.[SALESDOCUMENT]
-        , s.[CUSTOMERNAME]
-        , s.[CUSTOMERGROUP]
-        , s.[BILLINGCOMPANYCODE]
-        , s.[BILLINGDOCUMENTDATE]
-        , p.[PaymentDate] as PAYMENTDATE
-        , s.[CUSTOMERACCOUNTGROUP]
-        , s.[CREDITCONTROLAREA]
-        , s.[DISTRIBUTIONCHANNEL]
-        , s.[ORGANIZATIONDIVISION]
-        , s.[SALESDISTRICT]
-        , s.[SALESGROUP]
-        , s.[SALESOFFICE]
-        , s.[SALESORGANIZATION]
-        , s.[SDDOCUMENTCATEGORY]
-        , s.[CITYNAME]
-        , s.[POSTALCODE]
-        , DATEDIFF(dayofyear, s.BILLINGDOCUMENTDATE, p.PaymentDate) as PAYMENTDELAYINDAYS
-    FROM [dbo].[SalesOrderHeaders] as s
-    JOIN [dbo].[Payments] as p ON REPLACE(LTRIM(REPLACE(s.[SALESDOCUMENT], '0', ' ')), ' ', '0') = p.[SalesOrderNr]
-   ```
+   ![The Home tab is selected with the Transform data item expanded. The Transform data item is selected from the expanded menu.](media/pbi_transformdatamenu.png)
 
-### Task 2: Move the view data to a parquet file in Azure Data Lake Storage Gen2
+2. In the Power Query Editor window, select the **SalesOrderPayments** table from the Queries pane and select the **Azure Machine Learning** item from the Home toolbar menu.
 
-In this task, a pipeline is created to copy the SalesPaymentsFull view to a parquet file in storage. To implement this pipeline, two additional integration datasets are required, one that points to the SalesPaymentFull view, and one that points to the desired location of the parquet file in Azure Data Lake Storage Gen2.
+    ![The Power Query Editor displays with SalesOrderPayments table selected in the Queries pane. The Azure Machine Learning item is selected in the Home toolbar menu.](media/pbi_aml_menu.png "Power Query Editor")
 
-1. In Synapse Studio, select the **Data** hub from the left menu and expand the **+** menu in the center pane. Select **Integration dataset**.
-
-    ![The Data hub displays with the + menu expanded and the Integration dataset option highlighted.](media/ss_datahub_newintegrationdataset.png "New Integration dataset")
-
-2. In the New integration dataset blade, search for and select **Azure Synapse Analytics**. Select **Continue**.
-
-    ![The New integration dataset blade displays with Azure Synapse Analytics entered in the search box and Azure Synapse Analytics shown in the search results.](media/ss_newintegrationdataset_azuresynapseanalyticsmenu.png "New Azure Synapse Analytics integration dataset")
-
-3. On the **Set properties** blade, populate the form as follows and select **OK**.
-
-    | Field | Value |   
-    |-------|-------|
-    | Name | Enter `sales_payments_full_sql`. |
-    | Linked service | Select **sales_order_data_sql**. |
-    | Table name | Select **dbo.SalesPaymentsFull**. |
-    | Import schema | Select **From connection/store**. |
-
-    ![The Set properties blade for the new integration dataset displays populated with the preceding values.](media/ss_salespaymentsfull_dataset_form.png "Set integration dataset properties")
-
-4. Expand the **+** menu in the center pane. Select **Integration dataset**.
-
-    ![The Data hub displays with the + menu expanded and the Integration dataset option highlighted.](media/ss_datahub_newintegrationdataset.png "New Integration dataset")
-
-5. In the New integration dataset blade, search for and select **Azure Data Lake Storage Gen2**. Select **Continue**.
-
-    ![The New integration dataset blade displays with Azure Data Lake Storage Gen2 entered into the search box and selected from the results.](media/ss_newadlsgen2_integrationdataset_menu.png "New integration dataset blade")
-
-6. On the Select format blade, select **Parquet**. Select **Continue**.
-   
-   ![The Select format blade displays with the Parquet option selected.](media/ss_integration_dataset_parquet.png "Parquet file format")
-
-7. On the Set properties blade, complete the form as follows, then select **OK**.
-
-    | Field | Value |   
-    |-------|-------|
-    | Name | Enter `sales_payment_full_parquet`. |
-    | Linked service | Select **datalake**. |
-    | File path | Enter **sales-payment-parquet**. |
-    | Import schema | Select **None**. |
-
-    ![The Set properties blade for the new integration dataset displays populated with the preceding values.](media/ss_salespayment_dataset_properties.png "Set integration dataset properties")
-
-8. On the Synapse Studio toolbar menu, select **Publish all**. Select **Publish** on the verification blade.
-
-    ![The Synapse Studio toolbar menu displays with the Publish all button highlighted.](media/ss_publishall.png "Publish all")
-
-9. In Synapse Studio, select the **Integrate** hub from the left menu. Expand the **+** menu from the center pane, and choose **Pipeline**.
-
-    ![Synapse Studio displays with the Integrate hub selected in the left menu and the + menu expanded in the center panel. The pipeline item is selected.](media/ss_newpipelinemenu.png "New pipeline")
-
-10. In the Properties blade of the pipeline, name the pipeline **CreateSalesPaymentsParquet**. Optionally collapse the Properties blade.
-
-    ![The Properties pipeline blade displays with the name entered as CreateSalesPaymentsParquet. The Properties button is highlighted.](media/ss_salespaymentpipeline_properties.png "Pipeline properties")
-
-11. In the Activities menu, expand the **Move & Transform** section. Drag-and-drop the **Copy data** activity to the pipeline design canvas. In the General tab of the Copy data activity enter `CopySalesPaymentsAsParquet`.
-
-    ![The Pipeline editor displays with the Move & Transform section expanded in the Activities menu. An arrow indicating a drag-and-drop action denotes a Copy data activity being moved to the design canvas. The General tab is selected and CopySalesPaymentsAsParquet is entered in the Name field.](media/ss_salespayments_pipeline_general.png "Pipeline designer")
-
-12. With the Copy data activity selected, choose the **Source** tab. Select **sales_payments_full** as the **Source dataset**.
-
-    ![The Copy data activity Source tab displays with the Source dataset set to sales_payments_full.](media/ss_salespayments_pipeline_source.png "Copy data Source tab")
-
-13. With the Copy data activity selected, choose the **Sink** tab. Select **sales_payment_full_parquet** as the **Sink dataset**.
-
-    ![The Copy data activity Sink tab displays with the Sink dataset set to sales_payment_full_parquet.](media/ss_salespayments_pipeline_sink.png "Copy data Sink tab")
-
-14. With the Copy data activity selected, choose the **Settings** tab. Check the **Enable staging** checkbox, then select **datalake** for the **Staging account linked service** and enter `staging` in the **Storage Path** field.
-
-    ![The Settings tab is highlighted with the Enable staging checkbox checked and datalake selected as the Storage account linked service. The Storage Path field is populated with the value staging.](media/ss_copydata_enablestaging.png "Copy data Settings tab")
-
-15. On the Synapse Studio toolbar menu, select **Publish all**. Select **Publish** on the verification blade.
-
-    ![The Synapse Studio toolbar menu displays with the Publish all button highlighted.](media/ss_publishall.png "Publish all")
-
-16. Once published, expand the **Add trigger** item on the pipeline toolbar and select **Trigger now**. Select **OK** on the Pipeline run blade.
-    
-    ![The pipeline toolbar menu displays with the Add trigger menu expanded and the Trigger now item selected.](media/ss_pipelinetriggernow.png "Trigger pipeline")
-
-17. Use the **Monitor** hub to ensure the pipeline run successful completion.
-
-    ![The Monitor hub pipeline runs displays indicating the successful completion of the CreateSalesPaymentsParquet pipeline.](media/ss_createsalespaymentsparquet_pipelinesucceeded.png "Successfully completed pipeline")
-
-### Task 3: Create the SalesPaymentsFull Spark table from the parquet file
-
-1. In Synapse Studio, select the **Data** hub, then choose the **Linked** tab from the center pane. Expand the **Azure Data Lake Storage Gen2** item followed by the **datalake** account. Select the **sales-payment-parquet** container. In the data explorer tab, right-click on the **dbo.SalesPaymentsFull.parquet** and expand **New notebook** then choose the **New Spark table** item.
-
-    ![Synapse Studio displays with the Data hub selected. The Linked tab is selected from the center pane. The Azure Data Lake Storage Gen2 and datalake items are expanded. The sales-payments-parquet container is selected. In the data explorer tab the context menu on the dbo.SalesPaymentsFull.parquet file displays with the New notebook item expanded and New Spark table selected.](media/ss_datahub_newsparktable.png "New Spark table")
-
-2. This will open a notebook with some code scaffolded. In the Notebook toolbar, select to Attach to **SparkPoolSmall**. In the code cell, change the table name that is being saved to `default.SalesPaymentsFull`. Select the **Run all** button from the toolbar. **Note**: It will take a few minutes for the Spark cluster to be provisioned.
-
-    ![A Synapse notebook displays with code to create a new Spark table scaffolded.](media/ss_createsparktablenotebook.png "Spark notebook")
-
-### Task 4: Create an Azure Machine Learning linked service
-
-1. In Synapse Studio, select the **Manage** hub, then choose **Linked services** from the center menu. Select **+ New** in the Linked services screen toolbar menu.
-
-    ![The Manage Hub displays with the Linked services item selected. The + New button is highlighted on the Linked services screen toolbar.](media/ss_newlinkedservicemenu.png "New Linked service")
-
-2. In the New linked service blade, search for and select **Azure Machine Learning**. Select **Continue**.
-
-    ![The New linked service blade displays with Azure Machine Learning entered in the search box and selected from the results.](media/ss_newamllinkedsvc_menu.png "New Azure Machine Learning linked service")
-
-3. Fill the New linked service - Azure Machine Learning form as follows, then select **Create**.
-   
-    | Field | Value |   
-    |-------|-------|
-    | Name | Enter `cashflow_aml`. |
-    | Azure Subscription | Select the lab subscription. |
-    | Azure Machine Learning workspace name | Select **sap-mcw-ml-ws** |
-
-    ![The New linked service blade displays with a form populated with the preceding values.](media/ss_linkedservice_aml_form.png "New Azure Machine Learning linked service form")
-
-4. On the Synapse Studio toolbar menu, select **Publish all**. Select **Publish** on the verification blade.
-
-    ![The Synapse Studio toolbar menu displays with the Publish all button highlighted.](media/ss_publishall.png "Publish all")
-
-### Task 5: Train a new regression model for incoming cash flow
-
-1. In Synapse Studio, select the **Data** hub, select the **Workspace** tab. Expand the **Lake database** section. Expand the **default** database and **Tables**. Right-click on the **salespaymentsfull** table, and expand the **Machine Learning** item and choose **Train a new model**.
-
-    ![Synapse Studio displays with the Data Hub selected. The Workspace tab is selected with the Lake database, default, and Tables items expanded. The context menu on the ssalespaymentsfull table is expanded with Machine Learning expanded and Train a new model item selected.](media/ss_mltrainmodel_menu.png "Train a new model from a Spark table")
-
-2. In the Train a new model blade, select **Regression** then **Continue**.
-   
-    ![The Train a new model blade displays with the Regression item highlighted.](media/ss_trainanewmodel_regressionselection.png "Train a new Regression model")
-    
-3. On the Train a new model (Regression) blade, select **PAYMENTDELAYINDAYS** for the **Target column** field. Ensure the Azure Machine Learning workspace is set to **sap-mcw-ml-ws** and the Apache Spark pool field is set to **SparkPoolSmall**. Select **Continue**.
-
-    ![The Train a new model (Regression) blade displays with the PAYMENTDELAYINDAYS column selected as the Target column. sap-mcw-ml-ws is selected in the Azure Machine learning workspace field and SparkPoolSmall is selected in the Apache Spark pool field.](media/ss_trainnewregressionmodel_targetcolumn.png "Regression Target Column selection")
-
-4. On the Train a new model (Regression) blade, select **Normalized root mean squared error** as the Primary metric and set the Maximum training job time (hours) to `0.25`. Enable the ONNX model compatibility option. Select **Open in notebook**.
-
-    ![The Train a new model (Regression) blade displays with a form populated as described. The Open in notebook button is highlighted.](media/ss_amlopeninnotebook.png "Open in notebook")
-
-5. In the scaffolded notebook, change the SQL query in the third code cell (line 1) to the following. This will reduce the number of columns being used to train the model.
-
-    ```SQL
-    SELECT CUSTOMERNAME, CUSTOMERGROUP, BILLINGCOMPANYCODE, CUSTOMERACCOUNTGROUP,    CREDITCONTROLAREA, DISTRIBUTIONCHANNEL, ORGANIZATIONDIVISION, SALESDISTRICT,SALESORGANIZATION, SDDOCUMENTCATEGORY, CITYNAME, POSTALCODE, PAYMENTDELAYINDAYS FROM default.salespaymentsfull
-    ```
-    ![A portion of the scaffolded notebook displays with the SQL query replaced in the third cell.](media/ss_notebook_trainregressionmodel_querycell.png "Scaffolded AML notebook")
-
-6. From the notebook toolbar menu, select **Run all** to execute all cells in the notebook. This notebook registers the dataset with Azure Machine Learning and creates an AutoML experiment to determine the best model to determine the incoming cashflow via predicting the payment delay in days. The best model is then registered with the Azure Machine Learning workspace. **Note**: this notebook will run for approximately 20 minutes.
-   
-7. Once the notebook has completed running, the output of the last cell will indicate the best model that is registered in the Azure Machine Learning workspace.
-
-    ![The output of the final cell of the Synapse notebook displays with the registered model highlighted.](media/ss_amlnotebook_regmodeloutput.png "Azure Machine Learning registered best model")  
-
-### Task 6: Deploy and test the regression model in the dedicated SQL pool
-
-1. In Synapse Studio, select the **Develop** hub from the left menu, then expand the **+** menu from the center pane and choose **SQL script**.
-
-    ![Synapse Studio displays with the Develop hub selected in the left menu and the + menu expanded in the center pane. The SQL script item is highlighted.](media/ss_develophub_newsqlscript.png "New SQL script")
-
-2. In the SQL script tab, choose to connect to the **sapdatasynsql** dedicated SQL pool in the toolbar menu.
-
-    ![The SQL Script tab displays with the sapdatasynsql database chosen in the Connect to field.](media/ss_sqlscript_connectto_sapdatasynsql.png "Connect to the dedicated SQL pool database")
-
-3. In the SQL script editor, paste and run the following SQL command to create and populate a table with model test data. The **Run** button is located in the SQL script toolbar menu.
-   
-   ```SQL
-   CREATE TABLE cashflow_prediction_tests
-    (
-        [CUSTOMERNAME] [nvarchar](80)  NULL,
-        [CUSTOMERGROUP] [nvarchar](2)  NULL,
-        [BILLINGCOMPANYCODE] [nvarchar](4)  NULL,
-        [CUSTOMERACCOUNTGROUP] [nvarchar](4)  NULL,
-        [CREDITCONTROLAREA] [nvarchar](4)  NULL,
-        [DISTRIBUTIONCHANNEL] [nvarchar](2)  NULL,
-        [ORGANIZATIONDIVISION] [nvarchar](2)  NULL,
-        [SALESDISTRICT] [nvarchar](6)  NULL,
-        [SALESORGANIZATION] [nvarchar](4)  NULL,
-        [SDDOCUMENTCATEGORY] [nvarchar](4)  NULL,
-        [CITYNAME] [nvarchar](35)  NULL,
-        [POSTALCODE] [nvarchar](10)  NULL
-    );
-
-    INSERT INTO cashflow_prediction_tests VALUES ('Westend Cycles', 'Z1', '1710', 'KUNA','A000', '10', '0', 'US0003', '1710','C', 'RALEIGH', '27603');
-    INSERT INTO cashflow_prediction_tests VALUES ('Skymart Corp', 'Z2', '1710', 'KUNA','A000', '10', '0', 'US0004', '1710','C', 'New York', '10007');
-   ```
-
-4. Select the **Data** hub from the left menu, ensure the **Workspace** tab is selected in the center pane. Expand **SQL database**, the **sapsynsql** database and the **Tables** items. Right-click the newly created **dbo.cashflow_prediction_tests** table and expand the **Machine Learning** item and select **Predict with a model**.
-
-    ![The Synapse Studio Data hub displays with the SQL database section expanded. The sapdatasynsql database is expanded with the context menu showing on the dbo.cashflow_prediction_tests table. From the context menu, the Machine Learning item is expanded with the Predict with a model item selected.](media/ss_predictwithmodelmenu.png "Predict with a model")
-
-5. On the Predict with a model blade, select the pre-trained model that was created in the previous task then select **Continue**.
-   
-   ![The pre-trained model listing displays with the model trained in the previous task selected.](media/ss_pretrianedmodelselection.png "Select pre-trained model")
-
-6. On the Predict with a model blade, keep all the mappings at their default values and select **Continue**.
-
-    ![The column mappings display on the Predict with a model blade. The Continue button is highlighted.](media/ss_modelmapping.png "Model column mappings")
-
-7. On the Predict with a model blade, fill the database form as follows then select **Deploy model + open script**. This will create a table to hold the trained models as well as encapsulate the calling of the model with a stored procedure.
-   
-    | Field | Value |   
-    |-------|-------|
-    | Script type | Select **Stored procedure**. |
-    | Stored procedure name | Enter `[dbo].[predict_cashflow]`. |
-    | Database table | Select **Create new**. |
-    | New table | Enter `[dbo].[ml_models]`. |
-
-    ![The Predict with a model blade displays with a form populated with the preceding values. The Deploy model + open script button is highlighted.](media/ss_dbmodelspec.png "Deploy model to the database")
-
-8. A script window opens with a query to create the stored procedure that leverages the trained regression model using the dbo.cashflow_prediction_tests table as input. At the end of the script the stored procedure is executed. The resulting values will include the predicted payment delay in days for each row in the **variable_out1** column. Execute the generated script and view the results.
-
-    ![The SQL Query results window displays with the variabl_out1 column highlighted.](media/ss_modelpredictresult.png "Predicted days late for each test case")
-
+3. asdf
 ## After the hands-on lab 
 
 Duration: X minutes
