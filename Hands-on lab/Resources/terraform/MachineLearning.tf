@@ -57,7 +57,7 @@ resource "azurerm_key_vault_access_policy" "aml_kv_policy" {
 ##  - requires Reader IAM role to subscription and the aml workspace
 #######################################################################
 resource "azurerm_role_assignment" "usertosub" {
-  scope                = local.subscription_id
+  scope                = data.azurerm_subscription.current.id
   role_definition_name = "Reader"
   principal_id         = local.currentuserobjectid
 }
