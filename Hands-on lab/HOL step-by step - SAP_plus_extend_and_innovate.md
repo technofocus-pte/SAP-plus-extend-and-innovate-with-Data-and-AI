@@ -61,6 +61,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 3: Create the SalesPaymentsFull Spark table from the parquet file](#task-3-create-the-salespaymentsfull-spark-table-from-the-parquet-file)
     - [Task 4: Create an Azure Machine Learning linked service](#task-4-create-an-azure-machine-learning-linked-service)
     - [Task 5: Train a new regression model for incoming cash flow](#task-5-train-a-new-regression-model-for-incoming-cash-flow)
+    - [Task 6: Deploy and test the regression model in the dedicated SQL pool](#task-6-deploy-and-test-the-regression-model-in-the-dedicated-sql-pool)
   - [After the hands-on lab](#after-the-hands-on-lab)
     - [Task 1: Task name](#task-1-task-name)
     - [Task 2: Task name](#task-2-task-name)
@@ -960,6 +961,66 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
 7. Once the notebook has completed running, the output of the last cell will indicate the best model that is registered in the Azure Machine Learning workspace.
 
     ![The output of the final cell of the Synapse notebook displays with the registered model highlighted.](media/ss_amlnotebook_regmodeloutput.png "Azure Machine Learning registered best model")  
+
+### Task 6: Deploy and test the regression model in the dedicated SQL pool
+
+1. In Synapse Studio, select the **Develop** hub from the left menu, then expand the **+** menu from the center pane and choose **SQL script**.
+
+    ![Synapse Studio displays with the Develop hub selected in the left menu and the + menu expanded in the center pane. The SQL script item is highlighted.](media/ss_develophub_newsqlscript.png "New SQL script")
+
+2. In the SQL script tab, choose to connect to the **sapdatasynsql** dedicated SQL pool in the toolbar menu.
+
+    ![The SQL Script tab displays with the sapdatasynsql database chosen in the Connect to field.](media/ss_sqlscript_connectto_sapdatasynsql.png "Connect to the dedicated SQL pool database")
+
+3. In the SQL script editor, paste and run the following SQL command to create and populate a table with model test data. The **Run** button is located in the SQL script toolbar menu.
+   
+   ```SQL
+   CREATE TABLE cashflow_prediction_tests
+    (
+        [CUSTOMERNAME] [nvarchar](80)  NULL,
+        [CUSTOMERGROUP] [nvarchar](2)  NULL,
+        [BILLINGCOMPANYCODE] [nvarchar](4)  NULL,
+        [CUSTOMERACCOUNTGROUP] [nvarchar](4)  NULL,
+        [CREDITCONTROLAREA] [nvarchar](4)  NULL,
+        [DISTRIBUTIONCHANNEL] [nvarchar](2)  NULL,
+        [ORGANIZATIONDIVISION] [nvarchar](2)  NULL,
+        [SALESDISTRICT] [nvarchar](6)  NULL,
+        [SALESORGANIZATION] [nvarchar](4)  NULL,
+        [SDDOCUMENTCATEGORY] [nvarchar](4)  NULL,
+        [CITYNAME] [nvarchar](35)  NULL,
+        [POSTALCODE] [nvarchar](10)  NULL
+    );
+
+    INSERT INTO cashflow_prediction_tests VALUES ('Westend Cycles', 'Z1', '1710', 'KUNA','A000', '10', '0', 'US0003', '1710','C', 'RALEIGH', '27603');
+    INSERT INTO cashflow_prediction_tests VALUES ('Skymart Corp', 'Z2', '1710', 'KUNA','A000', '10', '0', 'US0004', '1710','C', 'New York', '10007');
+   ```
+
+4. Select the **Data** hub from the left menu, ensure the **Workspace** tab is selected in the center pane. Expand **SQL database**, the **sapsynsql** database and the **Tables** items. Right-click the newly created **dbo.cashflow_prediction_tests** table and expand the **Machine Learning** item and select **Predict with a model**.
+
+    ![The Synapse Studio Data hub displays with the SQL database section expanded. The sapdatasynsql database is expanded with the context menu showing on the dbo.cashflow_prediction_tests table. From the context menu, the Machine Learning item is expanded with the Predict with a model item selected.](media/ss_predictwithmodelmenu.png "Predict with a model")
+
+5. On the Predict with a model blade, select the pre-trained model that was created in the previous task then select **Continue**.
+   
+   ![The pre-trained model listing displays with the model trained in the previous task selected.](media/ss_pretrianedmodelselection.png "Select pre-trained model")
+
+6. On the Predict with a model blade, keep all the mappings at their default values and select **Continue**.
+
+    ![The column mappings display on the Predict with a model blade. The Continue button is highlighted.](media/ss_modelmapping.png "Model column mappings")
+
+7. On the Predict with a model blade, fill the database form as follows then select **Deploy model + open script**. This will create a table to hold the trained models as well as encapsulate the calling of the model with a stored procedure.
+   
+    | Field | Value |   
+    |-------|-------|
+    | Script type | Select **Stored procedure**. |
+    | Stored procedure name | Enter `[dbo].[predict_cashflow]`. |
+    | Database table | Select **Create new**. |
+    | New table | Enter `[dbo].[ml_models]`. |
+
+    ![The Predict with a model blade displays with a form populated with the preceding values. The Deploy model + open script button is highlighted.](media/ss_dbmodelspec.png "Deploy model to the database")
+
+8. A script window opens with a query to create the stored procedure that leverages the trained regression model using the dbo.cashflow_prediction_tests table as input. At the end of the script the stored procedure is executed. The resulting values will include the predicted payment delay in days for each row in the **variable_out1** column. Execute the generated script and view the results.
+
+    ![The SQL Query results window displays with the variabl_out1 column highlighted.](media/ss_modelpredictresult.png "Predicted days late for each test case")
 
 ## After the hands-on lab 
 
