@@ -52,12 +52,12 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 1: Retrieve the access key for the Azure Data Lake Storage account](#task-1-retrieve-the-access-key-for-the-azure-data-lake-storage-account)
     - [Task 2: Create an Azure Machine Learning datastore](#task-2-create-an-azure-machine-learning-datastore)
     - [Task 3: Create and run an Automated ML job](#task-3-create-and-run-an-automated-ml-job)
-    - [Task 3: Deploy the best model as a web service](#task-3-deploy-the-best-model-as-a-web-service)
+    - [Task 4: Deploy the best model as a web service](#task-4-deploy-the-best-model-as-a-web-service)
   - [Exercise 6: Train a regression model to predict incoming cashflow using Azure Synapse Analytics (OPTIONAL)](#exercise-6-train-a-regression-model-to-predict-incoming-cashflow-using-azure-synapse-analytics-optional)
     - [Task 1: Create the SalesPaymentsFull Spark table from the parquet file](#task-1-create-the-salespaymentsfull-spark-table-from-the-parquet-file)
-    - [Task 4: Create an Azure Machine Learning linked service](#task-4-create-an-azure-machine-learning-linked-service)
-    - [Task 2: Train a new regression model for incoming cash flow](#task-2-train-a-new-regression-model-for-incoming-cash-flow)
-    - [Task 3: Deploy and test the regression model in the dedicated SQL pool](#task-3-deploy-and-test-the-regression-model-in-the-dedicated-sql-pool)
+    - [Task 2: Create an Azure Machine Learning linked service](#task-2-create-an-azure-machine-learning-linked-service)
+    - [Task 3: Train a new regression model for incoming cash flow](#task-3-train-a-new-regression-model-for-incoming-cash-flow)
+    - [Task 4: Deploy and test the regression model in the dedicated SQL pool](#task-4-deploy-and-test-the-regression-model-in-the-dedicated-sql-pool)
   - [Exercise 7: Visualize historical data with Power BI](#exercise-7-visualize-historical-data-with-power-bi)
     - [Task 1: Retrieve the database connection information for the dedicated SQL pool](#task-1-retrieve-the-database-connection-information-for-the-dedicated-sql-pool)
     - [Task 2: Import data into Power BI](#task-2-import-data-into-power-bi)
@@ -834,7 +834,7 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
 
     > **Note**: Training will take approximately 15 minutes. Proceed to [Exercise 7](#exercise-7-visualize-historical-data-with-power-bi) and return here once completed.
 
-### Task 3: Deploy the best model as a web service
+### Task 4: Deploy the best model as a web service
 
 1. Once the Automated ML job indicates a status of **Completed**, in the Best model summary card on the screen, select the link beneather the **Algorithm name** heading.
     
@@ -913,7 +913,7 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
 
     ![A Synapse notebook displays with code to create a new Spark table scaffolded.](media/ss_createsparktablenotebook.png "Spark notebook")
 
-### Task 4: Create an Azure Machine Learning linked service
+### Task 2: Create an Azure Machine Learning linked service
 
 1. In Synapse Studio, select the **Manage** hub, then choose **Linked services** from the center menu. Select **+ New** in the Linked services screen toolbar menu.
 
@@ -937,7 +937,7 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
 
     ![The Synapse Studio toolbar menu displays with the Publish all button highlighted.](media/ss_publishall.png "Publish all")
 
-### Task 2: Train a new regression model for incoming cash flow
+### Task 3: Train a new regression model for incoming cash flow
 
 1. In Synapse Studio, select the **Data** hub, select the **Workspace** tab. Expand the **Lake database** section. Expand the **default** database and **Tables**. Right-click on the **salespaymentsfull** table, and expand the **Machine Learning** item and choose **Train a new model**.
 
@@ -970,7 +970,7 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
 
     ![The output of the final cell of the Synapse notebook displays with the registered model highlighted.](media/ss_amlnotebook_regmodeloutput.png "Azure Machine Learning registered best model")  
 
-### Task 3: Deploy and test the regression model in the dedicated SQL pool
+### Task 4: Deploy and test the regression model in the dedicated SQL pool
 
 1. In Synapse Studio, select the **Develop** hub from the left menu, then expand the **+** menu from the center pane and choose **SQL script**.
 
@@ -1288,7 +1288,7 @@ Contoso retail would like to augment their Power BI report with data enriched wi
 9.  Select the **Home** tab then **Close & Apply**.
     
     ![A portion of the Power Query editor toolbar displays with teh Close & Apply button highlighted.](media/pbi_closeapply_powerqueryeditor.png "Close & Apply")
-    
+
 ## After the hands-on lab 
 
 Duration: X minutes
