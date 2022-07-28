@@ -45,14 +45,20 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 1: Create a dedicated SQL pool table to hold payment information](#task-1-create-a-dedicated-sql-pool-table-to-hold-payment-information)
     - [Task 2: Create the Payments table integration dataset](#task-2-create-the-payments-table-integration-dataset)
     - [Task 3: Create the Payments ingestion pipeline](#task-3-create-the-payments-ingestion-pipeline)
-  - [Exercise 4: Create a machine learning model to predict incoming cashflow](#exercise-4-create-a-machine-learning-model-to-predict-incoming-cashflow)
+  - [Exercise 4: Prepare data for the incoming cashflow prediction model training](#exercise-4-prepare-data-for-the-incoming-cashflow-prediction-model-training)
     - [Task 1: Create a SQL view that combines sales orders with payments data](#task-1-create-a-sql-view-that-combines-sales-orders-with-payments-data)
     - [Task 2: Move the view data to a parquet file in Azure Data Lake Storage Gen2](#task-2-move-the-view-data-to-a-parquet-file-in-azure-data-lake-storage-gen2)
-    - [Task 3: Create the SalesPaymentsFull Spark table from the parquet file](#task-3-create-the-salespaymentsfull-spark-table-from-the-parquet-file)
+  - [Exercise 5: Train a regression model to predict incoming cashflow using Azure Machine Learning Studio](#exercise-5-train-a-regression-model-to-predict-incoming-cashflow-using-azure-machine-learning-studio)
+    - [Task 1: Retrieve the access key for the Azure Data Lake Storage account](#task-1-retrieve-the-access-key-for-the-azure-data-lake-storage-account)
+    - [Task 2: Create an Azure Machine Learning datastore](#task-2-create-an-azure-machine-learning-datastore)
+    - [Task 3: Create and run an Automated ML job](#task-3-create-and-run-an-automated-ml-job)
+    - [Task 3: Deploy the best model as a web service](#task-3-deploy-the-best-model-as-a-web-service)
+  - [Exercise 6: Train a regression model to predict incoming cashflow using Azure Synapse Analytics (OPTIONAL)](#exercise-6-train-a-regression-model-to-predict-incoming-cashflow-using-azure-synapse-analytics-optional)
+    - [Task 1: Create the SalesPaymentsFull Spark table from the parquet file](#task-1-create-the-salespaymentsfull-spark-table-from-the-parquet-file)
     - [Task 4: Create an Azure Machine Learning linked service](#task-4-create-an-azure-machine-learning-linked-service)
-    - [Task 5: Train a new regression model for incoming cash flow](#task-5-train-a-new-regression-model-for-incoming-cash-flow)
-    - [Task 6: Deploy and test the regression model in the dedicated SQL pool](#task-6-deploy-and-test-the-regression-model-in-the-dedicated-sql-pool)
-  - [Exercise 5: Visualize historical data with Power BI](#exercise-5-visualize-historical-data-with-power-bi)
+    - [Task 2: Train a new regression model for incoming cash flow](#task-2-train-a-new-regression-model-for-incoming-cash-flow)
+    - [Task 3: Deploy and test the regression model in the dedicated SQL pool](#task-3-deploy-and-test-the-regression-model-in-the-dedicated-sql-pool)
+  - [Exercise 7: Visualize historical data with Power BI](#exercise-7-visualize-historical-data-with-power-bi)
     - [Task 1: Retrieve the database connection information for the dedicated SQL pool](#task-1-retrieve-the-database-connection-information-for-the-dedicated-sql-pool)
     - [Task 2: Import data into Power BI](#task-2-import-data-into-power-bi)
     - [Task 3: Create the relational model](#task-3-create-the-relational-model)
@@ -62,7 +68,8 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 7: Create a sales per customer group and material group visualization](#task-7-create-a-sales-per-customer-group-and-material-group-visualization)
     - [Task 8: Create a payment offset per customer group visualization](#task-8-create-a-payment-offset-per-customer-group-visualization)
     - [Task 9: Create a payment offset per customer group box plot visualization (Optional)](#task-9-create-a-payment-offset-per-customer-group-box-plot-visualization-optional)
-  - [Exercise 6: Integrate Azure Machine Learning and Power BI](#exercise-6-integrate-azure-machine-learning-and-power-bi)
+  - [Exercise 8: Integrate Azure Machine Learning and Power BI](#exercise-8-integrate-azure-machine-learning-and-power-bi)
+    - [Task 1: Add the deployed model to the Power BI report](#task-1-add-the-deployed-model-to-the-power-bi-report)
   - [After the hands-on lab](#after-the-hands-on-lab)
     - [Task 1: Task name](#task-1-task-name)
     - [Task 2: Task name](#task-2-task-name)
@@ -560,9 +567,10 @@ Payment history data is required when creating the cash flow prediction model. T
     ```sql
     select count(*) from Payments;
     ```
-## Exercise 4: Create a machine learning model to predict incoming cashflow
 
-Contoso Retail would like to take advantage of the historical sales order and payment data to create a machine learning model that predicts incoming cashflow. In this exercise, a Sales Order and Payments data are combined in a SQL view whose data is then stored as a parquet file in Azure Data Lake Storage Gen2. This parquet file is then used to create a Spark table that is used as the data source for training the incoming cashflow regression model.
+## Exercise 4: Prepare data for the incoming cashflow prediction model training
+
+Contoso Retail would like to take advantage of the historical sales order and payment data to create a machine learning model that predicts incoming cashflow. In this exercise, a Sales Order and Payments data are combined in a SQL view whose data is then stored as a parquet file in Azure Data Lake Storage Gen2.
 
 ### Task 1: Create a SQL view that combines sales orders with payments data
 
@@ -686,7 +694,216 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
 
     ![The Monitor hub pipeline runs displays indicating the successful completion of the CreateSalesPaymentsParquet pipeline.](media/ss_createsalespaymentsparquet_pipelinesucceeded.png "Successfully completed pipeline")
 
-### Task 3: Create the SalesPaymentsFull Spark table from the parquet file
+## Exercise 5: Train a regression model to predict incoming cashflow using Azure Machine Learning Studio
+
+### Task 1: Retrieve the access key for the Azure Data Lake Storage account
+
+1. In the Azure Portal, open the lab resource group **mcw_sap_plus_extend_and_innovate** then search for and select the Storage account **sapadls{SUFFIX}**.
+
+    ![The resource group listing displays with the sapadls{SUFFIX} Storage account resource selected.](media/ap_adlsrglist.png "Resource group listing")
+
+2. From the left menu, select **Access keys**. Below the **key1** heading, select the **Show** button next to the Key field. Use the Copy button in the field to record this value for a future task.
+
+    ![The Access keys screen displays for the storage account with the copy button next to the key1 Key field highlighted.](media/ap_adlsaccesskeycopy.png "Copy key1 Key value")
+
+### Task 2: Create an Azure Machine Learning datastore
+
+1. In the Azure Portal, open the lab resource group **mcw_sap_plus_extend_and_innovate** then search for and select the Azure Machine Learning resource **sap-mcw-ml-ws**.
+
+    ![The resource group listing displays with the sap-mcw-ml-ws item highlighted.](media/ap_amlwsrglist.png "Resource Group list")
+
+2. On the Azure Machine Learning Overview screen, select the **Studio web URL** to open the workspace.
+
+    ![The Azure Machine Learning Overview screen displays with the Studio web URL hyperlink selected.](media/ap_launchamlworkspace.png "Launch AML Studio")
+
+3. From the left menu, select **Datastores**.
+   
+   ![AML Studio displays with Datastores selected from the left menu.](media/amls_datastoremenu.png "AML Studio menu")
+
+4. On the Datastores screen, select **+ New datastore** from the toolbar menu.
+
+    ![The Datastores screen displays with the + New datastore button highlighted.](media/amls_newdatastore_menu.png "New datastore")
+
+5. On the New datastore blade, fill the form as follows then select **Create**.
+
+    | Field | Value |   
+    |-------|-------|
+    | Datastore name | Enter `sales_payments_full_adls`. |
+    | Datastore type | Select **Azure Blob Storage**. |
+    | Account selection method | Select **From Azure subscription**. |
+    | Subscription ID | Select the lab subscription. |
+    | Storage account | Select **sapadls{SUFFIX}(mcw_sap_plus_extend_and_innovate)**. |
+    | Blob container | Select **sales-payment-parquet** |
+    | Save credentials with the datastore for data access | Select **Yes**. |
+    | Authentication type | Select **Account key**. |
+    | Account key | Enter the storage account key obtained in the previous task. |
+    | Use workspace managed identity for data preview and profiling in Azure Machine Learning studio | Select **No**. |
+
+    ![The New datastore blade displays with a form populated with the preceding values.](media/amls_newdatastoreform.png "New datastore")
+
+### Task 3: Create and run an Automated ML job
+
+1. In Azure Machine Learning studio, select **Automated ML** from the left menu.
+
+    ![A portion of the left menu of Azure Machine Learning studio displays with the Automated ML item highlighted.](media/amls_automatedml_menu.png "Automated ML")
+
+2. On the Automated ML screen, select **+ New Automated ML job** from the toolbar menu.
+   
+    ![The Automated ML screen toolbar menu displays with the + New Automated ML job button highlighted.](media/amls_newautomlrun_menu.png "New Automated ML job")
+
+3. On the Create a new Automated ML job Select a data asset step, expand the **Create** menu and select **From datastore**.
+
+    ![The Create a new Automated ML job screen displays with the Create menu expanded and the From datastore item highlighted.](media/amls_automl_createnewdatasetmenu.png "Create data asset from datastore")
+
+4. On the Create dataset from datastore blade Basic info step, name the dataset `sap-sales-payments-full`. Select **Next**.
+
+    ![The Create dataset from datastore blade displays with sap-sales-payments-full entered in the Name field.](media/amls_dataset_basicinfo.png "New dataset Basic info")
+
+5. On the Create dataset from datastore blade Datastore selection step, select the **sales_payment_full_adls** datastore then use the **Browse** button to select **dbo.SalesPaymentsFull.parquet** file for the **Path** field. Select **Next**. 
+
+    ![The Create dataset from datastore blade displays with sales_payment_full_adls selected as the datastore and dbo.SalesPaymentsFull.parquet entered in the Path field. The Browse button is highlighted.](media/amlms_dataset_datastoreselection.png "New dataset Datastore selection")  
+
+6. On the Create dataset from datastore blade Settings and preview step, ensure you see data in the table, and select **Next**.
+   
+   ![The Create dataset from datastore blade displays with tabular data.](media/amls_dataset_settingsandpreview.png "Preview data")
+
+7. On the Create dataset from datastore blade Schema step, toggle the following fields off so that they are not included in the dataset then select **Next**:
+   1. SALESDOCUMENT
+   2. BILLINGDOCUMENTDATE
+   3. PAYMENTDATE
+   4. SALESGROUP
+   5. SALESOFFICE
+
+    ![A portion of the Schema step screen displays with the specified fields toggled to not be included.](media/amls_dataset_schema.png "Dataset Schema")
+
+8. On the Create dataset from datastore blade Confirm details step, select **Create**.
+
+9. On the Select data asset step of the Create a new Automated ML job screen, refresh the data asset table.
+
+10. On the Select data asset step, select **sap-sales-payments-full** from the list and select **Next**.
+    
+    ![The Select data asset screen displays with the sap-sales-payments-full item selected.](media/amls_automlrun_selectdataset_sap.png "Select data asset")
+
+11. On the Configure job step, select the **+ New** button below the **Select Azure ML compute cluster** field.
+
+    ![The Select Azure ML compute cluster field displays with the + New button highlighted.](media/amls_newcomputecluster_button.png "Create new Compute cluster")
+
+12. On the Create compute cluster blade Virtual machine step, accept the defaults and select **Next**.
+
+13. On the Create compute cluster blade Advanced settings, fill the form as follows then select **Create**. It takes a few moments for the  
+
+    | Field | Value |   
+    |-------|-------|
+    | Compute name | Enter `automlcompute`. |
+    | Maximum number of nodes | Enter `3`. |
+
+    ![The Compute cluster Advanced Settings displays with automlcompute entered in the Compute name and the Maximum number of nodes is set to three.](media/amls_compute_advancedsettings.png "Compute cluster Advanced Settings")
+
+14. On the Configure job step, fill the form as follows, then select **Next**.
+    
+    | Field | Value |   
+    |-------|-------|
+    | Experiment name | Enter `predict-incoming-cashflow`. |
+    | Target column | Select **PAYMENTDELAYINDAYS**. |
+    | Select compute type | Select **Compute cluster**. |
+    | Select Azure ML compute cluster | Select **automlcompute**. |
+
+    ![The Configure job step displays with a form populated with the preceding values.](media/amls_configurejob.png "Configure job")
+
+15. On the Select task and settings step, select **Regression**, then select **View additional configuration settings**.
+
+    ![The Select task and settings step displays with the Regression item checked and the View additional configuration settings link highlighted.](media/amls_selecttaskandsettings.png "Select task and settings step")
+
+16. On the Additional configurations blade, select the Primary metric of **Normalized root mean squared error**, then expand the Blocked models drop down and check the following items and select **Save**. This will reduce the time to train the model.
+    1.  ElasticNet
+    2.  GradientBoosting
+    3.  KNN
+    4.  LassoLars
+    5.  SGD
+    6.  RandomForest
+    7.  ExtremeRandomTrees
+    8.  LightGBM
+    9.  FastLinearRegressor
+    10. OnlineGradientDescentRegressor
+
+    ![The Additional configurations blade displays with Normalized root mean squared error selected as the Primary metric and the Blocked models expanded with the above items checked.](media/amls_jobadditionalconfigurations.png "Additional configurations")
+
+18. Select **Next** on the Select task and settings step. On the Validate and test step, select **Finish**. The job is then created and opened in the browser. Use the **Refresh** button to monitor the current state.
+    
+    ![The Automated ML job screen displays with a status of Running. The Refresh button is highlighted.](media/amls_automljob_running.png "Running Automated ML job")
+
+    > **Note**: Training will take approximately 15 minutes. Proceed to [Exercise 7](#exercise-7-visualize-historical-data-with-power-bi) and return here once completed.
+
+### Task 3: Deploy the best model as a web service
+
+1. Once the Automated ML job indicates a status of **Completed**, in the Best model summary card on the screen, select the link beneather the **Algorithm name** heading.
+    
+    ![The Automated ML job screen displays with a Status of Completed. The link below Algorithm name is highlighted.](media/amls_automljob_complete.png "Completed Automated ML job")
+
+2. On the Model screen, expand the **Deploy** item in the toolbar menu and select **Deploy to web service**.
+    
+    ![The Model screen displays with the Deploy item expanded in the toolbar menu and teh Deploy to web service option highlighted.](media/amls_model_deploy_menu.png "Deploy model as web service")
+
+3.  On the Deploy a model blade, fill the form as follows then select **Deploy**.
+    
+    | Field | Value |   
+    |-------|-------|
+    | Name | Enter `predict-incoming-cashflow-svc`. |
+    | Compute type | Select **Azure Container Instance**. |
+
+    ![The Deploy a model blade displays with a form populated with the preceding values.](media/amls_model_deploy_settings.png "Deploy a model")
+
+4.  On the Model screen, monitor the Deploy status at the bottom of the Model summary card. It will indicate a status of **Completed** in a few minutes time.
+
+    ![The Model screen displays with the Deploy status indicating Running.](media/amls_modelsvc_deploying.png "Model deployment status")
+
+5.  Select the link below **Deploy status** to go to the deployed service endpoint screen.
+
+6.  On the predict-incoming-cashflow-svc endpoint screen, select the **Test** tab. Replace the contents of the input data with the following and select **Test**.
+
+    ```json
+    {
+        "Inputs": {
+            "data": [
+            { 
+                "CUSTOMERNAME": "Westend Cycles",
+                "CUSTOMERGROUP": "Z1",
+                "BILLINGCOMPANYCODE": 1710,
+                "CUSTOMERACCOUNTGROUP": "KUNA",
+                "CREDITCONTROLAREA": "A000",
+                "DISTRIBUTIONCHANNEL": 10,
+                "ORGANIZATIONDIVISION": 0,
+                "SALESDISTRICT": "US0003",
+                "SALESORGANIZATION": 1710,
+                "SDDOCUMENTCATEGORY": "C",
+                "CITYNAME": "RALEIGH",
+                "POSTALCODE": "27603"
+            },
+            { 
+                "CUSTOMERNAME": "Skymart Corp",
+                "CUSTOMERGROUP": "Z2",
+                "BILLINGCOMPANYCODE": 1710,
+                "CUSTOMERACCOUNTGROUP": "KUNA",
+                "CREDITCONTROLAREA": "A000",
+                "DISTRIBUTIONCHANNEL": 10,
+                "ORGANIZATIONDIVISION": 0,
+                "SALESDISTRICT": "US0004",
+                "SALESORGANIZATION": 1710,
+                "SDDOCUMENTCATEGORY": "C",
+                "CITYNAME": "New York",
+                "POSTALCODE": "10007"
+            }
+            ]
+        },
+        "GlobalParameters": 1.0
+    }
+    ```
+
+    ![The predict-incoming-cashflow-svc endpoint screen displays with the test data in the text box. The results of the call are also displayed.](media/amls_endpoint_test.png "Test service deployment endpoint")
+
+## Exercise 6: Train a regression model to predict incoming cashflow using Azure Synapse Analytics (OPTIONAL)
+
+### Task 1: Create the SalesPaymentsFull Spark table from the parquet file
 
 1. In Synapse Studio, select the **Data** hub, then choose the **Linked** tab from the center pane. Expand the **Azure Data Lake Storage Gen2** item followed by the **datalake** account. Select the **sales-payment-parquet** container. In the data explorer tab, right-click on the **dbo.SalesPaymentsFull.parquet** and expand **New notebook** then choose the **New Spark table** item.
 
@@ -720,7 +937,7 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
 
     ![The Synapse Studio toolbar menu displays with the Publish all button highlighted.](media/ss_publishall.png "Publish all")
 
-### Task 5: Train a new regression model for incoming cash flow
+### Task 2: Train a new regression model for incoming cash flow
 
 1. In Synapse Studio, select the **Data** hub, select the **Workspace** tab. Expand the **Lake database** section. Expand the **default** database and **Tables**. Right-click on the **salespaymentsfull** table, and expand the **Machine Learning** item and choose **Train a new model**.
 
@@ -747,13 +964,13 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
 
 6. From the notebook toolbar menu, select **Run all** to execute all cells in the notebook. This notebook registers the dataset with Azure Machine Learning and creates an AutoML experiment to determine the best model to determine the incoming cashflow via predicting the payment delay in days. The best model is then registered with the Azure Machine Learning workspace. 
    
-    > **Note**: this notebook will run for approximately 20 minutes. Proceed to [Exercise 5](#exercise-5-visualize-historical-data-with-power-bi) and return here once completed.
+    > **Note**: this notebook will run for approximately 20 minutes. Proceed to [Exercise 7](#exercise-7-visualize-historical-data-with-power-bi) and return here once completed.
    
 7. Once the notebook has completed running, the output of the last cell will indicate the best model that is registered in the Azure Machine Learning workspace.
 
     ![The output of the final cell of the Synapse notebook displays with the registered model highlighted.](media/ss_amlnotebook_regmodeloutput.png "Azure Machine Learning registered best model")  
 
-### Task 6: Deploy and test the regression model in the dedicated SQL pool
+### Task 3: Deploy and test the regression model in the dedicated SQL pool
 
 1. In Synapse Studio, select the **Develop** hub from the left menu, then expand the **+** menu from the center pane and choose **SQL script**.
 
@@ -813,7 +1030,7 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
 
     ![The SQL Query results window displays with the variabl_out1 column highlighted.](media/ss_modelpredictresult.png "Predicted days late for each test case")
 
-## Exercise 5: Visualize historical data with Power BI
+## Exercise 7: Visualize historical data with Power BI
 
 Contoso Retail would like to gain insights into historical sales order and payments data.
 
@@ -1024,13 +1241,15 @@ A box plot can provide a more detailed view of the payment offset by customer gr
     > - CustomerGroup2 pays within 30days +/- 5 days
     > - Other customergroups pay after 10 days
 
-6. Keep this report open in Power BI desktop for the next exercise.
+6. Keep this report open in Power BI desktop for future exercises.
 
-## Exercise 6: Integrate Azure Machine Learning and Power BI
+## Exercise 8: Integrate Azure Machine Learning and Power BI
 
-Contoso retail would like to augment their Power BI report with data enriched with predictions from the machine learning model trained in [Exercise 4](#exercise-4-create-a-machine-learning-model-to-predict-incoming-cashflow) to predict incoming cashflow.
+Contoso retail would like to augment their Power BI report with data enriched with predictions from the machine learning model trained in [Exercise 5](#exercise-5-train-a-regression-model-to-predict-incoming-cashflow-using-azure-machine-learning-studio) to predict incoming cashflow.
 
-1. On Power BI report, expand the **Transform data** item on Home tab toolbar menu. Select **Transform data**.
+### Task 1: Add the deployed model to the Power BI report
+
+1. On the Power BI report, expand the **Transform data** item on Home tab toolbar menu. Select **Transform data**.
    
    ![The Home tab is selected with the Transform data item expanded. The Transform data item is selected from the expanded menu.](media/pbi_transformdatamenu.png)
 
@@ -1038,7 +1257,38 @@ Contoso retail would like to augment their Power BI report with data enriched wi
 
     ![The Power Query Editor displays with SalesOrderPayments table selected in the Queries pane. The Azure Machine Learning item is selected in the Home toolbar menu.](media/pbi_aml_menu.png "Power Query Editor")
 
-3. asdf
+3. In the Azure Machine Learning Models dialog, select the **AzureML.predict-incoming-cashflow-svc** item, then select **OK**.
+
+    ![The Azure Machine Learning Models screen displays with the AzureML.predict-incoming-cashflow-svc selected and the OK button is highlighted.](media/pbi_selectamlmodel.png "Azure Machine Learning Models")
+
+    > **Note**: If the **Information is required about data privacy** message appears, select **Continue**, then check the checkbox to Ignore Privacy Levels, select **Save**.
+
+4. In the Power Query Editor, with the SalesOrderPayments table selected in the Queries pane, scroll all the way to the right of the displayed table. Right-click the **AzureML.predict-incoming-cashflow-svc** field menu and choose to rename the field `predOffset`.
+
+    ![The Power Query Editor window displays with SalesOrderPayments selected in the left menu. The tabular data is scrolled to the right and the context menu on the AzureML.predict-incoming-cashflow-svc expanded with the Rename option selected.](media/pbi_renameamlcolumn.png "Rename the new column")
+
+5. Right-click the **predOffset** column, and expand the **Change Type** option and select **Whole Number**.
+
+    ![The predOffset column displays with it's context menu expanded, the Change Type option is expanded with the Whole Number item selected.](media/pbi_changepredoffsettowholenumber.png "Change column type")
+
+6. On the Power Query Editor, select the **Add Column** tab, select **Custom Column**.
+
+    ![The Power Query Editor displays with the Add Column tab selected and the Custom Column button highlighted.](media/pbi_customcolumn_menu.png "Add Custom Column")
+
+7. On the Custom Column dialog, name the new column `predPaymentDate` and set the formula to the following and select **OK**.
+
+    ```vb
+    Date.AddDays([BILLINGDOCUMENTDATE], [predOffset])
+    ```
+
+8. Right-click the new predPaymentDate and expand the **Change Type** option and choose **Date**.
+
+    ![The predOffset column displays with it's context menu expanded, the Change Type option is expanded with the Whole Number item selected.](media/pbi_changepredpaymentdatetodate.png "Change Column Type")
+
+9.  Select the **Home** tab then **Close & Apply**.
+    
+    ![A portion of the Power Query editor toolbar displays with teh Close & Apply button highlighted.](media/pbi_closeapply_powerqueryeditor.png "Close & Apply")
+    
 ## After the hands-on lab 
 
 Duration: X minutes
