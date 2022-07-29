@@ -72,9 +72,15 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 1: Add the deployed model to the Power BI report](#task-1-add-the-deployed-model-to-the-power-bi-report)
     - [Task 2: Create a Date table for report aggregation](#task-2-create-a-date-table-for-report-aggregation)
     - [Task 3: Create the Sales and Payment Forecast visualization](#task-3-create-the-sales-and-payment-forecast-visualization)
+  - [Exercise 9: Create an alert in Power BI](#exercise-9-create-an-alert-in-power-bi)
+    - [Task 1: Publish the Power BI report to an online workspace](#task-1-publish-the-power-bi-report-to-an-online-workspace)
+    - [Task 2: Create a gauge visualization to be used as the notification trigger](#task-2-create-a-gauge-visualization-to-be-used-as-the-notification-trigger)
+    - [Task 3: Create an alerting dashboard](#task-3-create-an-alerting-dashboard)
   - [After the hands-on lab](#after-the-hands-on-lab)
-    - [Task 1: Task name](#task-1-task-name)
-    - [Task 2: Task name](#task-2-task-name)
+    - [Task 1: Delete the Power Automate flow](#task-1-delete-the-power-automate-flow)
+    - [Task 2: Delete the Power BI workspace report and dataset](#task-2-delete-the-power-bi-workspace-report-and-dataset)
+    - [Task 3: Remove deployed Azure resources with Terraform](#task-3-remove-deployed-azure-resources-with-terraform)
+    - [Task 4: Terminate the SAP CAL appliance](#task-4-terminate-the-sap-cal-appliance)
 
 <!-- /TOC -->
 
@@ -1363,7 +1369,7 @@ Contoso retail wants to display the Sales and Payment figures aggregated by diff
 
 1. From the left menu, select the **Report** item.
    
-    ![The Power BI left menu displays with the Report item highlighted.](pbi_report_leftmenu.png "Report view")
+    ![The Power BI left menu displays with the Report item highlighted.](media/pbi_report_leftmenu.png "Report view")
 
 2.  In the Visualizations pane, select **Clustered Column Chart**. Drag-and-drop the **Date.Date** field to the **X-axis** box. Drag-and-drop the **Date.Sales at Billing Date**, **Date.Payment at pred Date**, and **Date.Payment at actual Date** to the **Y-axis** box. 
 
@@ -1371,27 +1377,165 @@ Contoso retail wants to display the Sales and Payment figures aggregated by diff
 
     ![The Sales and Payment Forecast visualization displays in a clustered column chart visualization.](media/pbi_clusteredcolumnchart.png "Clustered Column Chart")
 
+## Exercise 9: Create an alert in Power BI
+
+In this exercise, a Power BI and Power Automate subscription are used to create an alert and trigger a Power Automate flow to send an email.
+
+### Task 1: Publish the Power BI report to an online workspace
+
+1. Ensure the Power BI report file is saved.
+   
+2. On the Power BI Home tab menu, select **Publish**.
+   
+   ![The Power BI Home tab menu displays with the Publish item highlighted.](media/pbi_publish_button.png "Publish")
+
+3. On the Publish to Power BI dialog, select **My workspace** as the destination and choose the **Select** button.
+
+    ![The Publish to Power BI dialog displays with the My workspace item selected and the Select button highlighted.](media/pbi_publishtoworkspace_dialog.png "Publish to Power BI")
+
+3. Wait a few moments for the publishing to complete. Select the **Open '{REPORT NAME}.pbix' in Power BI** link. The report will open in a browser window.
+
+    ![The Publishing to Power BI dialog displays with a success message and the Open report in Power BI link highlighted.](media/pbi_publishcomplete.png "Open report in Power BI")
+
+### Task 2: Create a gauge visualization to be used as the notification trigger
+
+1. In the online Power BI report editor in the web browser, select the **Edit** button from the top toolbar menu.
+
+    ![The online Power BI report editor displays with the Edit button highlighted.](media/opbi_editmenu.png "Edit report")
+
+2. In the Visualizations pane, select **Gauge**. Drag-and-drop the **SalesOrderPayments.predOffset** from the Fields pane to the **Value** box. Expand the **Value** field using the chevron menu, and select **Maximum**.
+
+    ![The Visualization pane displays with the Guage visualization selected. The SalesOrderPayments.predOffset value is in the Value box with the chevron menu expanded. The Maximum item is selected from this menu.](media/opbi_gauge_settings.png "Gauge visualization")
+
+3. From the toolbar menu, select **Reading view**. Save the changes when prompted.
+
+    ![The Power BI menu displays with the Reading view item highlighted.](media/opbi_readingview_menu.png "Reading view")
+
+    ![The report displays in Reader view.](media/obi_readervew.png "Reader view")
+
+### Task 3: Create an alerting dashboard
+
+4. On the report, select to **Pin** the Gauge visulization to a new dashboard.
+
+    ![The gauge visualization displays with the Pin icon highlighted.](media/opbi_pingauge.png "Pin visualization")
+
+5. On the **Pin to dashboard** dialog, select **New dashboard** and enter the name `Alerting Dashboard` and select **Pin**.
+    
+    ![The Pin to dashboard dialog displays with Alerting Dashboard entered in the Dashboard name field and the Pin button is highlighted.](media/opbi_pindialog.png "Pin visualization to new dashboard")
+
+6. From the left menu, select **My workspace**, then in the listing of items select **Alerting Dashboard**.
+   
+   ![The My workspace items are listed with the Alerting Dashboard item selected.](media/opbi_opendashboard_menu.png "Open Alerting Dashboard")
+
+7. On the gauge visualization, expand the ellipsis menu and choose **Manage alerts**.
+   
+    ![The ellipsis menu on the gauge visualization displays with the Manage alerts item selected.](media/opbi_managealerts_menu.png "Manage alerts")
+
+8. On the Manage alerts blade, select **+ Add alert rule**.
+
+    ![The Manage alerts blade displays with the + Add alert rule highlighted.](media/opbi_addalertrule.png "Add alert rule")
+
+9. Set the condition to trigger when the threshold is **lower than the value currently indicated in the gauge**, this will ensure it triggers immediately. Set the maximum notification frequency to once per hour. Near the bottom of the blade select the **Use Microsoft Power Automate to trigger additional actions** link.
+
+    ![The Manage alerts blade displays with the Max of predOffset alert set for the condition of above 70 (this is lower than the gauge value of 71) with notifications at most once an hour. The Use Microsoft Power Automate to trigger additional actions link is highlighted.](media/opbi_setupalert.png "Setup alert")
+
+10. A new web browser tab opens displaying an overview of a Power Automate Template. Select **Try it now** beneath the **Trigger a flow with a Power BI data-driven alert**. Sign in if required.
+
+    ![A portion of a web page displays with the Try it now button highlighted beneath the Trigger a flow with a Power BI data-driven alert.](media/pa_tryitnow.png "Try Power Automate flow")
+
+11. On the Trigger a flow with a Power BI data-driven alert screen, select **Sign in** on the **This flow will connect to field**. Once signed in, select **Continue**.
+
+    ![The Trigger a flow with a Power BI data-driven alert screen displays with the sign in and Continue button highlighted.](media/pa_triggerflowconnection.png "Sign in and Continue")
+
+12. In the flow designer, in the When a data driven alert is triggered step, expand the Alert id field and select **Max of predOffset**.
+    
+    ![The When a data driven alert is triggered step displays with the Alert Id drop down expanded and the Max of predOffset value is selected.](media/pa_alert_maxofpredoffset.png "Alert selection")
+
+13. Select **+ New step**, and search for `send email`. From the results select **Send an email (V2) - Office 365 Outlook**.
+
+    ![The Choose an operation step displays with send email entered in the search box. The Send an email (V2) item is selected from the list of results.](media/pa_sendemail_action_search.png "Send an email action")
+
+14. The step will transform to a Send an email (V2) step. It will automatically connect to Office 365 using the signed in user account, this will only take a moment. In the **To** field, enter your email address.
+
+    ![The Send an email (V2) step displays with the email field filled out.](media/pa_sendemail_emailfield.png "Email field")
+
+15.  Select the **Subject** text box and the Dynamic content pane will display. Select **Alert title**.
+
+    ![The Send an email (V2) step displays with the cursor in the Subject field. The Dynamic content pane displays with the Alert title option selected.](media/pa_sendemail_titlefield.png "Email subject")
+
+16.  Select the **Body** text box and in the Dynamic content pane select **Tile URL**.
+
+    ![The Send an email (V2) step displays with the cursor in the Body field. The Dynamic content pane displays with the Tile URL option selected.](media/pa_sendemail_body.png)
+
+17.  At the bottom of the flow designer select **Save**.
+
+    ![The flow designer displays with the save button highlighted.](media/pa_flow_save.png "Save flow")
+
+18. An email is sent to the email address from the trigger.
+
+    ![A notification email is displayed with the subject of Max of predOffset and a URL in the body of the email.](media/pa_notificationemail.png "Notification email")
+
+    > **Note**: To retrigger the alert a data update must occur. Execute the following SQL script in the dedicated SQL pool of Azure Synapse Analytics to change data. 
+
+    ```SQL
+    UPDATE dbo.Payments SET PaymentDate = DATEADD(DAY, 1, PaymentDate)
+    ```
+
 ## After the hands-on lab 
 
 Duration: X minutes
 
-\[insert your custom Hands-on lab content here . . .\]
+### Task 1: Delete the Power Automate flow
 
-### Task 1: Task name
+1.  In Power Automate, select **My flows** locate the **Trigger a flow with a Power BI data-driven alert** item, expand the ellipsis menu and choose **Delete**.
 
-1.  Number and insert your custom workshop content here . . .
+   ![The Power Automate interface displays with My flows selected from the left menu. The ellipsis menu is expanded next to the Trigger a flow with a Power BI data-driven alert item and the Delete option is selected.](media/pa_deleteflow.png "Delete Power Automate flow")
 
-    -  Insert content here
+### Task 2: Delete the Power BI workspace report and dataset
 
-        -  
+1. In the Power BI workspace, select **My workspace** from the left menu to get a listing of items. Delete the report, dataset and the Alerting dashboard items by expanding the ellipsis menu and choosing Delete.
 
-### Task 2: Task name
+    ![The My workspace items are listed with an ellipsis menu displaying with the Delete option highlighted.](media/opbi_deleteitems.png "Delete item") 
 
-1.  Number and insert your custom workshop content here . . .
+### Task 3: Remove deployed Azure resources with Terraform
 
-    -  Insert content here
+1. In the Azure portal, select the cloud shell button from the upper-right toolbar menu options.
 
-        -    
+    ![The upper right toolbar displays with the cloud shell button highlighted.](media/cloudshell_icon.png "Cloud Shell")
+
+2. Navigate to the Terraform directory by executing the following command.
+
+    ```PowerShell
+    cd 'MCW-SAP-plus-extend-and-innovate/Hands-on lab/Resources/terraform'
+    ```
+
+3. Enter the following command to remove all deployed resources, type `yes` and <kbd>Enter</kbd> when prompted.
+
+    ```PowerShell
+    terraform destroy
+    ```
+
+    > **Note**: Ensure the proper subscription is set using `az account set --subscription {SUBSCRIPTION_ID_GOES_HERE} if experiencing difficulties.
+
+4. Execute the following command **two times** to retun to the user directory.
+   
+    ``PowerShell
+    cd..
+    ```
+
+5. Delete the cloned source code repository with the following command.
+   
+   ```PowerShell
+   Remove-Item -Path .\MCW-SAP-plus-extend-and-innovate -recurse -force  
+   ```
+
+### Task 4: Terminate the SAP CAL appliance
+
+1. Log into the [SAP Cloud Appliance Library](https://cal.sap.com/) web site.
+
+2. From the left menu, select **Appliances**, locate the **MCW SAP** appliance and expand the ellipsis menu. Select **Terminate** to delete the appliance.
+
+![The SAP CAL interface displays with Appliances selected in the left menu. The ellipsis next to the MCW SAP appliance is expanded with the Terminate option selected.](media/sapcal_deleteappliance.png "Terminate appliance")
 
 You should follow all steps provided *after* attending the Hands-on lab.
 
