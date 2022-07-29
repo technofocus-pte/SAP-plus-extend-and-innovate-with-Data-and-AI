@@ -75,7 +75,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
   - [Exercise 9: Create an alert in Power BI](#exercise-9-create-an-alert-in-power-bi)
     - [Task 1: Publish the Power BI report to an online workspace](#task-1-publish-the-power-bi-report-to-an-online-workspace)
     - [Task 2: Create a gauge visualization to be used as the notification trigger](#task-2-create-a-gauge-visualization-to-be-used-as-the-notification-trigger)
-    - [Task 3: Create an alerting dashboard](#task-3-create-an-alerting-dashboard)
+    - [Task 3: Create an alerting dashboard to send email with Power Automate](#task-3-create-an-alerting-dashboard-to-send-email-with-power-automate)
   - [After the hands-on lab](#after-the-hands-on-lab)
     - [Task 1: Delete the Power Automate flow](#task-1-delete-the-power-automate-flow)
     - [Task 2: Delete the Power BI workspace report and dataset](#task-2-delete-the-power-bi-workspace-report-and-dataset)
@@ -1413,66 +1413,66 @@ In this exercise, a Power BI and Power Automate subscription are used to create 
 
     ![The report displays in Reader view.](media/obi_readervew.png "Reader view")
 
-### Task 3: Create an alerting dashboard
+### Task 3: Create an alerting dashboard to send email with Power Automate
 
-4. On the report, select to **Pin** the Gauge visulization to a new dashboard.
+1. On the report, select to **Pin** the Gauge visulization to a new dashboard.
 
     ![The gauge visualization displays with the Pin icon highlighted.](media/opbi_pingauge.png "Pin visualization")
 
-5. On the **Pin to dashboard** dialog, select **New dashboard** and enter the name `Alerting Dashboard` and select **Pin**.
+2. On the **Pin to dashboard** dialog, select **New dashboard** and enter the name `Alerting Dashboard` and select **Pin**.
     
     ![The Pin to dashboard dialog displays with Alerting Dashboard entered in the Dashboard name field and the Pin button is highlighted.](media/opbi_pindialog.png "Pin visualization to new dashboard")
 
-6. From the left menu, select **My workspace**, then in the listing of items select **Alerting Dashboard**.
+3. From the left menu, select **My workspace**, then in the listing of items select **Alerting Dashboard**.
    
    ![The My workspace items are listed with the Alerting Dashboard item selected.](media/opbi_opendashboard_menu.png "Open Alerting Dashboard")
 
-7. On the gauge visualization, expand the ellipsis menu and choose **Manage alerts**.
+4. On the gauge visualization, expand the ellipsis menu and choose **Manage alerts**.
    
     ![The ellipsis menu on the gauge visualization displays with the Manage alerts item selected.](media/opbi_managealerts_menu.png "Manage alerts")
 
-8. On the Manage alerts blade, select **+ Add alert rule**.
+5. On the Manage alerts blade, select **+ Add alert rule**.
 
     ![The Manage alerts blade displays with the + Add alert rule highlighted.](media/opbi_addalertrule.png "Add alert rule")
 
-9. Set the condition to trigger when the threshold is **lower than the value currently indicated in the gauge**, this will ensure it triggers immediately. Set the maximum notification frequency to once per hour. Near the bottom of the blade select the **Use Microsoft Power Automate to trigger additional actions** link.
+6. Set the condition to trigger when the threshold is **lower than the value currently indicated in the gauge**, this will ensure it triggers immediately. Set the maximum notification frequency to once per hour. Near the bottom of the blade select the **Use Microsoft Power Automate to trigger additional actions** link.
 
     ![The Manage alerts blade displays with the Max of predOffset alert set for the condition of above 70 (this is lower than the gauge value of 71) with notifications at most once an hour. The Use Microsoft Power Automate to trigger additional actions link is highlighted.](media/opbi_setupalert.png "Setup alert")
 
-10. A new web browser tab opens displaying an overview of a Power Automate Template. Select **Try it now** beneath the **Trigger a flow with a Power BI data-driven alert**. Sign in if required.
+7.  A new web browser tab opens displaying an overview of a Power Automate Template. Select **Try it now** beneath the **Trigger a flow with a Power BI data-driven alert**. Sign in if required.
 
     ![A portion of a web page displays with the Try it now button highlighted beneath the Trigger a flow with a Power BI data-driven alert.](media/pa_tryitnow.png "Try Power Automate flow")
 
-11. On the Trigger a flow with a Power BI data-driven alert screen, select **Sign in** on the **This flow will connect to field**. Once signed in, select **Continue**.
+8.  On the Trigger a flow with a Power BI data-driven alert screen, select **Sign in** on the **This flow will connect to field**. Once signed in, select **Continue**.
 
     ![The Trigger a flow with a Power BI data-driven alert screen displays with the sign in and Continue button highlighted.](media/pa_triggerflowconnection.png "Sign in and Continue")
 
-12. In the flow designer, in the When a data driven alert is triggered step, expand the Alert id field and select **Max of predOffset**.
+9.  In the flow designer, in the When a data driven alert is triggered step, expand the Alert id field and select **Max of predOffset**.
     
     ![The When a data driven alert is triggered step displays with the Alert Id drop down expanded and the Max of predOffset value is selected.](media/pa_alert_maxofpredoffset.png "Alert selection")
 
-13. Select **+ New step**, and search for `send email`. From the results select **Send an email (V2) - Office 365 Outlook**.
+10. Select **+ New step**, and search for `send email`. From the results select **Send an email (V2) - Office 365 Outlook**.
 
     ![The Choose an operation step displays with send email entered in the search box. The Send an email (V2) item is selected from the list of results.](media/pa_sendemail_action_search.png "Send an email action")
 
-14. The step will transform to a Send an email (V2) step. It will automatically connect to Office 365 using the signed in user account, this will only take a moment. In the **To** field, enter your email address.
+11. The step will transform to a Send an email (V2) step. It will automatically connect to Office 365 using the signed in user account, this will only take a moment. In the **To** field, enter your email address.
 
     ![The Send an email (V2) step displays with the email field filled out.](media/pa_sendemail_emailfield.png "Email field")
 
-15.  Select the **Subject** text box and the Dynamic content pane will display. Select **Alert title**.
-
+12. Select the **Subject** text box and the Dynamic content pane will display. Select **Alert title**.
+    
     ![The Send an email (V2) step displays with the cursor in the Subject field. The Dynamic content pane displays with the Alert title option selected.](media/pa_sendemail_titlefield.png "Email subject")
 
-16.  Select the **Body** text box and in the Dynamic content pane select **Tile URL**.
-
+13. Select the **Body** text box and in the Dynamic content pane select **Tile URL**.
+    
     ![The Send an email (V2) step displays with the cursor in the Body field. The Dynamic content pane displays with the Tile URL option selected.](media/pa_sendemail_body.png)
 
-17.  At the bottom of the flow designer select **Save**.
-
+14. At the bottom of the flow designer select **Save**.
+    
     ![The flow designer displays with the save button highlighted.](media/pa_flow_save.png "Save flow")
 
-18. An email is sent to the email address from the trigger.
-
+15. An email is sent to the email address from the trigger.
+    
     ![A notification email is displayed with the subject of Max of predOffset and a URL in the body of the email.](media/pa_notificationemail.png "Notification email")
 
     > **Note**: To retrigger the alert a data update must occur. Execute the following SQL script in the dedicated SQL pool of Azure Synapse Analytics to change data. 
@@ -1519,7 +1519,7 @@ Duration: X minutes
 
 4. Execute the following command **two times** to retun to the user directory.
    
-    ``PowerShell
+    ```PowerShell
     cd..
     ```
 
