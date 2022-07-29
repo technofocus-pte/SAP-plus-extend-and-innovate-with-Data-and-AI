@@ -70,6 +70,8 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 9: Create a payment offset per customer group box plot visualization (Optional)](#task-9-create-a-payment-offset-per-customer-group-box-plot-visualization-optional)
   - [Exercise 8: Integrate Azure Machine Learning and Power BI](#exercise-8-integrate-azure-machine-learning-and-power-bi)
     - [Task 1: Add the deployed model to the Power BI report](#task-1-add-the-deployed-model-to-the-power-bi-report)
+    - [Task 2: Create a Date table for report aggregation](#task-2-create-a-date-table-for-report-aggregation)
+    - [Task 3: Create the Sales and Payment Forecast visualization](#task-3-create-the-sales-and-payment-forecast-visualization)
   - [After the hands-on lab](#after-the-hands-on-lab)
     - [Task 1: Task name](#task-1-task-name)
     - [Task 2: Task name](#task-2-task-name)
@@ -1288,6 +1290,86 @@ Contoso retail would like to augment their Power BI report with data enriched wi
 9.  Select the **Home** tab then **Close & Apply**.
     
     ![A portion of the Power Query editor toolbar displays with teh Close & Apply button highlighted.](media/pbi_closeapply_powerqueryeditor.png "Close & Apply")
+
+### Task 2: Create a Date table for report aggregation
+
+Contoso retail wants to display the Sales and Payment figures aggregated by different days (BILLINGDOCUMENTDATE, predPaymentDate), this requires the creation of a calendar table with the timeslots by which to aggregate.
+
+1. In Power BI, select the **Data** item from the left menu.
+
+    ![The left menu of Power BI displays with the Data item highlighted.](media/pbi_datamenu.png "Data menu")
+
+2. From the Table tools menu, select **New table**.
+
+    ![The Table tools menu displays with the New table item highlighted.](media/pbi_tabletools_newtable_menu.png "New table")
+
+3. In the formula textbox, paste the following and select the checkmark button to execute the formula and create the table.
+
+    ```vb
+    Date= 
+    VAR MinYear = YEAR ( MIN ( 'SalesOrderPayments'[CREATIONDATE]) )
+    VAR MaxYear = YEAR ( MAX ( 'SalesOrderPayments'[predPaymentDate] ) )
+    RETURN
+    ADDCOLUMNS (
+    FILTER (
+    CALENDARAUTO( ),
+    AND ( YEAR ( [Date] ) >= MinYear, YEAR ( [Date] ) <= MaxYear )
+    ),
+    "Calendar Year", "CY " & YEAR ( [Date] ),
+    "Year", YEAR ( [Date] ),
+    "Month Name", FORMAT ( [Date], "mmmm" ),
+    "Month Number", MONTH ( [Date] ),
+    "Year & Month", YEAR([Date]) & " - " & FORMAT ( [Date], "mmmm" )
+    )
+    ```
+
+    ![The new table formula textbox displays with the above code and the checkmark button highlighted.](media/pbi_newtableformula.png "New table formula")
+
+4. From the left menu, select the **Models** option. Establish the following relationships from the **Date.Date** field using drag and drop to the following table.fields:
+   1. SalesOrderPayments.CREATIONDATE
+   2. SalesOrderPayments.BILLINGDOCUMENTDATE
+   3. SalesOrderPayments.PaymentDate
+   4. SalesOrderPayments.predPaymentDate
+
+    ![The Models item is selected from the Power BI left menu. The Date.Date field is highlighted as well as the preceding fields in a model diagram.](media/pbi_relationships_date.png "Model diagram")
+
+5. Select the **Data** from the left hand menu once more, and in the Table tools menu select the **New measure** button.
+
+    ![The Data item is selected from the left menu and the New measure button is highlighed in the Table tools menu.](media/pbi_date_newmeasuremenu.png "New measure")
+
+6. In the formula textbox paste the following code then select the checkmark button to execute the formula and create the measure. Verify the new measure displays in the Fields pane.
+   
+   ```vb
+   Sales at CreationDate = sum('SalesOrderPayments'[TOTALNETAMOUNT])
+   ```
+
+    ![The above formula is entered with the checkmark button selected. The new measure is highlighted in the Fields pane.](media/pbi_newmeasure_date.png "New measure formula")
+
+7. Repeat steps 5 and 6 and create new measures with the following formulas.
+
+    ```vb
+    Sales at BillingDate = CALCULATE(sum(SalesOrderPayments[TOTALNETAMOUNT]),USERELATIONSHIP('Date'[Date],SalesOrderPayments[BILLINGDOCUMENTDATE]))
+    ```
+
+    ```vb
+    Payment at Actual Date = CALCULATE(sum('SalesOrderPayments'[PaymentValue]), USERELATIONSHIP('Date'[Date],SalesOrderPayments[PaymentDate]))
+    ```
+
+    ```vb
+    Payment at pred Date = CALCULATE(sum('SalesOrderPayments'[PaymentValue]), USERELATIONSHIP('Date'[Date], SalesOrderPayments[predPaymentDate]))
+    ```
+
+### Task 3: Create the Sales and Payment Forecast visualization
+
+1. From the left menu, select the **Report** item.
+   
+    ![The Power BI left menu displays with the Report item highlighted.](pbi_report_leftmenu.png "Report view")
+
+2.  In the Visualizations pane, select **Clustered Column Chart**. Drag-and-drop the **Date.Date** field to the **X-axis** box. Drag-and-drop the **Date.Sales at Billing Date**, **Date.Payment at pred Date**, and **Date.Payment at actual Date** to the **Y-axis** box. 
+
+    ![The Visualizations pane displays with the Clustered Column Chart item highlighted and the form filled out as described above.](media/pbi_visualizations_clusteredcolumn.png "Clustered Column Chart visualization details")
+
+    ![The Sales and Payment Forecast visualization displays in a clustered column chart visualization.](media/pbi_clusteredcolumnchart.png "Clustered Column Chart")
 
 ## After the hands-on lab 
 
