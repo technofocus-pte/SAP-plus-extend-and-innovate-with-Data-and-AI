@@ -202,7 +202,7 @@ Food processing and distribution has small profit margins and large transaction 
 
 The accounting department director, Sarah Smith, says customer AR management has always been a problem.  The AR and sales data is spread across different systems. Manually merging and analyzing the data sources is time consuming and error prone.  Accounting runs reports from the two different systems and data is exported to spreadsheets.
 
-![The current process shows Excel spreadsheets exported and merged.](contoso-current-process.png "Contoso Current Process")
+![The current process shows Excel spreadsheets exported and merged.](media/contoso-current-process.png "Contoso Current Process")
 
 By the time a problem is identified, it becomes more difficult to correct.  Valuable constrained accounting resources are manually contacting delinquent accounts weeks after the problem has started making it more difficult to correct.  Some existing customers are habitually late payers and new accounts drift into this problem behavior.
 
