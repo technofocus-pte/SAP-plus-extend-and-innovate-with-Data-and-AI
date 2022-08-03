@@ -196,7 +196,7 @@ Directions:  With all participants in the session, the facilitator/SME presents 
 
 ### Customer situation
 
-Contoso Food Distribution (CFD), Inc., subsidiary of Contoso Retail Inc., has been selling goods through various channels for the past 15 years. Their primary customer segments are supermarkets, retail chains, and small- to mid-size enterprise stores.  The business has been built on great customer service and relationships.  They have been facing recent challenges leveraging their on-premises SAP and Azure Cosmos DB investments to manage their AR and customers’ accounts.
+Contoso Food Distribution (CFD), Inc., subsidiary of Contoso Retail Inc., has been selling goods through various channels for the past 15 years. Their primary customer segments are supermarkets, retail chains, and small- to mid-size enterprise stores.  The business has been built on great customer service and relationships.  They have been facing recent challenges leveraging their SAP and Azure Cosmos DB investments to manage their accounts receivable (AR) and customer accounts.
 
 Food processing and distribution has small profit margins and large transaction volume.  Inventory is perishable and needs to be delivered quickly.  CFD's CEO, Jan Smith, has chosen to deliver product first and manage account details later.  Unfortunately, CFD is having issues with high accounts receivables and rising inventory finance costs.  Mari Stephens, the CFO, is frustrated CFD operational credit line is being capped and the interest rate increased until they can lower their accounts receivable balances and predict their future cash flow is healthy.  This small interest expense increase is a problem given the industry’s thin profit margins.
 
@@ -367,19 +367,16 @@ Directions: Reconvene with the larger group to hear the facilitator/SME share th
 | --------------- | --------- |
 | SAP on Azure | <https://azure.microsoft.com/solutions/sap/>
 | Connect to SAP systems from Azure Logic Apps | <https://docs.microsoft.com/azure/logic-apps/logic-apps-using-sap-connector> |
-| What is Azure Databricks | <https://docs.microsoft.com/azure/databricks/scenarios/what-is-azure-databricks> |
 | Azure Synapse Analytics | <https://azure.microsoft.com/services/synapse-analytics/> |
 | Azure Cosmos DB | <https://azure.microsoft.com/services/cosmos-db/> |
 | Azure Machine Learning | <https://azure.microsoft.com/free/machine-learning> |
-| What is Azure IoT Hub | <https://docs.microsoft.com/azure/iot-hub/about-iot-hub> |
-| Azure IoT Edge | <https://azure.microsoft.com/services/iot-edge/> |
-| Event Hubs | <https://azure.microsoft.com/services/event-hubs/> |
 | Connect to SAP systems from Azure Logic Apps | <https://docs.microsoft.com/azure/logic-apps/logic-apps-using-sap-connector> |
 | SAP API Business Hub | <https://api.sap.com/search?searchterm=retail&tab=All&refinedBy=true&top=12> |
 | S/4HANA Extensibility: Use Case Overview | <https://blogs.sap.com/2016/09/12/s4hana-extensibility-use-case-overview/> |
 | SAP Extension Suite | <https://www.sapinsideronline.com/extend-your-core-business-applications-and-drive-your-business-forward-with-sap-extension-suite/>|
 | SAP reference architecture | <https://docs.microsoft.com/en-us/azure/architecture/reference-architectures/sap/sap-overview>|
 | SAP Portfolio categories | <https://www.sap.com/products.html>|
+| Extracting SAP data using OData | <https://techcommunity.microsoft.com/t5/azure-synapse-analytics-blog/extracting-sap-data-using-odata-part-7-delta-extraction-using/ba-p/2865383> |
 
 # SAP plus extend and innovate trainer guide
 
@@ -437,6 +434,22 @@ _High-level architecture_
 The proposed solutions take advantage of a wide range of Azure services in order to enhance the agility, resiliency, and resiliency of the customer's SAP landscape, as well as to deliver additional data integration capabilities. In particular, it provides the following functionality:
 
 _Data ingestion and integration_
+
+1. Which Azure services can you use to ingest data from SAP and non-SAP data sources?
+
+Azure Synapse Analytics has over 100 connectors to integrate with SAP and non-SAP data sources. There is also generic connectors such as REST and OData. The Azure Integration Runtime is used to connect to external cloud compute, whereas if there is on-premises compute or compute that resides with the confines of a virtual network, the Self-Hosted Integration Runtime can be used to connect to Azure Synapse Analytics. Data pipelines can be authored to orchestrate data movement from source to target systems. Other options include DataBricks, Azure Data Factory, or custom developed applications hosted in cloud services such as web applications or web jobs.
+
+2. Of the options you identified in the previous step, which ones would you recommend to Contoso?
+
+  Azure Synapse Analytics provides a single interface for all data ingestion needs. It has the ability to orchestrate data movement via code-free (copy data activity, data flows) or coded options (stored procedures, notebooks).
+
+3. What data integration options would Contoso benefit from?
+
+  Contoso can benefit from the services offered by Azure Synapse Analytics. There are over 100 connectors to external compute to be able to move data from source to sink. Additionally, Contoso can take advantage of integration capabilities with Azure Machine Learning. Wizards can be used directly within the Synapse Studio to train models and deploy and host those models in the dedicated SQL Pool. There is also an integration between Azure Synapse Analytics and Power BI. Power BI can be used to create visualizations on top of SQL Pool data (both serverless and dedicated). Power BI integrates with Power Automate and can trigger business processes based on data alerts. Power BI can also integrate with Azure Machine Learning models that have been deployed as web services.
+
+4. Which Azure integration services would you recommend be used by Contoso?
+
+  Azure Synapse Analytics, Azure Machine Learning, Power BI, and Power Automate.
 
 _Data transformation and processing_
 
