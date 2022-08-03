@@ -389,39 +389,39 @@ Directions: Reconvene with the larger group to hear the facilitator/SME share th
 
 - Ask, "What questions do you have about the customer case study?"
 
--   Briefly review the steps and timeframes of the whiteboard design session.
+- Briefly review the steps and timeframes of the whiteboard design session.
 
--   Ready, set, go! Let participants begin.
+- Ready, set, go! Let participants begin.
 
 ## Step 2: Design a proof of concept solution
 
--   Check in with your teams to ensure that they are transitioning from step to step on time.
+- Check in with your teams to ensure that they are transitioning from step to step on time.
 
--   Provide feedback on their responses to the business needs and design.
+- Provide feedback on their responses to the business needs and design.
 
-    -   Try asking questions first that will lead the participants to discover the answers on their own.
+  - Try asking questions first that will lead the participants to discover the answers on their own.
 
--   Provide feedback for their responses to the customer's objections.
+- Provide feedback for their responses to the customer's objections.
 
-    -   Try asking questions first that will lead the participants to discover the answers on their own.
+  - Try asking questions first that will lead the participants to discover the answers on their own.
 
 ## Step 3: Present the solution
 
--   Determine which groups will be paired together before Step 3 begins.
+- Determine which groups will be paired together before Step 3 begins.
 
--   For the first round, assign one group as the presenting team and the other as the customer.
+- For the first round, assign one group as the presenting team and the other as the customer.
 
--   Have the presenting team present their solution to the customer team.
+- Have the presenting team present their solution to the customer team.
 
-    -   Have the customer team provide one objection for the presenting team to respond to.
+  - Have the customer team provide one objection for the presenting team to respond to.
 
-    -   The presentation, objections, and feedback should take no longer than 15 minutes.
+  - The presentation, objections, and feedback should take no longer than 15 minutes.
 
-    -   If needed, the trainer may also provide feedback.
+  - If needed, the trainer may also provide feedback.
 
 ## Wrap-up
 
--   Have participants reconvene with the larger session group to hear the facilitator/SME share the following preferred solution.
+- Have participants reconvene with the larger session group to hear the facilitator/SME share the following preferred solution.
 
 ## Preferred target audience
 
@@ -436,21 +436,19 @@ _High-level architecture_
 
 The proposed solutions take advantage of a wide range of Azure services in order to enhance the agility, resiliency, and resiliency of the customer's SAP landscape, as well as to deliver additional data integration capabilities. In particular, it provides the following functionality:
 
-
 _Data ingestion and integration_
-
 
 _Data transformation and processing_
 
 1. How would you approach the need for additional analysis of data originating from SAP and non-SAP data sources?
-   
-   You have the option of combining SAP and non-SAP data sources for additional transformation and processing. This might involve long-running batch jobs to filter, aggregate, and prepare data for further analysis. Processing options include U-SQL jobs in Azure Data Lake Analytics, Hive, Pig, and custom Map/Reduce jobs in an HDInsight cluster, or Java, Scala, and Python programs in a Synapse Analytics Spark cluster. 
-   
+
+   You have the option of combining SAP and non-SAP data sources for additional transformation and processing. This might involve long-running batch jobs to filter, aggregate, and prepare data for further analysis. Processing options include U-SQL jobs in Azure Data Lake Analytics, Hive, Pig, and custom Map/Reduce jobs in an HDInsight cluster, or Java, Scala, and Python programs in a Synapse Analytics Spark cluster.
+
 2. Which Azure services would you use to implement the corresponding functionality?
-      
+
    It is also possible to use Azure Data Factory to extract data from SAP HANA and SAP Business Warehouse (BW) into Azure data stores, such as Azure Blob Storage and Azure Data Lake to facilitate implementation of advanced analytics with Azure Synapse Analytics. 
 
-    ![Diagram illustrating an Azure data pipeline that leverages SAP and non-SAP data sources.](media/azure-data-pipeline-with-sap-sources.png 'Azure data pipeline that leverages the preferred solution') 
+    ![Diagram illustrating an Azure data pipeline that leverages SAP and non-SAP data sources.](media/azure-data-pipeline-with-sap-sources.png 'Azure data pipeline that leverages the preferred solution')
 
 _Data analytics_
 
@@ -460,12 +458,11 @@ _Data analytics_
 
     Azure Synapse Analytics provides a managed service for large-scale, cloud-based data warehousing. Azure Synapse Analytics Spark tools are optimized for analyzing and transforming data for presentation. This analysis could reference data stored in Azure Cosmos DB. For example, Azure Synapse Link for Azure Cosmos DB enables you to run near real-time analytics over operational data in Azure Cosmos DB.
 
-    Power BI provides the ability to shape and model your data.  Data can be intelligently transformed into action-driven, eye-catching visualizations that can be presented in reports and dashboards.
+    Power BI provides the ability to shape and model your data. From Power BI, you could connect disconnected data stores or you could land the data into a centralized analytical data store like Azure Synapse Analytics. Using powerful cloud compute resources, large amounts of data can be ingested, stored, cleaned, and transformed in one centralized analytical store. Data consumers can focus on query and filtering the data based on need. Data can be intelligently transformed into action-driven, eye-catching visualizations that can be presented in reports and dashboards for multiple teams to consume.
 
 2. What Azure services would allow Contoso to further enrich the data by leveraging technologies such as artificial intelligence?
 
       To further enrich your data, you can combine data from your SAP databases with other systems pooled into Azure Data Lake. With Azure Synapse Analytics and Power BI dashboards, you are able to monitor payment status and sales orders. You can improve forecasting.
-
 
 ### Customer Needs
 
@@ -477,17 +474,15 @@ _Data analytics_
 
 ### Checklist of preferred objection handling
 
-1.  We currently have all the data we need, why do we need to do anything else?
+1. We currently have all the data we need, why do we need to do anything else?
 
-    The traditional approach to data integration is no longer sufficient in the modern marketplace. Retailers can now derive meaningful benefits from end-to-end visibility of supply and demand signals across the value chain. 
- 
-    In parallel, retailers could leverage external data that represents external conditions in order to evaluate how they may affect local demand patterns. The ability to account for external data such as breaking news, weather, or sporting events can help detect and align to shifts in customer demand within hours. Predictive intelligence provided by Microsoft and SAP analytics tools, AI and machine learning models facilitate implementing such solutions, resulting in optimized procurement cycles, minimizing waste, and maximizing profits.
+    The traditional approach to data integration is no longer sufficient in the modern marketplace. Retailers can now derive meaningful benefits from end-to-end visibility of supply and demand signals across the value chain.
 
-    Similarly, companies can use Azure analytics and Power BI dashboards to monitor supplier status, inbound materials flows and logistics in real time. Through Azure, they can overlay operating status with external data such as road closures or inclement weather to predict problems before they can impact production schedules or customer deliveries. 
+    In parallel, retailers could leverage external data that represents external conditions in order to evaluate how they may affect local demand patterns. The ability to account for external data such as breaking news, weather, or sporting events can help detect and align to shifts in customer demand within hours. Predictive intelligence provided by Microsoft and SAP analytics tools, AI and machine learning models facilitate implementing such solutions, resulting in payment/sales trends, optimized procurement cycles, minimizing waste, and maximizing profits.
 
-    By combining SAP- and Azure-based analytics, it becomes easier to uncover sales trends and customer preferences, resulting in optimized production targets and increased revenues. By expediting planning cycles in coordination with supplier networks and logistics providers, retailers can get products to market faster and deliver tailored products at scale. 
+    Similarly, companies can use Azure analytics and Power BI dashboards to monitor supplier status, inbound materials flows and logistics in real time. Through Azure, they can overlay operating status with external data such as third-party customer credit scoring, road closures or inclement weather to predict problems before they can impact production schedules or customer deliveries.
 
-
+    By combining SAP- and Azure-based analytics, it becomes easier to uncover trends and prioritize resources, resulting in optimized production targets and increased revenues.  
 
 ## Customer quote (to be read back to the attendees at the end)
 
