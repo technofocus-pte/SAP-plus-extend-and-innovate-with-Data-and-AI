@@ -76,6 +76,9 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 1: Publish the Power BI report to an online workspace](#task-1-publish-the-power-bi-report-to-an-online-workspace)
     - [Task 2: Create a gauge visualization to be used as the notification trigger](#task-2-create-a-gauge-visualization-to-be-used-as-the-notification-trigger)
     - [Task 3: Create an alerting dashboard to send email with Power Automate](#task-3-create-an-alerting-dashboard-to-send-email-with-power-automate)
+  - [Exercise 10: Update SAP from an alert in Power BI](#exercise-10-update-sap-from-an-alert-in-power-bi)
+    - [Task 1: Obtain the SAP VM IP address](#task-1-obtain-the-sap-vm-ip-address)
+    - [Task 2: Add a Power Automate visual and author the update flow](#task-2-add-a-power-automate-visual-and-author-the-update-flow)
   - [After the hands-on lab](#after-the-hands-on-lab)
     - [Task 1: Delete the Power Automate flow](#task-1-delete-the-power-automate-flow)
     - [Task 2: Delete the Power BI workspace report and dataset](#task-2-delete-the-power-bi-workspace-report-and-dataset)
@@ -1481,6 +1484,57 @@ In this exercise, a Power BI and Power Automate subscription are used to create 
     UPDATE dbo.Payments SET PaymentDate = DATEADD(DAY, 1, PaymentDate)
     ```
 
+## Exercise 10: Update SAP from an alert in Power BI
+
+Contoso Retail also needs a way to flag risky customers in the SAP system whose payments tend to arrive late. In this exercise, a Power Automate flow is added in Power BI that initiates a business partner update in SAP.
+
+### Task 1: Obtain the SAP VM IP address
+
+1. On the SAP Cloud Appliance Library Instances page, select the **Connect** button on the **MCW SAP** row.
+
+    ![The SAP CAL instances listing displays with the Connect button highlighted next to the MCW SAP item.](media/sapcal_instancerowconnect.png "Connect to SAP Instance")
+
+2. On the **Connect to the instance** dialog, select the **Connect** link on the RDP row. This will download an RDP file.
+
+    ![The Connect to the instance dialog displays with the Connect link highlighted on the RDP row.](media/sapcal_connectrdpdialog.png "Connect via RDP")
+
+3. Open the downloaded RDP file and log into the instance using the username `Administrator` and the password used when deploying the instance.
+
+4. After logging into the SAP VM, record the IP Address from the remote desktop window.
+   
+   ![The remote desktop window chrome displays with an IP address.](media/sapvm_ipaddress.png "SAP VM IP address")
+
+   >**Note**: This IP address can change, it does not have a static IP. Please obtain the current IP address.
+
+5. Leave the SAP VM remote desktop connection open for later tasks.
+
+### Task 2: Add a Power Automate visual and author the update flow
+
+1. Access and log into [Power BI](https://app.powerbi.com).
+
+2. Open the report from the earlier exercises, under **My workspace**.
+
+3. In the online Power BI report editor in the web browser, select the **Edit** button from the top toolbar menu.
+
+    ![The online Power BI report editor displays with the Edit button highlighted.](media/opbi_editmenu.png "Edit report")
+
+4. From the Visualizations panel, select the **Power Automate** item. Then drag-and-drop the SalesOrderPayments.CUSTOMERNAME and SalesOrderPayments.predOffset fields to the Power Automate data box.
+   
+   ![The Visualizations panel displays with the Power Automate item highlighted and the CUSTOMERNAME and predOffset values shown in the Power Automate data box.](media/opbi_pavis_visualizationpane.png "Power Automate visualization configuration")
+
+5. Expand the ellipsis menu on the Power Automate visualization on the report and select **Edit**.
+
+    ![The Power Automate visualization displays with the ellipsis menu expanded and the Edit item selected.](media/opbi_pavis_editpowerautomate.png "Edit Power Automate visualization")
+
+6. On the Microsoft Power Automate screen, expand the **+ New** button and select **Instant cloud flow**.
+
+    ![The Power Automate screen the + New button is expanded with the Instant cloud flow item selected.](media/opbi_pavis_newinstantcloudflow.png "New Instant cloud flow")
+
+7. In the flow designer, select **+ New step** below the Power BI button clicked step.
+
+    ![The flow designer displays with the + New step button highlighted beneath the Power BI button clicked step.](media/obpi_pavis_newstep.png "New step")
+    
+8. asdf
 ## After the hands-on lab 
 
 Duration: X minutes

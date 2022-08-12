@@ -32,6 +32,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 2: Create a SAP Cloud Appliance](#task-2-create-a-sap-cloud-appliance)
     - [Task 3: Deploy the Azure Resources](#task-3-deploy-the-azure-resources)
     - [Task 4: Prepare sales data in SAP](#task-4-prepare-sales-data-in-sap)
+    - [Task 5: Prepare the business partner service in SAP](#task-5-prepare-the-business-partner-service-in-sap)
     - [Task 5: Prepare payment data in Cosmos DB](#task-5-prepare-payment-data-in-cosmos-db)
       - [Step 1: Create linked services in Azure Synapse Analytics](#step-1-create-linked-services-in-azure-synapse-analytics)
       - [Step 2: Create source and sink integration datasets](#step-2-create-source-and-sink-integration-datasets)
@@ -127,7 +128,7 @@ This lab utilizes Terraform Infrastructure as Code to deploy the necessary Azure
 2. In the Cloud Shell pane, ensure the PowerShell language is selected. Clone the source code repository by issuing the following command.
 
     ```PowerShell
-    git clone https://github.com/codingbandit/MCW-SAP-plus-extend-and-innovate.git
+    git clone --branch feature/hands-on-lab https://github.com/codingbandit/MCW-SAP-plus-extend-and-innovate.git
     ```
 
 3. Navigate to the Terraform directory by executing the following command.
@@ -369,6 +370,68 @@ This task demonstrates creating a sales view in SAP and exposing it as an OData 
 
     ![The SAP GUI Security dialog displays with the URL value highlighted.](media/sapvm_sapgui_sapguisecuritydialog.png "Service endpoint")
 
+### Task 5: Prepare the business partner service in SAP
+
+A service is available that allows for the update of a Business Partner record. A Business Partner record is where non-paying entities are flagged in the system.
+
+1. In the SAP UI, access the Activate and Maintain Service transaction by typing `/n/IWFND/MAINT_SERVICE` in the toolbar menu transaction combo box and press <kbd>Enter</kbd>. This opens the **Activate and Maintain Services** window.
+
+    ![The SAP GUI toolbar displays with the transaction combo box highlighted. The n/IFWND/MAINT_SERVICE transaction is entered in the transaction combo box.](media/sapvm_sapgui_transactioncombobox.png "SAP GUI transaction combo box")  
+
+2. From the toolbar menu of the **Activate and Maintain Services** window, select the **Add Service** button.
+
+    ![A portion of the Activate and Maintain Services toolbar displays with the Add service button highlighted.](media/sapvm_sapgui_maintsvcs_addservicebutton.png "Add Service")
+
+3.  Populate the **Add Selected Services** filter form as follows and press <kbd>Enter</kbd>.
+
+    | Field | Value |
+    |-------|-------|
+    | System Alias | Enter `Local`. |
+    | Technical Service Name | Enter `*GWSAMPLE*`. |
+
+    ![The filter pane displays with the preceding values populated.](media/sapui_addsvcfilter_gwsample.png "Add Service Filter Pane")
+
+4. From the list of results, select the **/IWBEP/GWSAMPLE_BASIC** item.
+
+    ![The Select Backend Services pane displays with the /IWBEP/GWSAMPLE_BASIC item highlighted.](media/sapui_selectbackendsvc_gwsample.png "Select Backend Services pane")
+
+5. In the **Add Service** dialog, select the **Local Object** button located in the **Creation Information** section. This will populate the **$TMP** value, and press <kbd>Enter</kbd>. An information dialog indicating success will display, dismiss this dialog.
+
+    ![The Add Service dialog displays with the Local Object button highlighted.](media/sapvm_sapgui_addservicedialog_gwsample.png "Add Service dialog")
+
+6. On the **Add Selected Services** screen, select the **Back** button on the toolbar menu. This will open the **Activate and Maintan Services** window once more.
+
+    ![A portion of the Add Selected Services toolbar displays with the Back button highlighted.](media/sapvm_sapgui_backbuttonaddservices_gwsample.png "Back button")
+
+7. On the **Activate and Maintain Services** screen, select the **Filter** button from the toolbar menu.
+
+    ![A portion of the Activate and Maintain Services toolbar menu displays with the Filter button highlighted](media/sapvm_sapgui_activateandmaintainfilterbutton.png "Filter services")
+
+8.  In the **Filter for Service Catalog** dialog, type `*GWSAMPLE*` in the **Technical Service Name** field and press <kbd>Enter</kbd>.
+
+    ![The Filter for Service Catalog displays with *GWSAMPLE* entered in the Technical Service Name field.](media/sapvm_sapgui_svccatalogfilterdialog_gwsample.png "Filter for Service Catalog dialog")
+
+9. This action filters the **Activate and Maintain Services** screen to a single service. In the **ICF Nodes** pane, select the **SAP Gateway Client** button. If the **SAP GUI Security** dialog displays, check the **Remember My Decision** checkbox and select **Allow**.
+
+    ![The ICF Nodes pane displays with the SAP Gateway Client button highlighted on the toolbar menu.](media/sapvm_sapgui_icfnodessapgatewayclientbutton.png "ICF Nodes SAP Gateway Client")
+
+10. On the **SAP Gateway Client** window, select the **EntitySets** button on the toolbar menu.
+
+    ![The SAP Gateway window displays with the EntitySets button highlighted.](media/sapvm_sapgui_sapgatewaycliententitysetsbutton_gwsample.png "EntitySets")
+
+11. On the **EntitySets** dialog, double-click the **BusinessPartnerSet** item.
+
+    ![The Entity Sets dialog displays with the BusinessPartnerSet item highlighted.](media/sapvm_sapgui_entitysetsdialog_gwsample.png "EntitySets dialog") 
+ 
+12. On the **SAP Gateway Client** window, select **Execute**. This service retrieves the sales documents via the OData endpoint. Verify the HTTP Response status code value is **200**.
+
+    ![The SAP Gateway Client window displays with the Execute button highlighted. The HTTP Response status code is 200.](media/sapvm_sapgui_entitysetodataresult_gwsample.png "EntitySet OData service execution results")
+
+13. On the **SAP Gateway Client** window, select the **Back** button to return to the **Activate and Maintain Services** screen.
+
+14. On the **ICF Node** pane, select the **Call Browser** button. This will bring up the **Security GUI** dialog once more. Copy the URL value for future use in the lab. After recording the value, close the dialog. This URL is the service endpoint for the Business Partner OData service.
+
+    ![The SAP GUI Security dialog displays with the URL value highlighted.](media/sapvm_sapgui_sapguisecuritydialog_gwsample.png "Service endpoint")
 
 ### Task 5: Prepare payment data in Cosmos DB
 
