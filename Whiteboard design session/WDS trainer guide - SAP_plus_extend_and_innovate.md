@@ -480,39 +480,39 @@ _Streamline repetitive tasks via automation_
 
 1. How would you automatically send alerts based on KPI thresholds and rules?
 
-  Contoso's IT department is stretched thin and is slow to respond. Creating customized solutions to create simple workflows doesn't make sense.  Power BI provides the ability to trigger workflow actions and send alerts based on your visualizations thresholds. These are built-in and require no code.
+    Contoso's IT department is stretched thin and is slow to respond. Creating customized solutions to create simple workflows doesn't make sense.  Power BI provides the ability to trigger workflow actions and send alerts based on your visualizations thresholds. These are built-in and require no code.
 
 2. What services seamlessly integrate with the analytic solutions?
 
-  Power BI can trigger no-code/low-code Power Automate platform workflows. Power Automate workflows can automate business processes like sending customized emails to teams and clients or updating database tables with current workflow states. There several connectors and wizard-like integrations that make Azure Synapse Analytics the obvious choice for the data warehouse.
+    Power BI can trigger no-code/low-code Power Automate platform workflows. Power Automate workflows can automate business processes like sending customized emails to teams and clients or updating database tables with current workflow states. There several connectors and wizard-like integrations that make Azure Synapse Analytics the obvious choice for the data warehouse.
 
 ### Customer Needs
 
 1. Contoso wants to focus on their customers’ payment behavior.  The want to extend credit to the customers with responsible payment history.  Slow-paying customers should be identified as candidates for cash-only sales, have reduced credit lines, and be managed more closely.  The accounting staff needs to identify and collect on invoices at 30, 50, 70 days past due. An automated data workflow needs to update a centralized dashboard.
 
-  Users can create reports using Power BI Desktop. Power BI has charts that can easily produce a visualization showing customer AR payment delinquencies group by the required days. Once the report has been tested and validated, it can be published to the Power BI service for centralized team consumption.
+    Users can create reports using Power BI Desktop. Power BI has charts that can easily produce a visualization showing customer AR payment delinquencies group by the required days. Once the report has been tested and validated, it can be published to the Power BI service for centralized team consumption.
 
-  The Power BI Service has the ability to automatically refresh report data from Azure Synapse Analytics on a scheduled basis. Users do not need to worry about refreshing stale data.
-  
-  Based on configurable chart data thresholds, Power BI can send alerts to Power Automate. Power Automate can automatically send customized emails to late-paying customers and alert account managers take more aggressive measures.
+    The Power BI Service has the ability to automatically refresh report data from Azure Synapse Analytics on a scheduled basis. Users do not need to worry about refreshing stale data.
+
+    Based on configurable chart data thresholds, Power BI can send alerts to Power Automate. Power Automate can automatically send customized emails to late-paying customers and alert account managers take more aggressive measures.
 
 2. Predictive analytics will provide the ability forecast cash flows based on customer payment history and sales orders. Contoso would like to fine-tune staff management to ensure optimal resource allocation according to customer payment predictions. The accounting staff will focus on high risk accounts to maximize payments.
 
-  Azure ML has the ability provide analytics capable of predicting future cash flow to satisfy Contoso creditors. An addition to predicting cash flow, ML can be used to determine the probability of poor paying customers. Power BI can leverage the ML models to produce reports the accounting staff needs to identify high risk accounts.
+    Azure ML has the ability provide analytics capable of predicting future cash flow to satisfy Contoso creditors. An addition to predicting cash flow, ML can be used to determine the probability of poor paying customers. Power BI can leverage the ML models to produce reports the accounting staff needs to identify high risk accounts.
 
 3. They would like to leverage Azure services to extend and innovate data collection and analysis.
 
-  Contoso already has an investment in Azure with their Azure Cosmos DB payment tracking solution. They are pretty happy with the solution.
+    Contoso already has an investment in Azure with their Azure Cosmos DB payment tracking solution. They are pretty happy with the solution.
 
-  The traditional approach to data integration is no longer sufficient in the modern organization. Manually exporting and merging data from different data stores is too time consuming and error prone. Custom code applications and integrations are too costly build and maintain. Using the built-in Azure integrations and data processing tools from Microsoft allows users to focus on making decisions based on the data information. Rules can be created and applied in a consistent and effective manner.
+    The traditional approach to data integration is no longer sufficient in the modern organization. Manually exporting and merging data from different data stores is too time consuming and error prone. Custom code applications and integrations are too costly build and maintain. Using the built-in Azure integrations and data processing tools from Microsoft allows users to focus on making decisions based on the data information. Rules can be created and applied in a consistent and effective manner.
 
-  The proposed solutions take advantage of a wide range of Azure services in order to enhance data integration capabilities.
+    The proposed solutions take advantage of a wide range of Azure services in order to enhance data integration capabilities.
 
-  By combining and correlating data from multiple sources, such as SAP and Azure Cosmos DB, into a central cloud store, Contoso can leverage the powerful predictive analytic tools that drive users to action.
+    By combining and correlating data from multiple sources, such as SAP and Azure Cosmos DB, into a central cloud store, Contoso can leverage the powerful predictive analytic tools that drive users to action.
 
 4. They would also like to minimize the operational overhead within their current processes. The accounting and IT department would like a low-code self-service approach to reporting and automated workflows.
 
-  The Contoso IT and accounting department can leverage the low-code/no-code Azure services to meet their needs. Azure centralized tools and services allow both teams solve problems quickly.  The accounting department can create reports and configure alerts without having to rely on the IT department. The IT department knows they are working with best of breed technology that provides security, monitoring, and governance capabilities while giving the accounting department the independence they desire.
+    The Contoso IT and accounting department can leverage the low-code/no-code Azure services to meet their needs. Azure centralized tools and services allow both teams solve problems quickly.  The accounting department can create reports and configure alerts without having to rely on the IT department. The IT department knows they are working with best of breed technology that provides security, monitoring, and governance capabilities while giving the accounting department the independence they desire.
 
 ### Checklist of preferred objection handling
 
@@ -524,21 +524,21 @@ _Streamline repetitive tasks via automation_
 
 2. Our staff is already working overtime we don’t want staff to be distracted by a new process and reviewing large reports with tons of data. The accounting and finance departments want a centralized system to create dashboards, share critical data, and automate repetitive manual tasks. They do not have months to learn a new tool or wait for IT to create reports them.
 
-  Power BI is a collection of software services, apps, and connectors that work together to turn your unrelated sources of data into coherent, visually immersive, and interactive insights. Users have the ability to create and share/publish amazing reports without involving IT. Instead of reviewing thousands of rows of data, users can filter and display information using secure interactive web-based charts in seconds. Data refreshes can be scheduled allowing data owners to focus on higher priority tasks and consumers to see up to date information in one central location.
-  
-  Many of the data cleaning, shaping, and filtering tools, like Power Query, found in Excel are available in Power BI. Report creators have a familiar easy to use common development experience making the adoption barrier very low.
+    Power BI is a collection of software services, apps, and connectors that work together to turn your unrelated sources of data into coherent, visually immersive, and interactive insights. Users have the ability to create and share/publish amazing reports without involving IT. Instead of reviewing thousands of rows of data, users can filter and display information using secure interactive web-based charts in seconds. Data refreshes can be scheduled allowing data owners to focus on higher priority tasks and consumers to see up to date information in one central location.
+
+    Many of the data cleaning, shaping, and filtering tools, like Power Query, found in Excel are available in Power BI. Report creators have a familiar easy to use common development experience making the adoption barrier very low.
 
 3. Predicting cash flows seems very appealing. We have heard that creating a machine learning model takes a month to build and another 2-3 months to operationalize to be useable from our production systems. Is this true?
 
-  This is true in the traditional process of creating machine learning models. The data scientist creates and tests a model (e.g., in R). This can take several iterations.  Once the model is complete, the data scientist hands it over to developers who translate it into Java or C#---which can take months to get the translation correct and performant. Monitoring needs to be configured and tested.
+    This is true in the traditional process of creating machine learning models. The data scientist creates and tests a model (e.g., in R). This can take several iterations.  Once the model is complete, the data scientist hands it over to developers who translate it into Java or C#---which can take months to get the translation correct and performant. Monitoring needs to be configured and tested.
 
-  Azure ML has made it easier build, test, deploy, and monitor. All the resources required to build, scale, maintain, and secure your model are in one place - Azure.  
-  
-  Azure Automated ML allows developers to automate time-consuming iterative tasks. Users can create an end to end machine learning pipeline to produce models. Solutions can be created quickly without an extensive programming knowledge all the while leveraging best practices. Standard business scenarios like classification, regression, time series forecasting are already built in. Upload your sample dataset and Auto ML will recommend the best model for you rapidly based on the metrics you choose. Model deployment can done with a single click. Model refinement can be done using the built in drag and drop designer. You can run your model test and review the history. The deployed model can be exposed as a REST API. All this can be done in one tool.
+    Azure ML has made it easier build, test, deploy, and monitor. All the resources required to build, scale, maintain, and secure your model are in one place - Azure.  
+
+    Azure Automated ML allows developers to automate time-consuming iterative tasks. Users can create an end to end machine learning pipeline to produce models. Solutions can be created quickly without an extensive programming knowledge all the while leveraging best practices. Standard business scenarios like classification, regression, time series forecasting are already built in. Upload your sample dataset and Auto ML will recommend the best model for you rapidly based on the metrics you choose. Model deployment can done with a single click. Model refinement can be done using the built in drag and drop designer. You can run your model test and review the history. The deployed model can be exposed as a REST API. All this can be done in one tool.
 
 4. Management does not want to spend large amounts of money on IT hardware they have to manage on-premises.
 
-  Contoso can expand their current investment in Azure cloud services. There is no need to purchase and manage additional on-premises hardware.
+    Contoso can expand their current investment in Azure cloud services. There is no need to purchase and manage additional on-premises hardware.
 
 ## Customer quote (to be read back to the attendees at the end)
 
