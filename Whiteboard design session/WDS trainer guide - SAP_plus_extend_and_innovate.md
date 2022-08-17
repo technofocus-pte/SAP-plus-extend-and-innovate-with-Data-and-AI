@@ -242,19 +242,6 @@ The Chief Executive Officer (CEO), Chief Financial Officer (CFO), Chief Informat
 
 ![Diagram illustrating SAP on Azure scenarios and benefits for data pipeline.](media/info-pipeline-OverviewDiagram.png "Infographic - Datapipeline")
 
-SAP on Azure provides many potential scenarios and benefits that are shown in this illustration.
-![Diagram illustrating SAP on Azure scenarios and benefits.](media/sap-on-azure-scenarios-benefits.png 'SAP on Azure Scenarios and Benefits')
-
-Cloud, data, and AI provide ways to shift how data is utilized. This graphic highlights some of these capabilities.
-![Diagram illustrating a transformative shift fueled by cloud, data, and AI.](media/cloud-data-ai-transformative-shift.png 'Cloud, Data, and AI fueling a transformative shift')
-
-There are many drivers for migrating SAP to the cloud.  This graphic illustrates some of these drivers.
-![Diagram illustrating drivers for migrating SAP to the cloud.](media/drivers-for-migrating-sap-to-cloud.png 'Drivers for migrating SAP to the cloud')
-
-When migrating to Azure, there are different drivers that optimize your costs. Some of the key factors are in this graphic.
-
-![Diagram illustrating cost savings with Azure.](media/optimize-cost-with-azure.png 'Optimize cost with Azure')
-
 ## Step 2: Design a proof of concept solution
 
 **Outcome**
@@ -452,11 +439,11 @@ _Data transformation and processing_
 
 1. How would you approach the need for additional analysis of data originating from SAP and non-SAP data sources?
 
-   You have the option of combining SAP and non-SAP data sources for additional transformation and processing. This might involve long-running batch jobs to filter, aggregate, and prepare data for further analysis. Processing options include U-SQL jobs in Azure Data Lake Analytics, Hive, Pig, and custom Map/Reduce jobs in an HDInsight cluster, or Java, Scala, and Python programs in a Synapse Analytics Spark cluster.
+   You have the option of combining SAP and non-SAP data sources for additional transformation and processing. This might involve long-running batch jobs to filter, aggregate, and prepare data for further analysis. Processing options include Hive, Pig, and custom Map/Reduce jobs in an HDInsight cluster, or Java, Scala, and Python programs in a Synapse Analytics Spark cluster.
 
 2. Which Azure services would you use to implement the corresponding functionality?
 
-   It is also possible to use Azure Data Factory to extract data from SAP HANA and SAP Business Warehouse (BW) into Azure data stores, such as Azure Blob Storage and Azure Data Lake to facilitate implementation of advanced analytics with Azure Synapse Analytics.
+   It is also possible to use Azure Data Factory to extract data from SAP HANA and Azure Cosmos DB into Azure data stores, such as Azure Blob Storage and Azure Data Lake Storage Gen2 (ADLS Gen2) to facilitate implementation of advanced analytics with Azure Synapse Analytics.
 
     ![Diagram illustrating an Azure data pipeline that leverages SAP and non-SAP data sources.](media/azure-data-pipeline-with-sap-sources.png 'Azure data pipeline that leverages the preferred solution')
 
@@ -474,7 +461,7 @@ _Data analytics_
 
 2. What Azure services would allow Contoso to further enrich the data by leveraging technologies such as artificial intelligence?
 
-    To further enrich your data, you can combine data from your SAP databases with other systems pooled into Azure Data Lake. With Azure Synapse Analytics and Power BI dashboards, you are able to monitor payment status and sales orders. You can improve forecasting by leveraging Azure Machine Learning (Azure ML).
+    To further enrich your data, you can combine data from your SAP databases with other systems pooled into ADLS Gen2. With Azure Synapse Analytics and Power BI dashboards, you are able to monitor payment status and sales orders. You can improve forecasting by leveraging Azure Machine Learning (Azure ML).
 
 _Streamline repetitive tasks via automation_
 
@@ -490,7 +477,7 @@ _Streamline repetitive tasks via automation_
 
 1. Contoso wants to focus on their customers’ payment behavior.  The want to extend credit to the customers with responsible payment history.  Slow-paying customers should be identified as candidates for cash-only sales, have reduced credit lines, and be managed more closely.  The accounting staff needs to identify and collect on invoices at 30, 50, 70 days past due. An automated data workflow needs to update a centralized dashboard.
 
-    Users can create reports using Power BI Desktop. Power BI has charts that can easily produce a visualization showing customer AR payment delinquencies group by the required days. Once the report has been tested and validated, it can be published to the Power BI service for centralized team consumption.
+    Users can create reports using Power BI Desktop. Note, you can also create Power BI reports online, but with [limited functionality](https://docs.microsoft.com/power-bi/fundamentals/service-service-vs-desktop). Power BI has charts that can easily produce a visualization showing customer AR payment delinquencies group by the required days. Once the report has been tested and validated, it can be published to the Power BI service for centralized team consumption.
 
     The Power BI Service has the ability to automatically refresh report data from Azure Synapse Analytics on a scheduled basis. Users do not need to worry about refreshing stale data manually.
 
@@ -498,7 +485,7 @@ _Streamline repetitive tasks via automation_
 
 2. Predictive analytics will provide the ability forecast cash flows based on customer payment history and sales orders. Contoso would like to fine-tune staff management to ensure optimal resource allocation according to customer payment predictions. The accounting staff will focus on high risk accounts to maximize payments.
 
-    Azure ML has the ability provide analytics capable of predicting future cash flow to satisfy Contoso creditors. An addition to predicting cash flow, ML can be used to determine the probability of poor paying customers. Power BI can leverage the ML models to produce reports the accounting staff needs to identify high-risk accounts.
+    Azure ML can train and deploy model that can be used to predict future cash flow to satisfy Contoso creditors. An addition to predicting cash flow, ML can be used to determine the probability of poor paying customers. Power BI can leverage the ML models to produce reports the accounting staff needs to identify high-risk accounts.
 
 3. They would like to leverage Azure services to extend and innovate data collection and analysis.
 
@@ -530,15 +517,15 @@ _Streamline repetitive tasks via automation_
 
 3. Predicting cash flows seems very appealing.  We have heard that creating a machine learning model takes a month to build and another 2-3 months to operationalize to be useable from our production systems. Is this true?
 
-    This is true in the traditional process of creating machine learning models. The data scientist creates and tests a model (e.g., in R). This can take several iterations.  Once the model is complete, the data scientist hands it over to developers who translate it into Java or C#---which can take months to get the translation correct and performant. Monitoring needs to be configured and tested.
+    This is true in the traditional process of creating machine learning models. The data scientist creates and tests a model (for example, in Python). This can take several iterations. Once the model is complete, the data scientist hands it over to developers who can integrate it into their custom application. This is called operationalizing the model. Monitoring needs to be configured and tested.
 
-    Azure ML has made it easier to build, test, deploy, and monitor machine models. All the resources required to build, scale, maintain, and secure your model are in one place - Azure.  
+    Azure ML has made it easier to build, test, deploy, and monitor machine models. All the resources required to build, scale, maintain, and secure your model are in one place.  
 
-    Azure Automated ML allows developers to automate time-consuming iterative tasks. Users can create an end to end machine learning pipeline to produce models. Solutions can be created quickly without an extensive programming knowledge all the while leveraging best practices. Standard business scenarios like classification, regression, time series forecasting are already built in. You can upload your sample dataset and Auto ML will recommend the best model for you rapidly based on the metrics you choose. Model deployment can be completed with a single click. Model refinement can be done using the built-in drag and drop designer. You can execute your model tests and review the history. The deployed model can be exposed as a REST API. All this functionality is found in one tool.
+    Azure Automated ML allows developers to automate time-consuming iterative tasks. Users can create an end to end machine learning pipeline to produce models. Solutions can be created quickly without an extensive programming knowledge all the while leveraging best practices. Standard business scenarios like classification, regression, time series forecasting are already built in. You can upload your sample dataset and Auto ML will recommend the best model for you rapidly based on the metrics you choose. Model deployment can be completed with a single click. Model refinement can be done using the built-in drag and drop designer. You can execute your model tests and review the history. The deployed model can be exposed as a REST API to other services like Power BI. All this functionality is found in one tool.
 
 4. Management does not want to spend large amounts of money on IT hardware they have to manage on-premises.
 
-    Contoso can expand their current investment in Azure cloud services. There is no need to purchase and manage additional on-premises hardware.
+    Contoso can expand their current investment in Azure cloud services. There is no need to purchase and manage additional on-premises hardware. Eliminate capital expenditures and reduce the cost of underutilized hardware with on-demand usage models.
 
 ## Customer quote (to be read back to the attendees at the end)
 
