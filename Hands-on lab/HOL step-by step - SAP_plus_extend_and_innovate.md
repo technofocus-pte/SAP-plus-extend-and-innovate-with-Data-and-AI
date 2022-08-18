@@ -1,7 +1,7 @@
 ![](https://github.com/Microsoft/MCW-Template-Cloud-Workshop/raw/main/Media/ms-cloud-workshop.png "Microsoft Cloud Workshops")
 
 <div class="MCWHeader1">
-SAP plus extend and innovate
+SAP plus extend and innovate with Data and AI
 </div>
 
 <div class="MCWHeader2">
@@ -26,7 +26,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
 **Contents** 
 
 <!-- TOC -->
-- [SAP plus extend and innovate hands-on lab step-by-step](#sap-plus-extend-and-innovate-hands-on-lab-step-by-step)
+- [SAP plus extend and innovate with Data and AI hands-on lab step-by-step](#sap-plus-extend-and-innovate-with-data-and-ai-hands-on-lab-step-by-step)
   - [Abstract and learning objectives](#abstract-and-learning-objectives)
   - [Overview](#overview)
   - [Solution architecture](#solution-architecture)
@@ -84,7 +84,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
 
 <!-- /TOC -->
 
-# SAP plus extend and innovate hands-on lab step-by-step 
+# SAP plus extend and innovate with Data and AI hands-on lab step-by-step 
 
 ## Abstract and learning objectives 
 
@@ -568,7 +568,6 @@ Payment history data is required when creating the cash flow prediction model. T
 11. On the left menu of Synapse Studio, select the **Monitor** hub. Ensure **Pipeline runs** is selected from the center menu. Observe the IngestPaymentsData pipeline status over time. Use the **Refresh** button to update the table.
 
     ![The IngestSalesOrderData pipeline shows as in progress in the Pipeline runs Monitor hub table.](mmedia/ss_paymentsingestionpipeline_monitor.png "Monitor Pipeline runs")
-    
 
 12. Upon successful completion of the pipeline run, verify data was copied by accessing the **Develop** hub from the left menu, expanding the **+** menu and selecting **SQL script**. In the **Connect to** field of the SQL script, select **sapdatasynsql**. In the query window, paste the following SQL command and run the query. Ensure the value returned is non-zero.
 

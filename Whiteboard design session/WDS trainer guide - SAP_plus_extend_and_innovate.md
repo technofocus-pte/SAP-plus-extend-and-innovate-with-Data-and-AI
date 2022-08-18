@@ -1,7 +1,7 @@
 ![Microsoft Cloud Workshops](https://github.com/Microsoft/MCW-Template-Cloud-Workshop/raw/main/Media/ms-cloud-workshop.png "Microsoft Cloud Workshops")
 
 <div class="MCWHeader1">
-SAP plus extend and innovate
+SAP plus extend and innovate with Data and AI
 </div>
 
 <div class="MCWHeader2">
@@ -31,7 +31,7 @@ Microsoft and the trademarks listed at https://www.microsoft.com/en-us/legal/int
   - [Whiteboard design session flow](#whiteboard-design-session-flow)
   - [Before the whiteboard design session: How to prepare](#before-the-whiteboard-design-session-how-to-prepare)
   - [During the whiteboard design session: Tips for an effective whiteboard design session](#during-the-whiteboard-design-session-tips-for-an-effective-whiteboard-design-session)
-- [SAP plus extend and innovate student guide](#sap-plus-extend-and-innovate-student-guide)
+- [SAP plus extend and innovate with Data and AI student guide](#sap-plus-extend-and-innovate-with-data-and-ai-student-guide)
   - [Abstract and learning objectives](#abstract-and-learning-objectives)
   - [Step 1: Review the customer case study](#step-1-review-the-customer-case-study)
     - [Customer situation](#customer-situation)
@@ -42,7 +42,7 @@ Microsoft and the trademarks listed at https://www.microsoft.com/en-us/legal/int
   - [Step 3: Present the solution](#step-3-present-the-solution)
   - [Wrap-up](#wrap-up)
   - [Additional references](#additional-references)
-- [SAP plus extend and innovate trainer guide](#sap-plus-extend-and-innovate-trainer-guide)
+- [SAP plus extend and innovate with Data and AI trainer guide](#sap-plus-extend-and-innovate-with-data-and-ai-trainer-guide)
   - [Step 1: Review the customer case study](#step-1-review-the-customer-case-study-1)
   - [Step 2: Design a proof of concept solution](#step-2-design-a-proof-of-concept-solution-1)
   - [Step 3: Present the solution](#step-3-present-the-solution-1)
@@ -167,7 +167,7 @@ When participants are doing activities, you can **look ahead to refresh your mem
 
 **Wait for responses**. If you ask a question such as, "What's your experience with (fill in the blank)?" then wait. Do not be afraid of a little silence. If you leap into the silence, your participants will feel you are not serious about involving them and will become passive. Give participants a chance to think, and if no one answers, patiently ask again. You will usually get a response.
 
-# SAP plus extend and innovate student guide
+# SAP plus extend and innovate with Data and AI student guide
 
 ## Abstract and learning objectives
 
@@ -362,7 +362,7 @@ Directions: Reconvene with the larger group to hear the facilitator/SME share th
 | SAP Portfolio categories | <https://www.sap.com/products.html>|
 | Extracting SAP data using OData | <https://techcommunity.microsoft.com/t5/azure-synapse-analytics-blog/extracting-sap-data-using-odata-part-7-delta-extraction-using/ba-p/2865383> |
 
-# SAP plus extend and innovate trainer guide
+# SAP plus extend and innovate with Data and AI trainer guide
 
 ## Step 1: Review the customer case study
 
@@ -421,19 +421,19 @@ _Data ingestion and integration_
 
 1. Which Azure services can you use to ingest data from SAP and non-SAP data sources?
 
-Azure Synapse Analytics has over 100 connectors to integrate with SAP and non-SAP data sources. There is also generic connectors such as REST and OData. The Azure Integration Runtime is used to connect to external cloud compute, whereas if there is on-premises compute or compute that resides with the confines of a virtual network, the Self-Hosted Integration Runtime can be used to connect to Azure Synapse Analytics. Data pipelines can be authored to orchestrate data movement from source to target systems. Other options include DataBricks, Azure Data Factory, or custom developed applications hosted in cloud services such as web applications or web jobs.
+    Azure Synapse Analytics pipelines has over 100 connectors to integrate with SAP and non-SAP data sources. There is also generic connectors such as REST and OData. The Azure Integration Runtime is used to connect to external cloud compute, whereas if there is on-premises compute or compute that resides with the confines of a virtual network, the Self-Hosted Integration Runtime can be used to connect to Azure Synapse Analytics. Data pipelines can be authored to orchestrate data movement from source to target systems. Other options include DataBricks, Azure Data Factory, or custom developed applications hosted in cloud services such as web applications or web jobs.
 
 2. Of the options you identified in the previous step, which ones would you recommend to Contoso?
 
-  Azure Synapse Analytics provides a single interface for all data ingestion needs. It has the ability to orchestrate data movement via code-free (copy data activity, data flows) or coded options (stored procedures, notebooks).
+    Azure Synapse Analytics provides a single interface for all data ingestion needs and pipeline workflow. It has the ability to orchestrate data movement via code-free (copy data activity, data flows) or coded options (stored procedures, notebooks).  Synapse handles your data science workloads and your data exploration needs. There is some limited reporting capabilities as well.
 
 3. What data integration options would Contoso benefit from?
 
-  Contoso can benefit from the services offered by Azure Synapse Analytics. There are over 100 connectors to external compute to be able to move data from source to sink. Additionally, Contoso can take advantage of integration capabilities with Azure Machine Learning. Wizards can be used directly within the Synapse Studio to train models and deploy and host those models in the dedicated SQL Pool. There is also an integration between Azure Synapse Analytics and Power BI. Power BI can be used to create visualizations on top of SQL Pool data (both serverless and dedicated). Power BI integrates with Power Automate and can trigger business processes based on data alerts. Power BI can also integrate with Azure Machine Learning models that have been deployed as web services.
+    Contoso can benefit from the services offered by Azure Synapse Analytics. There are over 100 connectors to external compute to be able to move data from source to sink. Additionally, Contoso can take advantage of integration capabilities with Azure Machine Learning. Wizards can be used directly within the Synapse Studio to train models and deploy and host those models in the dedicated SQL Pool. There is also an integration between Azure Synapse Analytics and Power BI. Power BI can be used to create visualizations on top of SQL Pool data (both serverless and dedicated). Power BI integrates with Power Automate and can trigger business processes based on data alerts. Power BI can also integrate with Azure Machine Learning models that have been deployed as web services.
 
 4. Which Azure workflow and integration services would you recommend be used by Contoso?
 
-  Azure Synapse Analytics, Azure Machine Learning, Power BI, and Power Automate.
+    Azure Synapse Analytics, Azure Machine Learning, and Power Automate.
 
 _Data transformation and processing_
 
@@ -477,7 +477,7 @@ _Streamline repetitive tasks via automation_
 
 1. Contoso wants to focus on their customers’ payment behavior.  The want to extend credit to the customers with responsible payment history.  Slow-paying customers should be identified as candidates for cash-only sales, have reduced credit lines, and be managed more closely.  The accounting staff needs to identify and collect on invoices at 30, 50, 70 days past due. An automated data workflow needs to update a centralized dashboard.
 
-    Users can create reports using Power BI Desktop. Note, you can also create Power BI reports online, but with [limited functionality](https://docs.microsoft.com/power-bi/fundamentals/service-service-vs-desktop). Power BI has charts that can easily produce a visualization showing customer AR payment delinquencies group by the required days. Once the report has been tested and validated, it can be published to the Power BI service for centralized team consumption.
+    Users can create reports using Power BI Desktop. Note, you can also create Power BI reports online, but with [limited functionality](https://docs.microsoft.com/power-bi/fundamentals/service-service-vs-desktop). Features, like Measures, are not available in the on-line service. Power BI has charts that can easily produce a visualization showing customer AR payment delinquencies group by the required days. Once the report has been tested and validated, it can be published to the Power BI service for centralized team consumption.
 
     The Power BI Service has the ability to automatically refresh report data from Azure Synapse Analytics on a scheduled basis. Users do not need to worry about refreshing stale data manually.
 
@@ -485,7 +485,7 @@ _Streamline repetitive tasks via automation_
 
 2. Predictive analytics will provide the ability forecast cash flows based on customer payment history and sales orders. Contoso would like to fine-tune staff management to ensure optimal resource allocation according to customer payment predictions. The accounting staff will focus on high risk accounts to maximize payments.
 
-    Azure ML can train and deploy model that can be used to predict future cash flow to satisfy Contoso creditors. An addition to predicting cash flow, ML can be used to determine the probability of poor paying customers. Power BI can leverage the ML models to produce reports the accounting staff needs to identify high-risk accounts.
+    Azure ML can train and deploy models that can be used to predict future cash flow which would satisfy Contoso creditors. An addition to predicting cash flow, ML can be used to determine the probability of poor paying customers. Power BI can leverage the ML models to produce reports the accounting staff needs to identify high-risk accounts. Accounting and finance could review the data and adjust credit ratings.
 
 3. They would like to leverage Azure services to extend and innovate data collection and analysis.
 

@@ -1,7 +1,7 @@
 ![](https://github.com/Microsoft/MCW-Template-Cloud-Workshop/raw/main/Media/ms-cloud-workshop.png "Microsoft Cloud Workshops")
 
 <div class="MCWHeader1">
-SAP plus extend and innovate
+SAP plus extend and innovate with Data and AI
 </div>
 
 <div class="MCWHeader2">
@@ -25,7 +25,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
 
 **Contents**
 
-- [SAP plus extend and innovate before the hands-on lab setup guide](#sap-plus-extend-and-innovate-before-the-hands-on-lab-setup-guide)
+- [SAP plus extend and innovate with Data and AI before the hands-on lab setup guide](#sap-plus-extend-and-innovate-before-the-hands-on-lab-setup-guide)
   - [Requirements](#requirements)
   - [Before the hands-on lab](#before-the-hands-on-lab)
     - [Task 1: Obtain the desired Azure Subscription Id value](#task-1-obtain-the-desired-azure-subscription-id-value)
@@ -37,7 +37,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
       - [Step 2: Create source and sink integration datasets](#step-2-create-source-and-sink-integration-datasets)
       - [Step 3: Create pipeline to ingest payment data into Cosmos DB](#step-3-create-pipeline-to-ingest-payment-data-into-cosmos-db)
 
-# SAP plus extend and innovate before the hands-on lab setup guide
+# SAP plus extend and innovate with Data and AI before the hands-on lab setup guide
 
 ## Requirements
 
@@ -81,7 +81,7 @@ Duration: X minutes
 
     | Field | Value |
     |-------|-------|
-    | Name | MCW SAP plus extend and innovate |
+    | Name | MCW SAP plus extend and innovate with Data and AI |
     | Description | SAP instance for the Microsoft Cloud Workshop |
     | Cloud Provider | Select **Microsoft Azure** |
     | Subscription ID | Paste the **Subscription ID** value from Task 1 |
