@@ -529,7 +529,7 @@ _Streamline repetitive tasks via automation_
 
 4. Management does not want to spend large amounts of money on IT hardware they have to manage on-premises.
 
-    Contoso can expand their current investment in Azure cloud services. There is no need to purchase and manage additional on-premises hardware. Eliminate capital expenditures and reduce the cost of underutilized hardware with on-demand usage models.
+    Contoso can expand their current investment in Azure cloud services. There is no need to purchase and manage additional on-premises hardware. They can eliminate capital expenditures and reduce the cost of underutilized hardware with on-demand usage models.
 
 ## Customer quote (to be read back to the attendees at the end)
 
