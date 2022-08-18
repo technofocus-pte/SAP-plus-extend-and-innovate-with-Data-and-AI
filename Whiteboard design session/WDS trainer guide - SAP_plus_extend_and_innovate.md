@@ -240,7 +240,7 @@ The Chief Executive Officer (CEO), Chief Financial Officer (CFO), Chief Informat
 
 ### Infographic for common scenarios
 
-![Diagram illustrating SAP on Azure scenarios and benefits for data pipeline.](media/info-pipeline-OverviewDiagram.png "Infographic - Datapipeline")
+![Diagram illustrating SAP on Azure scenarios and benefits for data pipeline.](media/infographic.png "Infographic - Datapipeline")
 
 ## Step 2: Design a proof of concept solution
 
