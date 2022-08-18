@@ -204,7 +204,7 @@ The accounting department director, Sarah Smith, says customer AR management has
 
 ![The current process shows Excel spreadsheets exported and merged.](media/contoso-current-process.png "Contoso Current Process")
 
-By the time a problem is identified, it becomes more difficult to correct.  Valuable constrained accounting resources are manually contacting delinquent accounts weeks after the problem has started, making it more difficult to correct. Some existing customers are habitually late payers and new accounts drift into this problem behavior.
+By the time a problem account is identified, it becomes more difficult to correct.  Valuable constrained accounting resources are manually contacting delinquent accounts weeks after the problem has started. Some existing customers are habitually late payers and new accounts drift into this problem behavior.
 
 Contoso needs cash now and is considering selling some of its accounts receivables to outside debt collection agencies for a short-term cash infusion and is thinking about enforcing late payment fees for customers with balances beyond 50 days.  This type of option would have a positive cash flow, but might lead to weakening customer relationships and sales reductions.  Correcting customer payment behavior problems early is critical. The invoice late payment fees are substantial and could help manage customer paying behaviors. Also, the account managers believe it would be useful to notify customers when they are approaching an invoice due date.
 
@@ -418,6 +418,8 @@ _High-level architecture_
 The proposed solutions take advantage of a wide range of Azure services in order to enhance the agility, resiliency, and resiliency of the customer's SAP landscape, as well as to deliver additional data integration capabilities. In particular, it provides the following functionality:
 
   ![Diagram illustrating an Azure data pipeline that leverages SAP and non-SAP data sources.](media/solution_architecture.png 'Solution Architecture Diagram')
+
+  Sales Order information is stored in an S/4HANA system and payments data is stored in Cosmos DB. Synapse Pipelines are used to ingest historical data from both sources. Power BI is used to visualize historical data and to create reports. Azure Machine Learning is used to create a model to predict incoming cash flow. Finally, a data alert is established to identify risky payers whose payments are typically late. This alert triggers a Power Automate process that will in-turn flag the risky payers in SAP.
 
 _Data ingestion and integration_
 
