@@ -222,11 +222,11 @@ The Chief Executive Officer (CEO), Chief Financial Officer (CFO), Chief Informat
 
 1. Contoso wants to focus on their customers’ payment behavior.  The want to extend credit to the customers with responsible payment history.  Slow-paying customers should be identified as candidates for cash-only sales, have reduced credit lines, and be managed more closely.  The accounting staff needs to identify and collect on invoices at 30, 50, 70 days past due. They need an automated data workflow that updates a centralized dashboard.
 
-2. Predictive analytics will provide the ability forecast cash flows based on customer payment history and sales orders. Contoso would like to fine-tune staff management to ensure optimal resource allocation according to customer payment predictions. The accounting staff will focus on high-risk accounts to maximize payments
+2. Predictive analytics will provide the ability forecast cash flows based on customer payment history and sales orders. Contoso would like to fine-tune staff management to ensure optimal resource allocation according to customer payment predictions. The accounting staff will focus on high-risk accounts to maximize payments.
 
-3. They would also like to minimize the operational overhead within their current processes.  
+3. They would like to leverage Azure services to extend and innovate data collection and analysis.
 
-4. The accounting and IT department would like a low-code self-service approach to reporting and automated workflows.
+4. They would also like to minimize the operational overhead within their current processes. The accounting and IT department would like a low-code self-service approach to reporting and automated workflows.
 
 ### Customer objections
 
