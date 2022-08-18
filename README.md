@@ -1,6 +1,6 @@
 
 
-# SAP plus extend and innovate
+# SAP plus extend and innovate with Data and AI
 
 Contoso Retail processes and distributes food to supermarkets and other small-to-medium sized companies.  Generous credit terms based on relationships instead of data analytics has put the company in financial difficulty.  They have challenges identifying customers’ payment behaviors and notifying customers when they are behind on invoice payments.  The accounting department uses manual processes to identify delinquent accounts making the accounts receivable (AR) management time consuming.  Also, lenders and have capped CFD’s line of credit and increased the interest rate until they can lower their AR balance and be able to predict near term future cash flow.
 

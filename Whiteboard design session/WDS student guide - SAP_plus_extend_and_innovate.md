@@ -1,7 +1,7 @@
 ![Microsoft Cloud Workshops](https://github.com/Microsoft/MCW-Template-Cloud-Workshop/raw/main/Media/ms-cloud-workshop.png "Microsoft Cloud Workshops")
 
 <div class="MCWHeader1">
-SAP plus extend and innovate
+SAP plus extend and innovate with Data and AI
 </div>
 
 <div class="MCWHeader2">
@@ -26,7 +26,7 @@ Microsoft and the trademarks listed at https://www.microsoft.com/en-us/legal/int
 
 <!-- TOC -->
 
-- [SAP plus extend and innovate student guide](#sap-plus-extend-and-innovate-student-guide)
+- [SAP plus extend and innovate with Data and AI student guide](#sap-plus-extend-and-innovate-student-guide)
   - [Abstract and learning objectives](#abstract-and-learning-objectives)
   - [Step 1: Review the customer case study](#step-1-review-the-customer-case-study)
     - [Customer situation](#customer-situation)
@@ -40,7 +40,7 @@ Microsoft and the trademarks listed at https://www.microsoft.com/en-us/legal/int
 
 <!-- /TOC -->
 
-# SAP plus extend and innovate student guide
+# SAP plus extend and innovate with Data and AI student guide
 
 ## Abstract and learning objectives
 
