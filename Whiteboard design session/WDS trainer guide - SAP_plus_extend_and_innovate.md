@@ -417,6 +417,8 @@ _High-level architecture_
 
 The proposed solutions take advantage of a wide range of Azure services in order to enhance the agility, resiliency, and resiliency of the customer's SAP landscape, as well as to deliver additional data integration capabilities. In particular, it provides the following functionality:
 
+  ![Diagram illustrating an Azure data pipeline that leverages SAP and non-SAP data sources.](media/solution_architecture.png 'Solution Architecture Diagram')
+
 _Data ingestion and integration_
 
 1. Which Azure services can you use to ingest data from SAP and non-SAP data sources?
@@ -485,7 +487,7 @@ _Streamline repetitive tasks via automation_
 
 2. Predictive analytics will provide the ability forecast cash flows based on customer payment history and sales orders. Contoso would like to fine-tune staff management to ensure optimal resource allocation according to customer payment predictions. The accounting staff will focus on high risk accounts to maximize payments.
 
-    Azure ML can train and deploy models that can be used to predict future cash flow which would satisfy Contoso creditors. An addition to predicting cash flow, ML can be used to determine the probability of poor paying customers. Power BI can leverage the ML models to produce reports the accounting staff needs to identify high-risk accounts. Accounting and finance could review the data and adjust credit ratings.
+    Azure ML can train and deploy models that can be used to predict future cash flow. An addition to predicting cash flow, ML can be used to determine the probability of poor paying customers. Power BI can leverage the ML models to produce reports the accounting staff needs to identify high-risk accounts. Accounting and finance could review the data and adjust credit ratings.
 
 3. They would like to leverage Azure services to extend and innovate data collection and analysis.
 
