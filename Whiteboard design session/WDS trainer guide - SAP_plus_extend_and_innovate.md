@@ -175,8 +175,7 @@ Contoso Food Distribution (CFD), Inc., subsidiary of Contoso Retail Inc.,  proce
 
 In this whiteboard design session, you will work in a group to design the data pipeline PoC that could support the needs of Contoso Retail.
 
-At the end of this workshop, you’ll have the knowledge necessary to build a data pipeline that will ingest SAP and Cosmos DB data into a common Azure Synapse data warehouse.  You will be able analyze AR and sales data to deliver a 360-degree view of customers’ accounts.  Using Power BI and Power Automate, you will be able to optimize company operations through data analytics and process automation.
-
+At the end of workshop, you will have the knowledge necessary to build a data pipeline that will ingest SAP and Cosmos DB data into a common data warehouse. You will be able analyze AR and sales data to deliver a 360-degree view of customers’ accounts.
 
 ## Step 1: Review the customer case study 
 
@@ -534,5 +533,3 @@ _Streamline repetitive tasks via automation_
 ## Customer quote (to be read back to the attendees at the end)
 
 “We are truly satisfied with the results offered through the solution provided. By integrating our SAP data with Azure-based analytic tools, like Synapse and Power BI, we can deliver action driven reports while maintaining a single source of truth for critical data.  The accounting department has created reports displaying past due balance accounts in one central dashboard. Now, we can reliably base our tactical and strategic planning on end-to-end business data that incorporates interconnected operations and leverages cutting-edge technologies like AI, and machine learning. Our cash flows are predictable and AR balances lower.”
-
-Mari Stephens, CFO, Contoso
