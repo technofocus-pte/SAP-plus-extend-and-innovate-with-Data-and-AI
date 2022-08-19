@@ -196,7 +196,7 @@ Directions:  With all participants in the session, the facilitator/SME presents 
 
 ### Customer situation
 
-Contoso Food Distribution (CFD), Inc., subsidiary of Contoso Retail Inc., has been selling goods through various channels for the past 15 years. Their primary customer segments are supermarkets, retail chains, and small- to mid-size enterprise stores.  The business has been built on great customer service and relationships.  They have been facing recent challenges leveraging their SAP and Azure Cosmos DB investments to manage their accounts receivable (AR) and customer accounts.
+Contoso Food Distribution (CFD), Inc., a subsidiary of Contoso Retail Inc., has been selling goods through various channels for the past 15 years. Their primary customer segments are supermarkets, retail chains, and small- to mid-size enterprise stores.  The business has been built on great customer service and relationships.  They have been facing recent challenges leveraging their SAP and Azure Cosmos DB investments to manage their accounts receivable (AR) and customer accounts.
 
 Food processing and distribution has small profit margins and large transaction volume.  Inventory is perishable and needs to be delivered quickly.  CFD's CEO, Jan Smith, has chosen to deliver the product first and manage account details later.  Unfortunately, CFD is having issues with high accounts receivables and rising inventory finance costs.  Mari Stephens, the CFO, is frustrated CFD operational credit line is being capped and the interest rate increased until they can lower their accounts receivable balances and predict their future cash flow is healthy.  This small interest expense increase is a problem given the industry’s thin profit margins.
 
