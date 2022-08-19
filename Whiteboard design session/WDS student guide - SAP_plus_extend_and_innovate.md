@@ -92,7 +92,7 @@ The Chief Executive Officer (CEO), Chief Financial Officer (CFO), Chief Informat
 
 ### Customer needs
 
-1. Contoso wants to focus on their customers’ payment behavior.  They want to extend credit to the customers with responsible payment history.  Slow-paying customers should be identified as candidates for cash-only sales, have reduced credit lines, and be managed more closely.  The accounting staff needs to identify and collect on invoices at 30, 50, 70 days past due. They need an automated data workflow that updates a centralized dashboard.
+1. Contoso wants to focus on their customers’ payment behavior.  They want to extend credit to the customers with a responsible payment history.  Slow-paying customers should be identified as candidates for cash-only sales, have reduced credit lines, and be managed more closely.  The accounting staff needs to identify and collect on invoices at 30, 50, 70 days past due. They need an automated data workflow that updates a centralized dashboard.
 
 2. Predictive analytics will provide the ability to forecast cash flows based on customer payment history and sales orders. Contoso would like to fine-tune staff management to ensure optimal resource allocation according to customer payment predictions. The accounting staff will focus on high-risk accounts to maximize payments.
 
