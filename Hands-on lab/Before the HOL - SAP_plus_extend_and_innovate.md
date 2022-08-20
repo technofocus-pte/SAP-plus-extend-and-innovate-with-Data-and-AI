@@ -25,7 +25,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
 
 **Contents**
 
-- [SAP plus extend and innovate with Data and AI before the hands-on lab setup guide](#sap-plus-extend-and-innovate-before-the-hands-on-lab-setup-guide)
+- [SAP plus extend and innovate with Data and AI before the hands-on lab setup guide](#sap-plus-extend-and-innovate-with-data-and-ai-before-the-hands-on-lab-setup-guide)
   - [Requirements](#requirements)
   - [Before the hands-on lab](#before-the-hands-on-lab)
     - [Task 1: Obtain the desired Azure Subscription Id value](#task-1-obtain-the-desired-azure-subscription-id-value)
@@ -177,35 +177,39 @@ This task demonstrates creating a sales view in SAP and exposing it as an OData 
 
 3. Open the downloaded RDP file and log into the instance using the username `Administrator` and the password used when deploying the instance.
 
-4. From the desktop double-click the **HANA Studio** icon. This will open the Eclipse development environment.
+4. From the desktop double-click the **SAP Dev Tools for Eclipse** PowerShell icon to install Eclipse. Accept the license agreement. Installation can take up to 5 minutes, please be patient.
 
-    ![The HANA studio icon.](media/sapvm_hanastudioicon.png "HANA Studio icon")
+   ![The SAP Dev Tools for Eclipse PowerShell icon.](media/sapvm_pstoolsinstallicon.png "SAP Dev Tools for Eclipse icon")
 
-5. In the **Select a directory as workspace** dialog, keep the default value and select **Launch**. Launching will take a few moments, please be patient.
+5. Once the installation has completed, double-click the **SAP Dev Tools for Eclipse** icon. This will open the Eclipse development environment.
+
+    ![SAP Dev Tools for Eclipse icon.](media/sapvm_eclipseicon.png "SAP Dev Tools for Eclipse icon")
+
+6. In the **Select a directory as workspace** dialog, keep the default value and select **Launch**. Launching will take a few moments, please be patient.
 
     ![The Select a directory as workspace dialog displays with the Launch button highlighted.](media/sapvm_hanastudioworkspace_prompt.png "Select a directory as workspace dialog")
 
-6. Change the perspective to development by expanding the **Window** menu, **Perspective**, **Open Perspective**, then selecting the **SAP HANA Development** item.
+7. Change the perspective to development by expanding the **Window** menu, **Perspective**, **Open Perspective**, then selecting the **SAP HANA Development** item.
 
     ![HANA Studio displays with the Window, Perspective, Open Perspective menu items expanded and the SAP HANA Development item is selected.](media/sapvm_changeperspective.png "Change to development perspective")
 
-7. In the left panel, select the **Project Explorer** tab then double-click the **S4H_100_s4h_ext_en** folder.
+8. In the left panel, select the **Project Explorer** tab then double-click the **S4H_100_s4h_ext_en** folder.
 
     ![The left panel of HANA Studio displays with the Project Explorer tab and S4H_100_s4h_ext_en folder selected.](media/sapvm_projectexplorer.png "Project Explorer")
 
-8. When prompted for a password, enter `Welcome1` and select **OK**.
+9. When prompted for a password, enter `Welcome1` and select **OK**.
 
     ![A logon dialog displays with the Password text box and OK button highlighted.](media/sapvm_logins4h_ext.png "Logon dialog")
 
-9.  Expand the **File** menu, then **New** and select the **Other** item.
+10. Expand the **File** menu, then **New** and select the **Other** item.
 
     ![The File and New menus are expanded with the Other item selected.](media/sapvm_file_new_other.png "Create new file")
 
-10. In the **Select a wizard** dialog, search for `Data Definition`. Select the **Data Definition** item beneath the **ABAP / Core Data Services** folders. Select **Next**.
+11. In the **Select a wizard** dialog, search for `Data Definition`. Select the **Data Definition** item beneath the **ABAP / Core Data Services** folders. Select **Next**.
 
     ![The Select a wizard dialog displays with Data Definition entered in the search box and the Data Definition item selected from the search results. The Next button is highlighted.](media/sapvm_newdatadefinition.png "New Data Definition")
 
-11. Fill the **New Data Definition** dialog as follows, then select **Finish**.
+12. Fill the **New Data Definition** dialog as follows, then select **Finish**.
 
     | Field | Value |
     |-------|-------|
@@ -216,7 +220,7 @@ This task demonstrates creating a sales view in SAP and exposing it as an OData 
 
     ![The New Data Definition dialog displays populated with the preceding values.](media/sapvm_datadefinitionform.png "New Data Definition dialog")
 
-12. Replace the code listing for **ZBD_ISALESDOCUMENT_E** with the following. Save the file.
+13. Replace the code listing for **ZBD_ISALESDOCUMENT_E** with the following. Save the file.
 
     ```SAP
     @AbapCatalog.sqlViewName: 'ZBD_ISALESDOC_E'
@@ -273,19 +277,19 @@ This task demonstrates creating a sales view in SAP and exposing it as an OData 
     } where SDDocumentCategory = 'C'
     ```
 
-13. Right-click in the whitespace of the **ZBD_ISALESDOCUMENT_E** view code window and select **Activate**.
+14. Right-click in the whitespace of the **ZBD_ISALESDOCUMENT_E** view code window and select **Activate**.
 
     ![The ZBD_ISALESDOCUMENT_E view displays a context menu with the **Activate** item selected.](media/sapvm_activatezbd_isalesdocument_e.png "Activate the ZBD_ISALESDOCUMENT_E view")
 
-14. Right-click in the whitespace of the **ZBD_ISALESDOCUMENT_E** view once more, this time select **Open With** and choose **Data Preview**. This will display the raw data of the view.
+15. Right-click in the whitespace of the **ZBD_ISALESDOCUMENT_E** view once more, this time select **Open With** and choose **Data Preview**. This will display the raw data of the view.
 
     ![The ZBD_ISALESDOCUMENT_E view displays a context menu with the Open With and Data Preview items selected.](media/sapvm_preview_menuitem_zbd_isalesdocument_e.png "Preview ZBD_ISALESDOCUMENT_E view")
 
     ![Raw data for the ZBD_ISALESDOCUMENT_E view displays in tabular format.](media/sapvm_previewsalesdocuments.png "Raw data preview of ZBD_ISALESDOCUMENT_E view")
 
-15. Keep this file open for the next task.
+16. Keep this file open for the next task.
 
-16. Next, expose SAP sales data as an OData service. Add the following code immediately preceding the `define view` line of code of the **ZBD_ISALESDOCUMENT_E** file and save the file.
+17. Next, expose SAP sales data as an OData service. Add the following code immediately preceding the `define view` line of code of the **ZBD_ISALESDOCUMENT_E** file and save the file.
 
     ```ABAL
     @OData.publish: true
@@ -293,29 +297,29 @@ This task demonstrates creating a sales view in SAP and exposing it as an OData 
 
     ![A portion of a code window displays with the preceding line of code highlighted.](media/sapvm_addodataannotation.png "Add OData publish annotation")
 
-17. Right-click in the whitespace of the **ZBD_ISALESDOCUMENT_E** file, and select **Activate**.
+18. Right-click in the whitespace of the **ZBD_ISALESDOCUMENT_E** file, and select **Activate**.
 
-18. Minimize the Eclipse development environment, and double-click the **SAP Logon** icon located on the desktop of the virtual machine. This will open the SAP GUI application.
+19. Minimize the Eclipse development environment, and double-click the **SAP Logon** icon located on the desktop of the virtual machine. This will open the SAP GUI application.
 
     ![The SAP Logon icon located on the virtual machine desktop displays.](media/sapvm_saplogonicon.png "SAP Logon icon")
 
-19. From the top toolbar menu, select the **Logon** button.
+20. From the top toolbar menu, select the **Logon** button.
 
     ![A portion of the SAP GUI toolbar displays with the Logon button highlighted.](media/sapvm_sapguilogonbutton.png "Logon")
 
-20. Log in with the username `S4H_EXT` and the password `Welcome1`, press <kbd>Enter</kbd> to submit the form.
+21. Log in with the username `S4H_EXT` and the password `Welcome1`, press <kbd>Enter</kbd> to submit the form.
 
     ![The SAP GUI logon form displays populated with the preceding values.](media/sapvm_sapguilogonform.png "SAP GUI Logon form")
 
-21. Once logged on, type `/n/IWFND/MAINT_SERVICE` in the toolbar menu transaction combo box and press <kbd>Enter</kbd>. This opens the **Activate and Maintain Services** window.
+22. Once logged on, type `/n/IWFND/MAINT_SERVICE` in the toolbar menu transaction combo box and press <kbd>Enter</kbd>. This opens the **Activate and Maintain Services** window.
 
     ![The SAP GUI toolbar displays with the transaction combo box highlighted. The n/IFWND/MAINT_SERVICE transaction is entered in the transaction combo box.](media/sapvm_sapgui_transactioncombobox.png "SAP GUI transaction combo box")  
 
-22. From the toolbar menu of the **Activate and Maintain Services** window, select the **Add Service** button.
+23. From the toolbar menu of the **Activate and Maintain Services** window, select the **Add Service** button.
 
     ![A portion of the Activate and Maintain Services toolbar displays with the Add service button highlighted.](media/sapvm_sapgui_maintsvcs_addservicebutton.png "Add Service")
 
-23. Populate the **Add Selected Services** filter form as follows and press <kbd>Enter</kbd>.
+24. Populate the **Add Selected Services** filter form as follows and press <kbd>Enter</kbd>.
 
     | Field | Value |
     |-------|-------|
@@ -324,49 +328,49 @@ This task demonstrates creating a sales view in SAP and exposing it as an OData 
 
     ![The filter form displays populated with the preceding values.](media/sapvm_sapgui_svcfilterform.png "Filter form")
 
-24. From the list of results, select the **ZBD_I_SALESDOCUMENT_E_CDS** item.
+25. From the list of results, select the **ZBD_I_SALESDOCUMENT_E_CDS** item.
 
     ![The filter results display with the ZBD_I_SALESDOCUMENT_E_CDS item highlighted.](media/sapvm_sapgui_svcresults.png "Filter results list")
 
-25. In the **Add Service** dialog, select the **Local Object** button located in the **Creation Information** section. This will populate the **$TMP** value, and press <kbd>Enter</kbd>. An information dialog indicating success will display, dismiss this dialog.
+26. In the **Add Service** dialog, select the **Local Object** button located in the **Creation Information** section. This will populate the **$TMP** value, and press <kbd>Enter</kbd>. An information dialog indicating success will display, dismiss this dialog.
 
     ![The Add Service dialog displays with the Local Object button highlighted.](media/sapvm_sapgui_addservicedialog.png "Add Service dialog")
 
-26. On the **Add Selected Services** screen, select the **Back** button on the toolbar menu. This will open the **Activate and Maintan Services** window once more.
+27. On the **Add Selected Services** screen, select the **Back** button on the toolbar menu. This will open the **Activate and Maintan Services** window once more.
 
     ![A portion of the Add Selected Services toolbar displays with the Back button highlighted.](media/sapvm_sapgui_backbuttonaddservices.png "Back button")
 
-27. On the **Activate and Maintain Services** screen, select the **Filter** button from the toolbar menu.
+28. On the **Activate and Maintain Services** screen, select the **Filter** button from the toolbar menu.
 
     ![A portion of the Activate and Maintain Services toolbar menu displays with the Filter button highlighted](media/sapvm_sapgui_activateandmaintainfilterbutton.png "Filter services")
 
-28. In the **Filter for Service Catalog** dialog, type `ZBD_*` in the **Technical Service Name** field and press <kbd>Enter</kbd>.
+29. In the **Filter for Service Catalog** dialog, type `ZBD_*` in the **Technical Service Name** field and press <kbd>Enter</kbd>.
 
     ![The Filter for Service Catalog displays with ZBD_* entered in the Technical Service Name field.](media/sapvm_sapgui_svccatalogfilterdialog.png "Filter for Service Catalog dialog")
 
-29. This action filters the **Activate and Maintain Services** screen to a single service. In the **ICF Nodes** pane, select the **SAP Gateway Client** button. If the **SAP GUI Security** dialog displays, check the **Remember My Decision** checkbox and select **Allow**.
+30. This action filters the **Activate and Maintain Services** screen to a single service. In the **ICF Nodes** pane, select the **SAP Gateway Client** button. If the **SAP GUI Security** dialog displays, check the **Remember My Decision** checkbox and select **Allow**.
 
     ![The ICF Nodes pane displays with the SAP Gateway Client button highlighted on the toolbar menu.](media/sapvm_sapgui_icfnodessapgatewayclientbutton.png "ICF Nodes SAP Gateway Client")
 
-30. On the **SAP Gateway Client** window, select the **Execute** button from the toolbar menu. This tests the OData service. Verify in the **HTTP Response** pane that the status code indicates **200**.
+31. On the **SAP Gateway Client** window, select the **Execute** button from the toolbar menu. This tests the OData service. Verify in the **HTTP Response** pane that the status code indicates **200**.
 
     ![The SAP Gateway Client window displays with the Execute button highlighted on the toolbar menu and the HTTP Response status code indicating 200.](media/sapvm_sapgui_sapgatewayclientexecution.png "SAP Gateway Client")
 
-31. On the **SAP Gateway Client** window, select the **EntitySets** button on the toolbar menu.
+32. On the **SAP Gateway Client** window, select the **EntitySets** button on the toolbar menu.
 
     ![The SAP Gateway window displays with the EntitySets button highlighted.](media/sapvm_sapgui_sapgatewaycliententitysetsbutton.png "EntitySets")
 
-32. On the **EntitySets** dialog, double-click the **ZBD_I_Salesdocument_E** item.
+33. On the **EntitySets** dialog, double-click the **ZBD_I_Salesdocument_E** item.
 
-    ![The Entity Sets dialog displays with teh ZBD_I_Salesdocument_E item highlighted.](media/sapvm_sapgui_entitysetsdialog.png "EntitySets dialog") 
+    ![The Entity Sets dialog displays with teh ZBD_I_Salesdocument_E item highlighted.](media/sapvm_sapgui_entitysetsdialog.png "EntitySets dialog")
 
-33. On the **SAP Gateway Client** window, select **Execute**. This service retrieves the sales documents via the OData endpoint. Verify the HTTP Response status code value is **200**.
+34. On the **SAP Gateway Client** window, select **Execute**. This service retrieves the sales documents via the OData endpoint. Verify the HTTP Response status code value is **200**.
 
     ![The SAP Gateway Client window displays with the Execute button highlighted. The HTTP Response status code is 200.](media/sapvm_sapgui_entitysetodataresult.png "EntitySet OData service execution results")
 
-34. On the **SAP Gateway Client** window, select the **Back** button to return to the **Activate and Maintain Services** screen.
+35. On the **SAP Gateway Client** window, select the **Back** button to return to the **Activate and Maintain Services** screen.
 
-35. On the **ICF Node** pane, select the **Call Browser** button. This will bring up the **Security GUI** dialog once more. Copy the URL value for future use in the lab. After recording the value, close the dialog. This URL is the service endpoint for the sales document OData service.
+36. On the **ICF Node** pane, select the **Call Browser** button. This will bring up the **Security GUI** dialog once more. Copy the URL value for future use in the lab. After recording the value, close the dialog. This URL is the service endpoint for the sales document OData service.
 
     ![The SAP GUI Security dialog displays with the URL value highlighted.](media/sapvm_sapgui_sapguisecuritydialog.png "Service endpoint")
 
@@ -382,7 +386,7 @@ A service is available that allows for the update of a Business Partner record. 
 
     ![A portion of the Activate and Maintain Services toolbar displays with the Add service button highlighted.](media/sapvm_sapgui_maintsvcs_addservicebutton.png "Add Service")
 
-3.  Populate the **Add Selected Services** filter form as follows and press <kbd>Enter</kbd>.
+3. Populate the **Add Selected Services** filter form as follows and press <kbd>Enter</kbd>.
 
     | Field | Value |
     |-------|-------|
@@ -407,7 +411,7 @@ A service is available that allows for the update of a Business Partner record. 
 
     ![A portion of the Activate and Maintain Services toolbar menu displays with the Filter button highlighted](media/sapvm_sapgui_activateandmaintainfilterbutton.png "Filter services")
 
-8.  In the **Filter for Service Catalog** dialog, type `*GWSAMPLE*` in the **Technical Service Name** field and press <kbd>Enter</kbd>.
+8. In the **Filter for Service Catalog** dialog, type `*GWSAMPLE*` in the **Technical Service Name** field and press <kbd>Enter</kbd>.
 
     ![The Filter for Service Catalog displays with *GWSAMPLE* entered in the Technical Service Name field.](media/sapvm_sapgui_svccatalogfilterdialog_gwsample.png "Filter for Service Catalog dialog")
 
@@ -421,8 +425,8 @@ A service is available that allows for the update of a Business Partner record. 
 
 11. On the **EntitySets** dialog, double-click the **BusinessPartnerSet** item.
 
-    ![The Entity Sets dialog displays with the BusinessPartnerSet item highlighted.](media/sapvm_sapgui_entitysetsdialog_gwsample.png "EntitySets dialog") 
- 
+    ![The Entity Sets dialog displays with the BusinessPartnerSet item highlighted.](media/sapvm_sapgui_entitysetsdialog_gwsample.png "EntitySets dialog")
+
 12. On the **SAP Gateway Client** window, select **Execute**. This service retrieves the sales documents via the OData endpoint. Verify the HTTP Response status code value is **200**.
 
     ![The SAP Gateway Client window displays with the Execute button highlighted. The HTTP Response status code is 200.](media/sapvm_sapgui_entitysetodataresult_gwsample.png "EntitySet OData service execution results")
@@ -462,7 +466,7 @@ Raw payment data is available in Azure Data Lake storage. This exercise walks th
     ![The New linked service blade displays with the Azure Data Lake Storage Gen2 item highlighted.](media/ss_newlinkedsvc_adlsgen2search.png "New ADLS Gen2 Linked service")  
 
 7. In the New linked service - Azure Data Lake Storage Gen2 form, fill it in as follows and select **Create**. Unspecified fields retain their default values.
-    
+
     | Field | Value |
     |-------|-------|
     | Name | Enter `datalake`. |
@@ -477,7 +481,7 @@ Raw payment data is available in Azure Data Lake storage. This exercise walks th
     ![The New linked service blade displays with Azure Cosmos DB (SQL API) selected. The Continue button is highlighted.](media/ss_linkedservice_cosmosdbsql.png "New Cosmos DB Linked Service")
 
 9. In the New linked service - Azure Cosmos DB form, fill it as follows then select the **Create** button. Unspecified fields retain their default values.
-    
+
     | Field | Value |
     |-------|-------|
     | Name | Enter `payment_data_cosmosdb`. |
@@ -497,7 +501,7 @@ Raw payment data is available in Azure Data Lake storage. This exercise walks th
 The source data is payment data that is located in Azure Data Lake Storage Gen2 in CSV format. The sink is the paymentData Cosmos DB collection.
 
 1. In Synapse Studio, select the **Data** hub.
-   
+
    ![The left menu of Synapse Studio displays with the Data hub highlighted.](media/ss_datahub_menu.png "Data hub")
 
 2. From the center pane, select the **Linked** tab. Expand the **Azure Data Lake Storage Gen2** item, followed by teh **datalake** item, and select the **payment-data-csv** container. From the **payment-data-csv** tab, select the **paymentData_CAL2021.csv** file. Next, select **New integration dataset** from the toolbar menu.
@@ -509,7 +513,7 @@ The source data is payment data that is located in Azure Data Lake Storage Gen2 
     ![The New integration dataset blade displays populated with the preceding values.](media/ss_newintegrationdataset_paymentdatacsv.png "New integration dataset for payment data")
 
 4. On the **payment-data-csv** integration dataset tab, change the **Column delimiter** value to **Semicolon (;)** and check the checkbox for the **First row as header** field.
-   
+
    ![The payment-data-csv integration dataset form displays with the column delimiter value changed to semicolon and the first row as header field checked.](media/ss_paymentdata_dataset_form.png)
 
 5. If desired, select the **Preview data** button to view a sample of the data.

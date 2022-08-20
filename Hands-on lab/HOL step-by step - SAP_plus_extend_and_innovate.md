@@ -87,9 +87,9 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
 
 <!-- /TOC -->
 
-# SAP plus extend and innovate with Data and AI hands-on lab step-by-step 
+# SAP plus extend and innovate with Data and AI hands-on lab step-by-step
 
-## Abstract and learning objectives 
+## Abstract and learning objectives
 
 In this hands-on lab you will:
 
@@ -111,30 +111,29 @@ When customers buy goods, the corresponding payments are not completed immediate
 
 ![The solution architecture diagram displays.](media/solution_architecture.png "Solution architecture")
 
- Sales Order information is stored in an S/4HANA system and payments data is stored in Cosmos DB. Synapse Pipelines are used to ingest historical data from both sources. Power BI is used to visualize historical data and to create reports. Azure Machine Learning is used to create a model to predict incoming cash flow. Finally, a data alert is established to identify risky payers whose payments are typically late. This alert triggers a Power Automate process that will in-turn flag the risky payers in SAP.
+ Sales Order information is stored in an S/4 HANA system and payments data is stored in Cosmos DB. Synapse Pipelines are used to ingest historical data from both sources. Power BI is used to visualize historical data and to create reports. Azure Machine Learning is used to create a model to predict incoming cash flow. Finally, a data alert is established to identify risky payers whose payments are typically late. This alert triggers a Power Automate process that will in-turn flag the risky payers in SAP.
 
 ## Requirements
 
-1.  Azure Subscription with Owner role
+1. Azure Subscription with Owner role
 
-2.  SAP CAL account
+2. SAP CAL account
 
-3.  Power Platform account or membership in the [Microsoft 365 Developer Program](https://developer.microsoft.com/microsoft-365/dev-program)
+3. Power Platform account or membership in the [Microsoft 365 Developer Program](https://developer.microsoft.com/microsoft-365/dev-program)
 
-4.  [Power BI Desktop](https://powerbi.microsoft.com/desktop/)
+4. [Power BI Desktop](https://powerbi.microsoft.com/desktop/)
 
 ## Before the hands-on lab
 
 Refer to the Before the hands-on lab setup guide manual before continuing to the lab exercises.
- 
+
 ## Exercise 1: Install the self-hosted integration runtime on the SAP virtual machine
 
-In order for Azure Synapse Analytics to utilize the locally hosted OData services on the 
-SAP virtual machine, a self-hosted integration runtime must be installed. The self-hosted integration runtime is used to establish connectivity between Azure Synapse Analytics and other non-public internet facing compute resources. These can be on-premises resources and those protected by virtual networks and firewalls.
+In this exercise, we will assume the SAP environment is either on-premises or secured via a virtual network. In order for Azure Synapse Analytics to utilize the locally hosted OData services on the SAP virtual machine, a self-hosted integration runtime must be installed. The self-hosted integration runtime is used to establish connectivity between Azure Synapse Analytics and other non-public internet facing compute resources. These can be on-premises resources and those protected by virtual networks and firewalls.
 
 ### Task 1: Download and install the self-hosted integration runtime
 
-1. On the **SAP VM**, open the Chrome browser and log into the [Azure Portal](https://portal.azure.com). 
+1. On the **SAP VM**, open the Chrome browser and log into the [Azure Portal](https://portal.azure.com).
 
 2. Open the **mcw_sap_plus_extend_and_innovate** resource group then locate and open the **sapdatasynws{SUFFIX}** Synapse workspace resource.
 
@@ -150,7 +149,7 @@ SAP virtual machine, a self-hosted integration runtime must be installed. The se
 
 6. Select **Self-Hosted** as the network environment. Select **Continue**.
 
-    ![The Integration runtim setup blade displays with the Self-Hosted option selected.](media/ss_ir_selfhostedcard.png "Self-Hosted integration runtime")  
+    ![The Integration runtime setup blade displays with the Self-Hosted option selected.](media/ss_ir_selfhostedcard.png "Self-Hosted integration runtime")  
 
 7. Enter `SAPVM-SHIR` in the Name field and select **Create**.
 
@@ -271,9 +270,9 @@ A linked service describes connectivity to external resources. In this case, an 
 
     ![The New linked service blade displays with OData in the search box and in the filtered search results.](media/ss_newlinkedservice_odatasel.png "New OData Linked service")
 
-4. Fill the New linked service form as follows, then test connection. Select **Create**.
+3. Fill the New linked service form as follows, then test connection. Select **Create**.
 
-    | Field | Value |   
+    | Field | Value |
     |-------|-------|
     | Name | Enter `sap_salesorderheader_odata`. |
     | Connect via integration runtime | Select **SAPVM-SHIR**. |
@@ -281,7 +280,7 @@ A linked service describes connectivity to external resources. In this case, an 
     | Authentication type | Select **Basic authentication**. |
     | User name | Enter `S4H_EXT`. |
     | Password | Enter `Welcome1`. |
-    
+
     ![The New linked service OData form displays populated with the preceding values. The Test connection button is highlighted.](media/ss_salesorderheader_linkedserviceform.png "New Linked service - OData")
 
 ### Task 3: Create a linked service to the SAP OData endpoint for sales order item information
@@ -294,9 +293,9 @@ A linked service describes connectivity to external resources. In this case, an 
 
     ![The New linked service blade displays with OData in the search box and in the filtered search results.](media/ss_newlinkedservice_odatasel.png "New OData Linked service")
 
-4. Fill the New linked service form as follows, then test connection. Select **Create**.
+3. Fill the New linked service form as follows, then test connection. Select **Create**.
 
-    | Field | Value |   
+    | Field | Value |
     |-------|-------|
     | Name | Enter `sap_salesorderitems_odata`. |
     | Connect via integration runtime | Select **SAPVM-SHIR**. |
@@ -304,7 +303,7 @@ A linked service describes connectivity to external resources. In this case, an 
     | Authentication type | Select **Basic authentication**. |
     | User name | Enter `S4H_EXT`. |
     | Password | Enter `Welcome1`. |
-    
+
     ![The New linked service OData form displays populated with the preceding values. The Test connection button is highlighted.](media/ss_salesorderitems_linkedserviceform.png "New Linked service - OData")
 
 ### Task 4: Create a linked service to the dedicated SQL pool database
@@ -318,8 +317,8 @@ A linked service describes connectivity to external resources. In this case, an 
     ![The New linked service blade displays with Azure Synapse Analytics entered in the search box and Azure Synapse Analytics selected from the search results.](media/ss_linkedservice_azuresynapseanalytics_menu.png "New Azure Synapse Analytics linked service")
 
 3. In the New linked service Azure Synapse Analytics blade, populate the form as follows then select **Create**.
-    
-    | Field | Value |   
+
+    | Field | Value |
     |-------|-------|
     | Name | Enter `sales_order_data_sql`. |
     | Azure subscription | Select the Azure subscription for the lab. |
@@ -347,7 +346,7 @@ The Copy activity in Azure Synapse Analytics requires the usage of integration d
 
 3. On the **Set properties** blade, fill the form as follows and select **OK**. This will create the integration dataset representing sales order header information.
 
-    | Field | Value |   
+    | Field | Value |
     |-------|-------|
     | Name | Enter `sales_order_headers_odata`. |
     | Linked service | Select **sap_salesorderheader_odata**. |
@@ -357,7 +356,7 @@ The Copy activity in Azure Synapse Analytics requires the usage of integration d
 
 4. Repeat steps 1 and 2 to create a new integration dataset. On the **Set properties** blade, fill the form as follows and select **OK**. This creates the integration dataset for sales item information.
 
-    | Field | Value |   
+    | Field | Value |
     |-------|-------|
     | Name | Enter `sales_order_items_odata`. |
     | Linked service | Select **sap_salesorderitems_odata**. |
@@ -375,7 +374,7 @@ The Copy activity in Azure Synapse Analytics requires the usage of integration d
 
 7. On the **Set properties** blade, populate the form as follows and select **OK**.
 
-    | Field | Value |   
+    | Field | Value |
     |-------|-------|
     | Name | Enter `sales_order_headers_sql`. |
     | Linked service | Select **sales_order_data_sql**. |
@@ -386,7 +385,7 @@ The Copy activity in Azure Synapse Analytics requires the usage of integration d
 
 8. Repeat steps 5 and 6 to create a new Azure Synapse Analytics integration dataset. On the **Set properties** blade, populate the form as follows and select **OK**.
 
-    | Field | Value |   
+    | Field | Value |
     |-------|-------|
     | Name | Enter `sales_order_items_sql`. |
     | Linked service | Select **sales_order_data_sql**. |
@@ -432,10 +431,10 @@ An Azure Synapse Analytics pipeline can be used to move data from source to sink
     ![The Settings tab is highlighted with the Enable staging checkbox checked and datalake selected as the Storage account linked service. The Storage Path field is populated with the value staging.](media/ss_copydata_enablestaging.png "Copy data Settings tab")
 
 8. Drag-and-drop another instance of the Copy data activity to the pipeline visual canvas. On the **General** tab enter `copy_sales_order_items`.
-   
+
    ![The pipeline canvas displays with a Copy data activity drag-and-dropped to the visual canvas. The General tab of the Copy data activity displays with copy_sales_order_items entered in the Name field.](media/ss_copydata_itemsactivity_generaltab.png "Copy data General tab")  
 
-9.  With the **copy_sales_order_items** activity selected, select the **Source** tab. In the **Source dataset** tab, select **sales_order_items_odata**.
+9. With the **copy_sales_order_items** activity selected, select the **Source** tab. In the **Source dataset** tab, select **sales_order_items_odata**.
 
     ![The Source tab of the Copy data activity displays with sales_order_items_odata set as the Source dataset.](media/ss_copydata_itemsactivity_source_tab.png "Copy data Source tab")
 
@@ -456,7 +455,7 @@ An Azure Synapse Analytics pipeline can be used to move data from source to sink
     ![The Synapse Studio toolbar menu displays with the Publish all button highlighted.](media/ss_publishall.png "Publish all")
 
 14. Once published, expand the **Add trigger** item on the pipeline toolbar and select **Trigger now**. Select **OK** on the Pipeline run blade.
-    
+
     ![The pipeline toolbar menu displays with the Add trigger menu expanded and the Trigger now item selected.](media/ss_pipelinetriggernow.png "Trigger pipeline")
 
 15. On the left menu of Synapse Studio, select the **Monitor** hub. Ensure **Pipeline runs** is selected from the center menu. Observe the IngestSalesOrderData pipeline status over time. Use the **Refresh** button to update the table.
@@ -501,6 +500,7 @@ Payment history data is required when creating the cash flow prediction model. T
         Currency nvarchar(5)
     )
     ```
+
 ### Task 2: Create the Payments table integration dataset
 
 1. In Synapse Studio, select the **Data** hub from the left menu and expand the **+** menu in the center pane. Select **Integration dataset**.
@@ -511,9 +511,9 @@ Payment history data is required when creating the cash flow prediction model. T
 
     ![The New integration dataset blade displays with Azure Synapse Analytics entered in the search box and Azure Synapse Analytics shown in the search results.](media/ss_newintegrationdataset_azuresynapseanalyticsmenu.png "New Azure Synapse Analytics integration dataset")
 
-7. On the **Set properties** blade, populate the form as follows and select **OK**.
+3. On the **Set properties** blade, populate the form as follows and select **OK**.
 
-    | Field | Value |   
+    | Field | Value |
     |-------|-------|
     | Name | Enter `payments_sql`. |
     | Linked service | Select **sales_order_data_sql**. |
@@ -522,7 +522,7 @@ Payment history data is required when creating the cash flow prediction model. T
 
     ![The Set properties blade displays populated with the preceding values.](media/ss_payments_sql_dataset_set_properties.png "Set properties pane")
 
-8. On the Synapse Studio toolbar menu, select **Publish all**. Select **Publish** on the verification blade.
+4. On the Synapse Studio toolbar menu, select **Publish all**. Select **Publish** on the verification blade.
 
     ![The Synapse Studio toolbar menu displays with the Publish all button highlighted.](media/ss_publishall.png "Publish all")
 
@@ -565,7 +565,7 @@ Payment history data is required when creating the cash flow prediction model. T
     ![The Synapse Studio toolbar menu displays with the Publish all button highlighted.](media/ss_publishall.png "Publish all")
 
 10. Once published, expand the **Add trigger** item on the pipeline toolbar and select **Trigger now**. Select **OK** on the Pipeline run blade.
-    
+
     ![The pipeline toolbar menu displays with the Add trigger menu expanded and the Trigger now item selected.](media/ss_pipelinetriggernow.png "Trigger pipeline")
 
 11. On the left menu of Synapse Studio, select the **Monitor** hub. Ensure **Pipeline runs** is selected from the center menu. Observe the IngestPaymentsData pipeline status over time. Use the **Refresh** button to update the table.
@@ -593,7 +593,7 @@ Contoso Retail would like to take advantage of the historical sales order and pa
     ![The SQL Script tab displays with the sapdatasynsql database chosen in the Connect to field.](media/ss_sqlscript_connectto_sapdatasynsql.png "Connect to the dedicated SQL pool database")
 
 3. In the SQL script editor, paste and run the following SQL command to create the SalesPaymentsFull view that joins the SalesOrderHeaders and Payments data. The **Run** button is located in the SQL script toolbar menu.
-   
+
    ```SQL
    CREATE VIEW [dbo].[SalesPaymentsFull]
         AS SELECT s.[SALESDOCUMENT]
@@ -632,7 +632,7 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
 
 3. On the **Set properties** blade, populate the form as follows and select **OK**.
 
-    | Field | Value |   
+    | Field | Value |
     |-------|-------|
     | Name | Enter `sales_payments_full_sql`. |
     | Linked service | Select **sales_order_data_sql**. |
@@ -650,12 +650,12 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
     ![The New integration dataset blade displays with Azure Data Lake Storage Gen2 entered into the search box and selected from the results.](media/ss_newadlsgen2_integrationdataset_menu.png "New integration dataset blade")
 
 6. On the Select format blade, select **Parquet**. Select **Continue**.
-   
+
    ![The Select format blade displays with the Parquet option selected.](media/ss_integration_dataset_parquet.png "Parquet file format")
 
 7. On the Set properties blade, complete the form as follows, then select **OK**.
 
-    | Field | Value |   
+    | Field | Value |
     |-------|-------|
     | Name | Enter `sales_payment_full_parquet`. |
     | Linked service | Select **datalake**. |
@@ -697,7 +697,7 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
     ![The Synapse Studio toolbar menu displays with the Publish all button highlighted.](media/ss_publishall.png "Publish all")
 
 16. Once published, expand the **Add trigger** item on the pipeline toolbar and select **Trigger now**. Select **OK** on the Pipeline run blade.
-    
+
     ![The pipeline toolbar menu displays with the Add trigger menu expanded and the Trigger now item selected.](media/ss_pipelinetriggernow.png "Trigger pipeline")
 
 17. Use the **Monitor** hub to ensure the pipeline run successful completion.
@@ -727,7 +727,7 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
     ![The Azure Machine Learning Overview screen displays with the Studio web URL hyperlink selected.](media/ap_launchamlworkspace.png "Launch AML Studio")
 
 3. From the left menu, select **Datastores**.
-   
+
    ![AML Studio displays with Datastores selected from the left menu.](media/amls_datastoremenu.png "AML Studio menu")
 
 4. On the Datastores screen, select **+ New datastore** from the toolbar menu.
@@ -736,7 +736,7 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
 
 5. On the New datastore blade, fill the form as follows then select **Create**.
 
-    | Field | Value |   
+    | Field | Value |
     |-------|-------|
     | Datastore name | Enter `sales_payments_full_adls`. |
     | Datastore type | Select **Azure Blob Storage**. |
@@ -758,7 +758,7 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
     ![A portion of the left menu of Azure Machine Learning studio displays with the Automated ML item highlighted.](media/amls_automatedml_menu.png "Automated ML")
 
 2. On the Automated ML screen, select **+ New Automated ML job** from the toolbar menu.
-   
+
     ![The Automated ML screen toolbar menu displays with the + New Automated ML job button highlighted.](media/amls_newautomlrun_menu.png "New Automated ML job")
 
 3. On the Create a new Automated ML job Select a data asset step, expand the **Create** menu and select **From datastore**.
@@ -769,12 +769,12 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
 
     ![The Create dataset from datastore blade displays with sap-sales-payments-full entered in the Name field.](media/amls_dataset_basicinfo.png "New dataset Basic info")
 
-5. On the Create dataset from datastore blade Datastore selection step, select the **sales_payment_full_adls** datastore then use the **Browse** button to select **dbo.SalesPaymentsFull.parquet** file for the **Path** field. Select **Next**. 
+5. On the Create dataset from datastore blade Datastore selection step, select the **sales_payment_full_adls** datastore then use the **Browse** button to select **dbo.SalesPaymentsFull.parquet** file for the **Path** field. Select **Next**.
 
     ![The Create dataset from datastore blade displays with sales_payment_full_adls selected as the datastore and dbo.SalesPaymentsFull.parquet entered in the Path field. The Browse button is highlighted.](media/amlms_dataset_datastoreselection.png "New dataset Datastore selection")  
 
 6. On the Create dataset from datastore blade Settings and preview step, ensure you see data in the table, and select **Next**.
-   
+
    ![The Create dataset from datastore blade displays with tabular data.](media/amls_dataset_settingsandpreview.png "Preview data")
 
 7. On the Create dataset from datastore blade Schema step, toggle the following fields off so that they are not included in the dataset then select **Next**:
@@ -791,7 +791,7 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
 9. On the Select data asset step of the Create a new Automated ML job screen, refresh the data asset table.
 
 10. On the Select data asset step, select **sap-sales-payments-full** from the list and select **Next**.
-    
+
     ![The Select data asset screen displays with the sap-sales-payments-full item selected.](media/amls_automlrun_selectdataset_sap.png "Select data asset")
 
 11. On the Configure job step, select the **+ New** button below the **Select Azure ML compute cluster** field.
@@ -802,7 +802,7 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
 
 13. On the Create compute cluster blade Advanced settings, fill the form as follows then select **Create**. It takes a few moments for the  
 
-    | Field | Value |   
+    | Field | Value |
     |-------|-------|
     | Compute name | Enter `automlcompute`. |
     | Maximum number of nodes | Enter `3`. |
@@ -810,8 +810,8 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
     ![The Compute cluster Advanced Settings displays with automlcompute entered in the Compute name and the Maximum number of nodes is set to three.](media/amls_compute_advancedsettings.png "Compute cluster Advanced Settings")
 
 14. On the Configure job step, fill the form as follows, then select **Next**.
-    
-    | Field | Value |   
+
+    | Field | Value |
     |-------|-------|
     | Experiment name | Enter `predict-incoming-cashflow`. |
     | Target column | Select **PAYMENTDELAYINDAYS**. |
@@ -825,21 +825,21 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
     ![The Select task and settings step displays with the Regression item checked and the View additional configuration settings link highlighted.](media/amls_selecttaskandsettings.png "Select task and settings step")
 
 16. On the Additional configurations blade, select the Primary metric of **Normalized root mean squared error**, then expand the Blocked models drop down and check the following items and select **Save**. This will reduce the time to train the model.
-    1.  ElasticNet
-    2.  GradientBoosting
-    3.  KNN
-    4.  LassoLars
-    5.  SGD
-    6.  RandomForest
-    7.  ExtremeRandomTrees
-    8.  LightGBM
-    9.  FastLinearRegressor
+    1. ElasticNet
+    2. GradientBoosting
+    3. KNN
+    4. LassoLars
+    5. SGD
+    6. RandomForest
+    7. ExtremeRandomTrees
+    8. LightGBM
+    9. FastLinearRegressor
     10. OnlineGradientDescentRegressor
 
     ![The Additional configurations blade displays with Normalized root mean squared error selected as the Primary metric and the Blocked models expanded with the above items checked.](media/amls_jobadditionalconfigurations.png "Additional configurations")
 
-18. Select **Next** on the Select task and settings step. On the Validate and test step, select **Finish**. The job is then created and opened in the browser. Use the **Refresh** button to monitor the current state.
-    
+17. Select **Next** on the Select task and settings step. On the Validate and test step, select **Finish**. The job is then created and opened in the browser. Use the **Refresh** button to monitor the current state.
+
     ![The Automated ML job screen displays with a status of Running. The Refresh button is highlighted.](media/amls_automljob_running.png "Running Automated ML job")
 
     > **Note**: Training will take approximately 15 minutes. Proceed to [Exercise 7](#exercise-7-visualize-historical-data-with-power-bi) and return here once completed.
@@ -847,29 +847,29 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
 ### Task 4: Deploy the best model as a web service
 
 1. Once the Automated ML job indicates a status of **Completed**, in the Best model summary card on the screen, select the link beneather the **Algorithm name** heading.
-    
+
     ![The Automated ML job screen displays with a Status of Completed. The link below Algorithm name is highlighted.](media/amls_automljob_complete.png "Completed Automated ML job")
 
 2. On the Model screen, expand the **Deploy** item in the toolbar menu and select **Deploy to web service**.
-    
+
     ![The Model screen displays with the Deploy item expanded in the toolbar menu and teh Deploy to web service option highlighted.](media/amls_model_deploy_menu.png "Deploy model as web service")
 
-3.  On the Deploy a model blade, fill the form as follows then select **Deploy**.
-    
-    | Field | Value |   
+3. On the Deploy a model blade, fill the form as follows then select **Deploy**.
+
+    | Field | Value |
     |-------|-------|
     | Name | Enter `predict-incoming-cashflow-svc`. |
     | Compute type | Select **Azure Container Instance**. |
 
     ![The Deploy a model blade displays with a form populated with the preceding values.](media/amls_model_deploy_settings.png "Deploy a model")
 
-4.  On the Model screen, monitor the Deploy status at the bottom of the Model summary card. It will indicate a status of **Completed** in a few minutes time.
+4. On the Model screen, monitor the Deploy status at the bottom of the Model summary card. It will indicate a status of **Completed** in a few minutes time.
 
     ![The Model screen displays with the Deploy status indicating Running.](media/amls_modelsvc_deploying.png "Model deployment status")
 
-5.  Select the link below **Deploy status** to go to the deployed service endpoint screen.
+5. Select the link below **Deploy status** to go to the deployed service endpoint screen.
 
-6.  On the predict-incoming-cashflow-svc endpoint screen, select the **Test** tab. Replace the contents of the input data with the following and select **Test**.
+6. On the predict-incoming-cashflow-svc endpoint screen, select the **Test** tab. Replace the contents of the input data with the following and select **Test**.
 
     ```json
     {
@@ -934,8 +934,8 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
     ![The New linked service blade displays with Azure Machine Learning entered in the search box and selected from the results.](media/ss_newamllinkedsvc_menu.png "New Azure Machine Learning linked service")
 
 3. Fill the New linked service - Azure Machine Learning form as follows, then select **Create**.
-   
-    | Field | Value |   
+
+    | Field | Value |
     |-------|-------|
     | Name | Enter `cashflow_aml`. |
     | Azure Subscription | Select the lab subscription. |
@@ -954,9 +954,9 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
     ![Synapse Studio displays with the Data Hub selected. The Workspace tab is selected with the Lake database, default, and Tables items expanded. The context menu on the ssalespaymentsfull table is expanded with Machine Learning expanded and Train a new model item selected.](media/ss_mltrainmodel_menu.png "Train a new model from a Spark table")
 
 2. In the Train a new model blade, select **Regression** then **Continue**.
-   
+
     ![The Train a new model blade displays with the Regression item highlighted.](media/ss_trainanewmodel_regressionselection.png "Train a new Regression model")
-    
+
 3. On the Train a new model (Regression) blade, select **PAYMENTDELAYINDAYS** for the **Target column** field. Ensure the Azure Machine Learning workspace is set to **sap-mcw-ml-ws** and the Apache Spark pool field is set to **SparkPoolSmall**. Select **Continue**.
 
     ![The Train a new model (Regression) blade displays with the PAYMENTDELAYINDAYS column selected as the Target column. sap-mcw-ml-ws is selected in the Azure Machine learning workspace field and SparkPoolSmall is selected in the Apache Spark pool field.](media/ss_trainnewregressionmodel_targetcolumn.png "Regression Target Column selection")
@@ -970,12 +970,13 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
     ```SQL
     SELECT CUSTOMERNAME, CUSTOMERGROUP, BILLINGCOMPANYCODE, CUSTOMERACCOUNTGROUP,    CREDITCONTROLAREA, DISTRIBUTIONCHANNEL, ORGANIZATIONDIVISION, SALESDISTRICT,SALESORGANIZATION, SDDOCUMENTCATEGORY, CITYNAME, POSTALCODE, PAYMENTDELAYINDAYS FROM default.salespaymentsfull
     ```
+
     ![A portion of the scaffolded notebook displays with the SQL query replaced in the third cell.](media/ss_notebook_trainregressionmodel_querycell.png "Scaffolded AML notebook")
 
-6. From the notebook toolbar menu, select **Run all** to execute all cells in the notebook. This notebook registers the dataset with Azure Machine Learning and creates an AutoML experiment to determine the best model to determine the incoming cashflow via predicting the payment delay in days. The best model is then registered with the Azure Machine Learning workspace. 
-   
+6. From the notebook toolbar menu, select **Run all** to execute all cells in the notebook. This notebook registers the dataset with Azure Machine Learning and creates an AutoML experiment to determine the best model to determine the incoming cashflow via predicting the payment delay in days. The best model is then registered with the Azure Machine Learning workspace.
+
     > **Note**: this notebook will run for approximately 20 minutes. Proceed to [Exercise 7](#exercise-7-visualize-historical-data-with-power-bi) and return here once completed.
-   
+
 7. Once the notebook has completed running, the output of the last cell will indicate the best model that is registered in the Azure Machine Learning workspace.
 
     ![The output of the final cell of the Synapse notebook displays with the registered model highlighted.](media/ss_amlnotebook_regmodeloutput.png "Azure Machine Learning registered best model")  
@@ -991,7 +992,7 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
     ![The SQL Script tab displays with the sapdatasynsql database chosen in the Connect to field.](media/ss_sqlscript_connectto_sapdatasynsql.png "Connect to the dedicated SQL pool database")
 
 3. In the SQL script editor, paste and run the following SQL command to create and populate a table with model test data. The **Run** button is located in the SQL script toolbar menu.
-   
+
    ```SQL
    CREATE TABLE cashflow_prediction_tests
     (
@@ -1018,7 +1019,7 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
     ![The Synapse Studio Data hub displays with the SQL database section expanded. The sapdatasynsql database is expanded with the context menu showing on the dbo.cashflow_prediction_tests table. From the context menu, the Machine Learning item is expanded with the Predict with a model item selected.](media/ss_predictwithmodelmenu.png "Predict with a model")
 
 5. On the Predict with a model blade, select the pre-trained model that was created in the previous task then select **Continue**.
-   
+
    ![The pre-trained model listing displays with the model trained in the previous task selected.](media/ss_pretrianedmodelselection.png "Select pre-trained model")
 
 6. On the Predict with a model blade, keep all the mappings at their default values and select **Continue**.
@@ -1026,8 +1027,8 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
     ![The column mappings display on the Predict with a model blade. The Continue button is highlighted.](media/ss_modelmapping.png "Model column mappings")
 
 7. On the Predict with a model blade, fill the database form as follows then select **Deploy model + open script**. This will create a table to hold the trained models as well as encapsulate the calling of the model with a stored procedure.
-   
-    | Field | Value |   
+
+    | Field | Value |
     |-------|-------|
     | Script type | Select **Stored procedure**. |
     | Stored procedure name | Enter `[dbo].[predict_cashflow]`. |
@@ -1057,16 +1058,16 @@ Contoso Retail would like to gain insights into historical sales order and payme
 ### Task 2: Import data into Power BI
 
 1. Open **Power BI Desktop**. On the splash screen, select the **Get Data** item.
-   
+
     ![A portion of the Power BI Desktop splash screen displays with the Get Data item highlighted.](media/pbi_getdatamenu_splash.png "Power BI Desktop splash screen")
 
 2. On the Get Data dialog, select **Azure** from the left menu and select **Azure Synapse Analytics SQL** from the listing. Select the **Connect** button.
-   
+
     ![The Get Data dialog displays with Azure selected from the left menu and the Azure Synapse Analytics SQL item chosen from the listing. The Connect button is highlighted.](media/pbi_getdata_synapsemenu.png "Get Data")
 
 3. On the SQL Server database dialog, populate the form as follows and select **OK**.
 
-    | Field | Value |   
+    | Field | Value |
     |-------|-------|
     | Server | Enter the **Workspace SQL endpoint** value recorded in the previous task. |
     | Database | Enter the **Name** value recorded in the previous step. |
@@ -1090,7 +1091,7 @@ Contoso Retail would like to gain insights into historical sales order and payme
 
 8. Repeat the previous step, this time changing the type of the following table columns to Whole Number.
 
-    | Table (Queries pane) | Column |   
+    | Table (Queries pane) | Column |
     |-------|-------|
     | SalesOrderHeaders | SALESDOCUMENT |
     | Payments | SalesOrderNr |
@@ -1110,14 +1111,14 @@ Contoso Retail would like to gain insights into historical sales order and payme
     ![The Model design canvas displays with the SALESDOCUMENT field highlighted in the SalesOrderHeaders table and the SalesOrder field highlighted in the SalesOrderItems table. A one-to-many relationship displays between the two tables.](media/pbi_rel_headertoitems.png "One-to-many relationship between SalesOrderHeaders and SalesOrderItems")
 
 3. On the Model design canvas, drag the SalesOrderNr field from the Payments table and drop it on the SALESDOCUMENT field in the SalesOrderHeaders table. This establishes a one-to-one relationship (1:1) between the tables.
-   
+
    ![The Model design canvas displays with the SalesOrderNr field highlighted in the Payments table and the SALESDOCUMENT field highlighted in the SalesOrderHeaders table. A one-to-one relationship displays between the two tables.](media/pbi_rel_paytoheader.png "One-to-one relationship between Payments and SalesOrderHeaders")
-   
+
 ### Task 4: Create a sales per data and customer group visualization
 
-1. In the Visualizations pane, select **Stacked column chart**. 
+1. In the Visualizations pane, select **Stacked column chart**.
 
-2. From the **Fields** pane, drag-and-drop the SalesOrderHeaders.CREATIONDATE field to the X-axis box, the SalesOrderHeaders.TOTALNETAMOUNT field to the Y-axis box and the SalesOrderHeaders.CUSTOMERGROUP field to the Legend box. 
+2. From the **Fields** pane, drag-and-drop the SalesOrderHeaders.CREATIONDATE field to the X-axis box, the SalesOrderHeaders.TOTALNETAMOUNT field to the Y-axis box and the SalesOrderHeaders.CUSTOMERGROUP field to the Legend box.
 
     ![The Power BI Visualization pane displays with Stacked column chart selected as the selected visualization and the settings populated with the previously mentioned values.](media/pbi_visualizationspane_salesbyyearandcustomergroup.png "Visualization pane")
 
@@ -1127,9 +1128,9 @@ Contoso Retail would like to gain insights into historical sales order and payme
 
 ### Task 5: Create a sales per region and customer group visualization
 
-1. In the Visualizations pane, select **Map**. 
+1. In the Visualizations pane, select **Map**.
 
-2. From the **Fields** pane, drag-and-drop the SalesOrderHeaders.CITYNAME field to the Location box, the SalesOrderHeaders.CUSTOMERGROUP field to the Legend box and the SalesOrderHeaders.TOTALNETAMOUNT to the Bubble size box. 
+2. From the **Fields** pane, drag-and-drop the SalesOrderHeaders.CITYNAME field to the Location box, the SalesOrderHeaders.CUSTOMERGROUP field to the Legend box and the SalesOrderHeaders.TOTALNETAMOUNT to the Bubble size box.
 
    ![The Visualizations pane displays with the Map visualization selected, the associated form is populated as described above.](media/pbi_mapvispane.png "Map visualization settings")
 
@@ -1144,11 +1145,11 @@ Contoso Retail would like to gain insights into historical sales order and payme
 
 1. In the Visualizations pane, select **Stacked Column Chart**.
 
-2. From the **Fields** pane, drag-and-drop the Payments.PaymentDate field to the X-axis box, the Payments.PaymentValue field to the Y-axis box and the SalesOrderHeaders.CUSTOMERGROUP field to the Legend box. 
-   
+2. From the **Fields** pane, drag-and-drop the Payments.PaymentDate field to the X-axis box, the Payments.PaymentValue field to the Y-axis box and the SalesOrderHeaders.CUSTOMERGROUP field to the Legend box.
+
     ![The Power BI Visualization pane displays with Stacked column chart selected as the selected visualization and the settings populated with the previously mentioned values.](media/pbi_vispane_paymetnsbydatebycustomergroup.png "Visualization pane")
 
-3.  Adjust the sizing of the chart on the report canvas as desired.
+3. Adjust the sizing of the chart on the report canvas as desired.
 
     ![The payments per date and customer group chart.](media/pbi_paymentsperdateandcustomergroup.png "Stacked column chart visualization")
 
@@ -1156,11 +1157,11 @@ Contoso Retail would like to gain insights into historical sales order and payme
 
 1. In the Visualizations pane, select **Stacked Bar Chart**.
 
-2. From the **Fields** pane, drag-and-drop the SalesOrderHeaders.CUSTOMERGROUP field to the Y-axis box, the SalesOrderItems.NetAmount field to the Y-axis box and the SalesOrderItems.MaterialGroup field to the Legend box. 
-   
+2. From the **Fields** pane, drag-and-drop the SalesOrderHeaders.CUSTOMERGROUP field to the Y-axis box, the SalesOrderItems.NetAmount field to the Y-axis box and the SalesOrderItems.MaterialGroup field to the Legend box.
+
     ![The Power BI Visualization pane displays with Stacked bar chart selected as the selected visualization and the settings populated with the previously mentioned values.](media/pbi_stackedbar_vispane.png "Visualization pane")
 
-3.  Adjust the sizing of the chart on the report canvas as desired.
+3. Adjust the sizing of the chart on the report canvas as desired.
 
     ![The sales per customer group and material group chart.](media/pbi_stackedbarchart.png "Stacked bar chart visualization")
 
@@ -1169,12 +1170,12 @@ Contoso Retail would like to gain insights into historical sales order and payme
 This report shows the average number of days by which each customer group pays their SalesOrders. Afterwards a comparison can be made with the outcome of the Machine Learning Model built in the next exercise. SalesOrderHeaders and the Payment data are combined to calculate the number of days between the billing date and the payment date.
 
 1. In Power BI Desktop, expand the **Transform data** item on Home tab toolbar menu. Select **Transform data**.
-   
+
    ![The Home tab is selected with the Transform data item expanded. The Transform data item is selected from the expanded menu.](media/pbi_transformdatamenu.png)
 
 2. In the Power Query Editor window, select the **SalesOrderHeaders** table from the Queries pane, and expand the **Merge Queries** option on the Home toolbar menu. Select the **Merge Queries as New** option.
 
-![The Power Query Editor displays with the SalesOrderHeaders table selected in the Queries pane and the Merge Queries menu expanded with the Merge Queries as New option selected.](media/pbi_mergequeriesasnewmenu.png "Power Query Editor")  
+    ![The Power Query Editor displays with the SalesOrderHeaders table selected in the Queries pane and the Merge Queries menu expanded with the Merge Queries as New option selected.](media/pbi_mergequeriesasnewmenu.png "Power Query Editor")  
 
 3. In the Merge window, select the SALESDOCUMENT column of the SalesOrderHeaders table. Select the **Payments** table as the second table, and select the SalesOrderNr field. Select **OK**.
 
@@ -1191,7 +1192,7 @@ This report shows the average number of days by which each customer group pays t
     ![A portion of the Power Query editor toolbar displays with teh Close & Apply button highlighted.](media/pbi_closeapply_powerqueryeditor.png "Close & Apply")
 
 7. From the report designer, expand the **Transform data** item on Home tab toolbar menu. Select **Transform data**.
-   
+
    ![The Home tab is selected with the Transform data item expanded. The Transform data item is selected from the expanded menu.](media/pbi_transformdatamenu.png)
 
 8. In the Power Query Editor window, select the **SalesOrderPayments** table from the Queries pane. A new column is required to calculate the difference between the billing date and the actual payment data. Select the **Add Column** tab and select the **Custom Column** button on the toolbar menu.
@@ -1209,7 +1210,7 @@ This report shows the average number of days by which each customer group pays t
 10. In the table, right-click on the newly created Offset field and expand the **Change Type** option. Select **WholeNumber** to convert this column to integer.
 
     ![The context menu of the Offset column displays with the Change Type option expanded. Whole Number is selected from the expanded menu.](media/pbi_changeoffsetcolumntoint.png "Convert Offset column to integer")
-   
+
 11. Return to the Home tab and select **Close & Apply** in the Power Query editor toolbar.
 
     ![A portion of the Power Query editor toolbar displays with teh Close & Apply button highlighted.](media/pbi_closeapply_powerqueryeditor.png "Close & Apply")
@@ -1247,6 +1248,7 @@ A box plot can provide a more detailed view of the payment offset by customer gr
     ![The box plot chart displays.](media/pbi_boxplot.png "Box plot visualization")
 
     > **Note**: From this diagram you can see that:
+
     > - CustomerGroup1 pays within 70 days +/- 10 days
     > - CustomerGroup2 pays within 30days +/- 5 days
     > - Other customergroups pay after 10 days
@@ -1260,7 +1262,7 @@ Contoso retail would like to augment their Power BI report with data enriched wi
 ### Task 1: Add the deployed model to the Power BI report
 
 1. On the Power BI report, expand the **Transform data** item on Home tab toolbar menu. Select **Transform data**.
-   
+
    ![The Home tab is selected with the Transform data item expanded. The Transform data item is selected from the expanded menu.](media/pbi_transformdatamenu.png)
 
 2. In the Power Query Editor window, select the **SalesOrderPayments** table from the Queries pane and select the **Azure Machine Learning** item from the Home toolbar menu.
@@ -1295,8 +1297,8 @@ Contoso retail would like to augment their Power BI report with data enriched wi
 
     ![The predOffset column displays with it's context menu expanded, the Change Type option is expanded with the Whole Number item selected.](media/pbi_changepredpaymentdatetodate.png "Change Column Type")
 
-9.  Select the **Home** tab then **Close & Apply**.
-    
+9. Select the **Home** tab then **Close & Apply**.
+
     ![A portion of the Power Query editor toolbar displays with teh Close & Apply button highlighted.](media/pbi_closeapply_powerqueryeditor.png "Close & Apply")
 
 ### Task 2: Create a Date table for report aggregation
@@ -1346,7 +1348,7 @@ Contoso retail wants to display the Sales and Payment figures aggregated by diff
     ![The Data item is selected from the left menu and the New measure button is highlighed in the Table tools menu.](media/pbi_date_newmeasuremenu.png "New measure")
 
 6. In the formula textbox paste the following code then select the checkmark button to execute the formula and create the measure. Verify the new measure displays in the Fields pane.
-   
+
    ```vb
    Sales at CreationDate = sum('SalesOrderPayments'[TOTALNETAMOUNT])
    ```
@@ -1370,10 +1372,10 @@ Contoso retail wants to display the Sales and Payment figures aggregated by diff
 ### Task 3: Create the Sales and Payment Forecast visualization
 
 1. From the left menu, select the **Report** item.
-   
+
     ![The Power BI left menu displays with the Report item highlighted.](media/pbi_report_leftmenu.png "Report view")
 
-2.  In the Visualizations pane, select **Clustered Column Chart**. Drag-and-drop the **Date.Date** field to the **X-axis** box. Drag-and-drop the **Date.Sales at Billing Date**, **Date.Payment at pred Date**, and **Date.Payment at actual Date** to the **Y-axis** box. 
+2. In the Visualizations pane, select **Clustered Column Chart**. Drag-and-drop the **Date.Date** field to the **X-axis** box. Drag-and-drop the **Date.Sales at Billing Date**, **Date.Payment at pred Date**, and **Date.Payment at actual Date** to the **Y-axis** box.
 
     ![The Visualizations pane displays with the Clustered Column Chart item highlighted and the form filled out as described above.](media/pbi_visualizations_clusteredcolumn.png "Clustered Column Chart visualization details")
 
@@ -1386,16 +1388,16 @@ In this exercise, a Power BI and Power Automate subscription are used to create 
 ### Task 1: Publish the Power BI report to an online workspace
 
 1. Ensure the Power BI report file is saved.
-   
+
 2. On the Power BI Home tab menu, select **Publish**.
-   
+
    ![The Power BI Home tab menu displays with the Publish item highlighted.](media/pbi_publish_button.png "Publish")
 
 3. On the Publish to Power BI dialog, select **My workspace** as the destination and choose the **Select** button.
 
     ![The Publish to Power BI dialog displays with the My workspace item selected and the Select button highlighted.](media/pbi_publishtoworkspace_dialog.png "Publish to Power BI")
 
-3. Wait a few moments for the publishing to complete. Select the **Open '{REPORT NAME}.pbix' in Power BI** link. The report will open in a browser window.
+4. Wait a few moments for the publishing to complete. Select the **Open '{REPORT NAME}.pbix' in Power BI** link. The report will open in a browser window.
 
     ![The Publishing to Power BI dialog displays with a success message and the Open report in Power BI link highlighted.](media/pbi_publishcomplete.png "Open report in Power BI")
 
@@ -1422,15 +1424,15 @@ In this exercise, a Power BI and Power Automate subscription are used to create 
     ![The gauge visualization displays with the Pin icon highlighted.](media/opbi_pingauge.png "Pin visualization")
 
 2. On the **Pin to dashboard** dialog, select **New dashboard** and enter the name `Alerting Dashboard` and select **Pin**.
-    
+
     ![The Pin to dashboard dialog displays with Alerting Dashboard entered in the Dashboard name field and the Pin button is highlighted.](media/opbi_pindialog.png "Pin visualization to new dashboard")
 
 3. From the left menu, select **My workspace**, then in the listing of items select **Alerting Dashboard**.
-   
+
    ![The My workspace items are listed with the Alerting Dashboard item selected.](media/opbi_opendashboard_menu.png "Open Alerting Dashboard")
 
 4. On the gauge visualization, expand the ellipsis menu and choose **Manage alerts**.
-   
+
     ![The ellipsis menu on the gauge visualization displays with the Manage alerts item selected.](media/opbi_managealerts_menu.png "Manage alerts")
 
 5. On the Manage alerts blade, select **+ Add alert rule**.
@@ -1441,16 +1443,16 @@ In this exercise, a Power BI and Power Automate subscription are used to create 
 
     ![The Manage alerts blade displays with the Max of predOffset alert set for the condition of above 70 (this is lower than the gauge value of 71) with notifications at most once an hour. The Use Microsoft Power Automate to trigger additional actions link is highlighted.](media/opbi_setupalert.png "Setup alert")
 
-7.  A new web browser tab opens displaying an overview of a Power Automate Template. Select **Try it now** beneath the **Trigger a flow with a Power BI data-driven alert**. Sign in if required.
+7. A new web browser tab opens displaying an overview of a Power Automate Template. Select **Try it now** beneath the **Trigger a flow with a Power BI data-driven alert**. Sign in if required.
 
     ![A portion of a web page displays with the Try it now button highlighted beneath the Trigger a flow with a Power BI data-driven alert.](media/pa_tryitnow.png "Try Power Automate flow")
 
-8.  On the Trigger a flow with a Power BI data-driven alert screen, select **Sign in** on the **This flow will connect to field**. Once signed in, select **Continue**.
+8. On the Trigger a flow with a Power BI data-driven alert screen, select **Sign in** on the **This flow will connect to field**. Once signed in, select **Continue**.
 
     ![The Trigger a flow with a Power BI data-driven alert screen displays with the sign in and Continue button highlighted.](media/pa_triggerflowconnection.png "Sign in and Continue")
 
-9.  In the flow designer, in the When a data driven alert is triggered step, expand the Alert id field and select **Max of predOffset**.
-    
+9. In the flow designer, in the When a data driven alert is triggered step, expand the Alert id field and select **Max of predOffset**.
+
     ![The When a data driven alert is triggered step displays with the Alert Id drop down expanded and the Max of predOffset value is selected.](media/pa_alert_maxofpredoffset.png "Alert selection")
 
 10. Select **+ New step**, and search for `send email`. From the results select **Send an email (V2) - Office 365 Outlook**.
@@ -1462,22 +1464,22 @@ In this exercise, a Power BI and Power Automate subscription are used to create 
     ![The Send an email (V2) step displays with the email field filled out.](media/pa_sendemail_emailfield.png "Email field")
 
 12. Select the **Subject** text box and the Dynamic content pane will display. Select **Alert title**.
-    
+
     ![The Send an email (V2) step displays with the cursor in the Subject field. The Dynamic content pane displays with the Alert title option selected.](media/pa_sendemail_titlefield.png "Email subject")
 
 13. Select the **Body** text box and in the Dynamic content pane select **Tile URL**.
-    
+
     ![The Send an email (V2) step displays with the cursor in the Body field. The Dynamic content pane displays with the Tile URL option selected.](media/pa_sendemail_body.png)
 
 14. At the bottom of the flow designer select **Save**.
-    
+
     ![The flow designer displays with the save button highlighted.](media/pa_flow_save.png "Save flow")
 
 15. An email is sent to the email address from the trigger.
-    
+
     ![A notification email is displayed with the subject of Max of predOffset and a URL in the body of the email.](media/pa_notificationemail.png "Notification email")
 
-    > **Note**: To retrigger the alert a data update must occur. Execute the following SQL script in the dedicated SQL pool of Azure Synapse Analytics to change data. 
+    > **Note**: To retrigger the alert a data update must occur. Execute the following SQL script in the dedicated SQL pool of Azure Synapse Analytics to change data.
 
     ```SQL
     UPDATE dbo.Payments SET PaymentDate = DATEADD(DAY, 1, PaymentDate)
@@ -1500,7 +1502,7 @@ Contoso Retail also needs a way to flag risky customers in the SAP system whose 
 3. Open the downloaded RDP file and log into the instance using the username `Administrator` and the password used when deploying the instance.
 
 4. After logging into the SAP VM, record the IP Address from the remote desktop window.
-   
+
    ![The remote desktop window chrome displays with an IP address.](media/sapvm_ipaddress.png "SAP VM IP address")
 
    >**Note**: This IP address can change, it does not have a static IP. Please obtain the current IP address.
@@ -1517,30 +1519,35 @@ Contoso Retail also needs a way to flag risky customers in the SAP system whose 
 
     ![The online Power BI report editor displays with the Edit button highlighted.](media/opbi_editmenu.png "Edit report")
 
-4. From the Visualizations panel, select the **Power Automate** item. Then drag-and-drop the SalesOrderPayments.CUSTOMERNAME and SalesOrderPayments.predOffset fields to the Power Automate data box.
-   
-   ![The Visualizations panel displays with the Power Automate item highlighted and the CUSTOMERNAME and predOffset values shown in the Power Automate data box.](media/opbi_pavis_visualizationpane.png "Power Automate visualization configuration")
+4. From the Visualizations panel, select the **Table** item. Drag-and-drop the SalesOrderPayments.CUSTOMERNAME to the Columns box.
 
-5. Expand the ellipsis menu on the Power Automate visualization on the report and select **Edit**.
+   ![The Visualizations panel displays with the Table item highlighted and the CUSTOMERNAME value shown in the Columns box.](media/opbi_tablecustomersvis.png "Power Automate visualization configuration")
+
+5. Ensure no other visualization is selected, then choose the **Power Automate** item from the Visualizations panel. Drag-and-drop the SalesOrderPayments.CUSTOMERNAME to the Power Automate data box.
+
+    ![The Power Automate item is selected from the Visualizations pane with the CUSTOMERNAME value shown in the data box. The Power Automate visualization is highlighted on the report designer canvas.](media/opbi_pavis.png "Power Automate Visualization")
+
+6. Expand the ellipsis menu on the Power Automate visualization on the report and select **Edit**.
 
     ![The Power Automate visualization displays with the ellipsis menu expanded and the Edit item selected.](media/opbi_pavis_editpowerautomate.png "Edit Power Automate visualization")
 
-6. On the Microsoft Power Automate screen, expand the **+ New** button and select **Instant cloud flow**.
+7. On the Microsoft Power Automate screen, expand the **+ New** button and select **Instant cloud flow**.
 
     ![The Power Automate screen the + New button is expanded with the Instant cloud flow item selected.](media/opbi_pavis_newinstantcloudflow.png "New Instant cloud flow")
 
-7. In the flow designer, select **+ New step** below the Power BI button clicked step.
+8. In the flow designer, select **+ New step** below the Power BI button clicked step.
 
     ![The flow designer displays with the + New step button highlighted beneath the Power BI button clicked step.](media/obpi_pavis_newstep.png "New step")
-    
-8. asdf
-## After the hands-on lab 
+
+9.  asdf
+
+## After the hands-on lab
 
 Duration: X minutes
 
 ### Task 1: Delete the Power Automate flow
 
-1.  In Power Automate, select **My flows** locate the **Trigger a flow with a Power BI data-driven alert** item, expand the ellipsis menu and choose **Delete**.
+1. In Power Automate, select **My flows** locate the **Trigger a flow with a Power BI data-driven alert** item, expand the ellipsis menu and choose **Delete**.
 
    ![The Power Automate interface displays with My flows selected from the left menu. The ellipsis menu is expanded next to the Trigger a flow with a Power BI data-driven alert item and the Delete option is selected.](media/pa_deleteflow.png "Delete Power Automate flow")
 
@@ -1548,7 +1555,7 @@ Duration: X minutes
 
 1. In the Power BI workspace, select **My workspace** from the left menu to get a listing of items. Delete the report, dataset and the Alerting dashboard items by expanding the ellipsis menu and choosing Delete.
 
-    ![The My workspace items are listed with an ellipsis menu displaying with the Delete option highlighted.](media/opbi_deleteitems.png "Delete item") 
+    ![The My workspace items are listed with an ellipsis menu displaying with the Delete option highlighted.](media/opbi_deleteitems.png "Delete item")
 
 ### Task 3: Remove deployed Azure resources with Terraform
 
@@ -1571,13 +1578,13 @@ Duration: X minutes
     > **Note**: Ensure the proper subscription is set using `az account set --subscription {SUBSCRIPTION_ID_GOES_HERE} if experiencing difficulties.
 
 4. Execute the following command **two times** to retun to the user directory.
-   
+
     ```PowerShell
     cd..
     ```
 
 5. Delete the cloned source code repository with the following command.
-   
+
    ```PowerShell
    Remove-Item -Path .\MCW-SAP-plus-extend-and-innovate -recurse -force  
    ```
@@ -1591,4 +1598,3 @@ Duration: X minutes
 ![The SAP CAL interface displays with Appliances selected in the left menu. The ellipsis next to the MCW SAP appliance is expanded with the Terminate option selected.](media/sapcal_deleteappliance.png "Terminate appliance")
 
 You should follow all steps provided *after* attending the Hands-on lab.
-
