@@ -78,9 +78,9 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 3: Create an alerting dashboard to send email with Power Automate](#task-3-create-an-alerting-dashboard-to-send-email-with-power-automate)
   - [Exercise 10: Update SAP from Power BI](#exercise-10-update-sap-from-power-bi)
     - [Task 1: Import a Power Automate flow](#task-1-import-a-power-automate-flow)
-    - [Task 1: Add a Power Automate visual and author the update flow](#task-1-add-a-power-automate-visual-and-author-the-update-flow)
+    - [Task 2: Add a Power Automate visual and author the update flow](#task-2-add-a-power-automate-visual-and-author-the-update-flow)
   - [After the hands-on lab](#after-the-hands-on-lab)
-    - [Task 1: Delete the Power Automate flow](#task-1-delete-the-power-automate-flow)
+    - [Task 1: Delete the Power Automate flows](#task-1-delete-the-power-automate-flows)
     - [Task 2: Delete the Power BI workspace report and dataset](#task-2-delete-the-power-bi-workspace-report-and-dataset)
     - [Task 3: Remove deployed Azure resources with Terraform](#task-3-remove-deployed-azure-resources-with-terraform)
     - [Task 4: Terminate the SAP CAL appliance](#task-4-terminate-the-sap-cal-appliance)
@@ -123,11 +123,15 @@ When customers buy goods, the corresponding payments are not completed immediate
 
 4. [Power BI Desktop](https://powerbi.microsoft.com/desktop/)
 
+5. [Postman](https://www.postman.com/downloads/)
+
 ## Before the hands-on lab
 
 Refer to the Before the hands-on lab setup guide manual before continuing to the lab exercises.
 
 ## Exercise 1: Install the self-hosted integration runtime on the SAP virtual machine
+
+Estimated time: 30 minutes
 
 In this exercise, we will assume the SAP environment is either on-premises or secured via a virtual network. In order for Azure Synapse Analytics to utilize the locally hosted OData services on the SAP virtual machine, a self-hosted integration runtime must be installed. The self-hosted integration runtime is used to establish connectivity between Azure Synapse Analytics and other non-public internet facing compute resources. These can be on-premises resources and those protected by virtual networks and firewalls.
 
@@ -172,6 +176,8 @@ In this exercise, we will assume the SAP environment is either on-premises or se
 12. Optionally close Chrome and minimize the SAP VM.
 
 ## Exercise 2: Ingest sales order information from SAP into Azure Synapse Analytics
+
+Estimated time: 35 minutes
 
 Historical sales order information resides in S/4HANA and is exposed with OData services. The self-hosted integration runtime installed on the SAP virtual machine enables connectivity between Azure Synapse Analytics and S/4HANA, this will allow for local web calls to take place to the OData endpoints to retrieve sales data.
 
@@ -475,6 +481,8 @@ An Azure Synapse Analytics pipeline can be used to move data from source to sink
 
 ## Exercise 3: Ingest payment information from Cosmos DB into Azure Synapse Analytics
 
+Estimated time: 30 minutes
+
 Payment history data is required when creating the cash flow prediction model. This data resides in Cosmos DB. In this exercise, a pipeline is created to move payment history data from a Cosmos DB collection into a table in a dedicated SQL pool in Azure Synapse Analytics. In the steps taken in the Before the hands-on lab steps, a linked service for Cosmos DB (payment_data_cosmosdb) and an integration dataset for the paymentData collection (payments_cosmosdb) were created. These assets will be reused in this exercise to implement the payment ingestion pipeline.
 
 ### Task 1: Create a dedicated SQL pool table to hold payment information
@@ -579,6 +587,8 @@ Payment history data is required when creating the cash flow prediction model. T
     ```
 
 ## Exercise 4: Prepare data for the incoming cashflow prediction model training
+
+Estimated time: 30 minutes
 
 Contoso Retail would like to take advantage of the historical sales order and payment data to create a machine learning model that predicts incoming cashflow. In this exercise, a Sales Order and Payments data are combined in a SQL view whose data is then stored as a parquet file in Azure Data Lake Storage Gen2.
 
@@ -705,6 +715,8 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
     ![The Monitor hub pipeline runs displays indicating the successful completion of the CreateSalesPaymentsParquet pipeline.](media/ss_createsalespaymentsparquet_pipelinesucceeded.png "Successfully completed pipeline")
 
 ## Exercise 5: Train a regression model to predict incoming cashflow using Azure Machine Learning Studio
+
+Estimated time: 50 minutes
 
 ### Task 1: Retrieve the access key for the Azure Data Lake Storage account
 
@@ -913,6 +925,8 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
 
 ## Exercise 6: Train a regression model to predict incoming cashflow using Azure Synapse Analytics (OPTIONAL)
 
+Estimated time: 50 minutes
+
 ### Task 1: Create the SalesPaymentsFull Spark table from the parquet file
 
 1. In Synapse Studio, select the **Data** hub, then choose the **Linked** tab from the center pane. Expand the **Azure Data Lake Storage Gen2** item followed by the **datalake** account. Select the **sales-payment-parquet** container. In the data explorer tab, right-click on the **dbo.SalesPaymentsFull.parquet** and expand **New notebook** then choose the **New Spark table** item.
@@ -1042,6 +1056,8 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
     ![The SQL Query results window displays with the variabl_out1 column highlighted.](media/ss_modelpredictresult.png "Predicted days late for each test case")
 
 ## Exercise 7: Visualize historical data with Power BI
+
+Estimated time: 40 minutes
 
 Contoso Retail would like to gain insights into historical sales order and payments data.
 
@@ -1257,6 +1273,8 @@ A box plot can provide a more detailed view of the payment offset by customer gr
 
 ## Exercise 8: Integrate Azure Machine Learning and Power BI
 
+Estimated time: 25 minutes
+
 Contoso retail would like to augment their Power BI report with data enriched with predictions from the machine learning model trained in [Exercise 5](#exercise-5-train-a-regression-model-to-predict-incoming-cashflow-using-azure-machine-learning-studio) to predict incoming cashflow.
 
 ### Task 1: Add the deployed model to the Power BI report
@@ -1383,6 +1401,8 @@ Contoso retail wants to display the Sales and Payment figures aggregated by diff
 
 ## Exercise 9: Create an alert in Power BI
 
+Estimated time: 30 minutes
+
 In this exercise, a Power BI and Power Automate subscription are used to create an alert and trigger a Power Automate flow to send an email.
 
 ### Task 1: Publish the Power BI report to an online workspace
@@ -1487,17 +1507,63 @@ In this exercise, a Power BI and Power Automate subscription are used to create 
 
 ## Exercise 10: Update SAP from Power BI
 
+Estimated time: 30 minutes
+
 Contoso Retail also needs a way to flag risky customers in the SAP system whose payments tend to arrive late. In this exercise, a Power Automate flow is added in the Power BI report that initiates a business partner update in SAP using OData.
 
 ### Task 1: Import a Power Automate flow
 
-1. Access and log into [Power Automate](https://make.powerautomate.com).
+1. In a web browser, access the following link and select **Download** to download the UpdateBusinessPartnerFromPowerBI.zip file. This file contains the exported flow that is used in this exercise.
 
-2. From the left menu, select **My flows**. Expand the **Import** menu item on the toolbar menu and select **Import Package (Legacy)**.
+    ```text
+    https://github.com/codingbandit/MCW-SAP-plus-extend-and-innovate/blob/feature/exercise10/Hands-on%20lab/Resources/powerautomate/UpdateBusinessPartnerFromPowerBI.zip
+    ```
 
-3. asdf
+    ![A portion of a GitHub window displays with the Download button highlighted.](media/gh_downloadzip.png "Download file from GitHub")
 
-### Task 1: Add a Power Automate visual and author the update flow
+2. Access and log into [Power Automate](https://make.powerautomate.com).
+
+3. From the left menu, select **My flows**. Expand the **Import** menu item on the toolbar menu and select **Import Package (Legacy)**.
+
+    ![The Power Automate UI displays with My flows selected on the left menu. The Import button is expanded with the Import Package (Legacy) highlighted.](media/pa_importpackagelegacy_menu.png "Import Package")
+
+4. On the Import package screen, select the **Upload** button then choose to upload the file that was downloaded in the first step of this task: **UpdateBusinessPartnerFromPowerBI.zip**. The file will automatically start uploading.
+
+    ![The Choose the package file to import field displays with the Upload button highlighted.](media/pa_importpackage_uploadbutton.png "Upload package")
+
+5. In the Import package review screen, select the wrench icon next to the Power BI Connection under the Related resources section.
+
+   ![The Import package review screen displays with the wrench item next to the Power BI Connection highlighted.](media/pa_importwrench_connection.png "Establish Power BI connection")
+
+6. On the Import Setup blade, choose the Power BI user account utilized during this lab and select **Save**.
+
+    ![The Import setup blade displays with a user account selected from the list and the Save button highlighted.](media/pa_importsetup_selpbiusr.png "Select Power BI user account")
+
+7. Select **Import** to comlete the import of the flow.
+
+    ![The Import package review screen displays with the Import button highlighted.](media/pa_importflow_button.png "Import flow")
+
+8. A message indicating successful import will display at the top of the screen. Select the **Open flow** link from this message.
+
+    ![A success message displays with the Open flow link highlighted.](media/pa_successimport_message.png "Open flow")
+
+9. On the flow design canvas, expand the second step **Initialize variable** and replace the Value field with the IP address of the MCWSAP-SAP1 virtual machine. Select **Save** from the toolbar menu.
+
+    ![The flow design canvas displays with the Initialize variable step expanded and highlighted. The Save button is higlighted in the toolbar menu.](media/pa_importflow_edit_ip.png "Edit IP address variable")
+
+    >**Note**: This flow initiates a get request to the SAP service to retrieve a business partner by name using the CUSTOMERNAME value passed in by Power BI. This request also requests a X-CSRF-Token that will allow the current sesstion to perform an update. The last HTTP call issues the update of the business partner record found in the first HTTP activity to 02, indicating a risky customer.
+
+10. Select the back arrow icon next to the Update Business Partner from Power BI title in the toolbar.
+
+    ![The flow toolbar displays with the back arrow icon highlighted.](media/pa_flowbackbutton.png "Go back")
+
+11. On the Flows &gt; Update Business Partner from Power BI screen, select **Turn on** from the toolbar menu.
+
+    ![The flow details screen displays with the Turn On button highlighted in the toolbar menu.](media/pa_turnon_action.png "Turn on flow")
+
+12. Keep this screen open for a future task.
+
+### Task 2: Add a Power Automate visual and author the update flow
 
 1. Access and log into [Power BI](https://app.powerbi.com).
 
@@ -1519,17 +1585,43 @@ Contoso Retail also needs a way to flag risky customers in the SAP system whose 
 
     ![The Power Automate visualization displays with the ellipsis menu expanded and the Edit item selected.](media/opbi_pavis_editpowerautomate.png "Edit Power Automate visualization")
 
-7. asdf
+7. On the Microsoft Power Automate screen, select the **Update Business Partner from Power BI** flow then choose **Apply** on the toolbar menu. Once applied, select the **Back to report** link at the top of the screen.
+
+   ![The Microsoft Power Automate screen displays with the Update Business Partner from Power BI flow highlighted and the Apply button selected from the toolbar menu.](media/opbi_selectflow.png "Apply flow")
+
+8. Select **Save** then **Reading view** from the report toolbar menu.
+
+    ![The report toolbar displays with Save and Reading view highlighted.](media/opbi_save_readerview_menu.png "Save and switch to Reading view")
+
+9. Switch to the Postman application, issue the **GET Customer** request from the SAP MCW collection. Refer to the [Before the hands-on-lab](#task-5-prepare-the-business-partner-service-in-sap) step 17 through 21 for guidance if necessary. Make note that in the response, the **BusinessPartnerRole** indicates **01** for **Bigmart** - this indicates a customer in good standing.
+
+    ![A portion of the Postman response displays with Bigmart highlighted with a BusinessPartnerRole of 01.](media/pm_bigmart_partner_01_value.png "Bigmart BusinessPartnerRole has a value of 01")
+
+10. Switch back to the Power BI report, from the CUSTOMERNAME table, select **Bigmart**. This will filter the report visualizations by that customer.
+
+    ![The Power BI report displays with the Bigmart item selected from the CUSTOMERNAME table. The report visualizations are filtered by this selection.](media/opbi_customername_selected.png "Filter report for Bigmart")
+
+11. Select the **Run flow** button (anywhere in the blue area), and the Update Business Partner from Power BI flow will be triggered.
+
+12. Return to the Power Automate Update Business Partner from Power BI flow screen (left open in Task 1). The history displays the status of the run as succeeded. Optionally, drill into the the Date link beneath the Start header to view the run details.
+
+    ![The Power Automate screen indicates a flow run succeeded.](media/pa_flow_succeeded.png "Power Automate run succeeded")
+
+13. Switch back to the Postman application, issue the **GET Customer** request from the SAP MCW collection. Notice how the BusinessPartnerRole value now indicates **02**. This role indicates this customer is now flagged as a risky customer in SAP.
+
+    ![A portion of the Postman response displays with Bigmart highlighted with a BusinessPartnerRole of 02.](media/pm_bigmart_role02.png "Bigmart BusinessPartnerRole has a value of 02")
 
 ## After the hands-on lab
 
-Duration: X minutes
+Duration: 10 minutes
 
-### Task 1: Delete the Power Automate flow
+### Task 1: Delete the Power Automate flows
 
 1. In Power Automate, select **My flows** locate the **Trigger a flow with a Power BI data-driven alert** item, expand the ellipsis menu and choose **Delete**.
 
    ![The Power Automate interface displays with My flows selected from the left menu. The ellipsis menu is expanded next to the Trigger a flow with a Power BI data-driven alert item and the Delete option is selected.](media/pa_deleteflow.png "Delete Power Automate flow")
+
+2. Repeat the previous step to delete the **Update Business Partner from Power BI** flow.
 
 ### Task 2: Delete the Power BI workspace report and dataset
 

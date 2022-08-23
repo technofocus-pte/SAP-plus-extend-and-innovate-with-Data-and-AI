@@ -42,13 +42,15 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
 
 ## Requirements
 
-1. An Azure account with the ability to provision an Azure Synapse Workspace
+1. Azure Subscription with Owner role
 
 2. Internet browser such as [Edge](https://www.microsoft.com/edge) or [Chrome](https://www.google.com/chrome/downloads/)
 
+3. [Postman](https://www.postman.com/downloads/)
+
 ## Before the hands-on lab
 
-Duration: X minutes
+Duration: 3 - 4 hours
 
 ### Task 1: Obtain the desired Azure Subscription Id value
 
