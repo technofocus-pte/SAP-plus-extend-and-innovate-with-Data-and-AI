@@ -76,7 +76,8 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 1: Publish the Power BI report to an online workspace](#task-1-publish-the-power-bi-report-to-an-online-workspace)
     - [Task 2: Create a gauge visualization to be used as the notification trigger](#task-2-create-a-gauge-visualization-to-be-used-as-the-notification-trigger)
     - [Task 3: Create an alerting dashboard to send email with Power Automate](#task-3-create-an-alerting-dashboard-to-send-email-with-power-automate)
-  - [Exercise 10: Update SAP from an alert in Power BI](#exercise-10-update-sap-from-an-alert-in-power-bi)
+  - [Exercise 10: Update SAP from Power BI](#exercise-10-update-sap-from-power-bi)
+    - [Task 1: Import a Power Automate flow](#task-1-import-a-power-automate-flow)
     - [Task 1: Add a Power Automate visual and author the update flow](#task-1-add-a-power-automate-visual-and-author-the-update-flow)
   - [After the hands-on lab](#after-the-hands-on-lab)
     - [Task 1: Delete the Power Automate flow](#task-1-delete-the-power-automate-flow)
@@ -1484,9 +1485,17 @@ In this exercise, a Power BI and Power Automate subscription are used to create 
     UPDATE dbo.Payments SET PaymentDate = DATEADD(DAY, 1, PaymentDate)
     ```
 
-## Exercise 10: Update SAP from an alert in Power BI
+## Exercise 10: Update SAP from Power BI
 
-Contoso Retail also needs a way to flag risky customers in the SAP system whose payments tend to arrive late. In this exercise, a Power Automate flow is added in Power BI that initiates a business partner update in SAP.
+Contoso Retail also needs a way to flag risky customers in the SAP system whose payments tend to arrive late. In this exercise, a Power Automate flow is added in the Power BI report that initiates a business partner update in SAP using OData.
+
+### Task 1: Import a Power Automate flow
+
+1. Access and log into [Power Automate](https://make.powerautomate.com).
+
+2. From the left menu, select **My flows**. Expand the **Import** menu item on the toolbar menu and select **Import Package (Legacy)**.
+
+3. asdf
 
 ### Task 1: Add a Power Automate visual and author the update flow
 
@@ -1500,7 +1509,7 @@ Contoso Retail also needs a way to flag risky customers in the SAP system whose 
 
 4. From the Visualizations panel, select the **Table** item. Drag-and-drop the SalesOrderPayments.CUSTOMERNAME to the Columns box.
 
-   ![The Visualizations panel displays with the Table item highlighted and the CUSTOMERNAME value shown in the Columns box.](media/opbi_tablecustomersvis.png "Power Automate visualization configuration")
+   ![The Visualizations panel displays with the Table item highlighted and the CUSTOMERNAME value shown in the Columns box.](media/opbi_tablecustomersvis.png "Table visualization configuration")
 
 5. Ensure no other visualization is selected, then choose the **Power Automate** item from the Visualizations panel. Drag-and-drop the SalesOrderPayments.CUSTOMERNAME to the Power Automate data box.
 
@@ -1510,15 +1519,7 @@ Contoso Retail also needs a way to flag risky customers in the SAP system whose 
 
     ![The Power Automate visualization displays with the ellipsis menu expanded and the Edit item selected.](media/opbi_pavis_editpowerautomate.png "Edit Power Automate visualization")
 
-7. On the Microsoft Power Automate screen, expand the **+ New** button and select **Instant cloud flow**.
-
-    ![The Power Automate screen the + New button is expanded with the Instant cloud flow item selected.](media/opbi_pavis_newinstantcloudflow.png "New Instant cloud flow")
-
-8. In the flow designer, select **+ New step** below the Power BI button clicked step.
-
-    ![The flow designer displays with the + New step button highlighted beneath the Power BI button clicked step.](media/obpi_pavis_newstep.png "New step")
-
-9.  asdf
+7. asdf
 
 ## After the hands-on lab
 
