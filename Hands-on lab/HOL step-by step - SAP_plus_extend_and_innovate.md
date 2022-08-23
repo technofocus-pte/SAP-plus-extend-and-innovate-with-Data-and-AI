@@ -1547,7 +1547,7 @@ Contoso Retail also needs a way to flag risky customers in the SAP system whose 
 
     ![A success message displays with the Open flow link highlighted.](media/pa_successimport_message.png "Open flow")
 
-9. On the flow design canvas, expand the second step **Initialize variable** and replace the Value field with the IP address of the MCWSAP-SAP1 virtual machine. Select **Save** from the toolbar menu.
+9. On the flow design canvas, expand the second step **Initialize variable** and replace the Value field with the IP address of the MCWSAP-SAP1 virtual machine. Select **Save** from the toolbar menu. Refer to the [Before the hands-on lab Task 5](Before%20the%20HOL%20-%20SAP_plus_extend_and_innovate.md#task-5-prepare-the-business-partner-service-in-sap) steps 15 and 16 for guidance.
 
     ![The flow design canvas displays with the Initialize variable step expanded and highlighted. The Save button is higlighted in the toolbar menu.](media/pa_importflow_edit_ip.png "Edit IP address variable")
 
