@@ -77,8 +77,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 2: Create a gauge visualization to be used as the notification trigger](#task-2-create-a-gauge-visualization-to-be-used-as-the-notification-trigger)
     - [Task 3: Create an alerting dashboard to send email with Power Automate](#task-3-create-an-alerting-dashboard-to-send-email-with-power-automate)
   - [Exercise 10: Update SAP from an alert in Power BI](#exercise-10-update-sap-from-an-alert-in-power-bi)
-    - [Task 1: Obtain the SAP VM IP address](#task-1-obtain-the-sap-vm-ip-address)
-    - [Task 2: Add a Power Automate visual and author the update flow](#task-2-add-a-power-automate-visual-and-author-the-update-flow)
+    - [Task 1: Add a Power Automate visual and author the update flow](#task-1-add-a-power-automate-visual-and-author-the-update-flow)
   - [After the hands-on lab](#after-the-hands-on-lab)
     - [Task 1: Delete the Power Automate flow](#task-1-delete-the-power-automate-flow)
     - [Task 2: Delete the Power BI workspace report and dataset](#task-2-delete-the-power-bi-workspace-report-and-dataset)
@@ -1489,27 +1488,7 @@ In this exercise, a Power BI and Power Automate subscription are used to create 
 
 Contoso Retail also needs a way to flag risky customers in the SAP system whose payments tend to arrive late. In this exercise, a Power Automate flow is added in Power BI that initiates a business partner update in SAP.
 
-### Task 1: Obtain the SAP VM IP address
-
-1. On the SAP Cloud Appliance Library Instances page, select the **Connect** button on the **MCW SAP** row.
-
-    ![The SAP CAL instances listing displays with the Connect button highlighted next to the MCW SAP item.](media/sapcal_instancerowconnect.png "Connect to SAP Instance")
-
-2. On the **Connect to the instance** dialog, select the **Connect** link on the RDP row. This will download an RDP file.
-
-    ![The Connect to the instance dialog displays with the Connect link highlighted on the RDP row.](media/sapcal_connectrdpdialog.png "Connect via RDP")
-
-3. Open the downloaded RDP file and log into the instance using the username `Administrator` and the password used when deploying the instance.
-
-4. After logging into the SAP VM, record the IP Address from the remote desktop window.
-
-   ![The remote desktop window chrome displays with an IP address.](media/sapvm_ipaddress.png "SAP VM IP address")
-
-   >**Note**: This IP address can change, it does not have a static IP. Please obtain the current IP address.
-
-5. Leave the SAP VM remote desktop connection open for later tasks.
-
-### Task 2: Add a Power Automate visual and author the update flow
+### Task 1: Add a Power Automate visual and author the update flow
 
 1. Access and log into [Power BI](https://app.powerbi.com).
 

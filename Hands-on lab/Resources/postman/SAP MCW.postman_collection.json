@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4a751a68-8219-4ef6-b5b1-2f2a96673b27",
+		"_postman_id": "a80667f7-b6ab-44be-9480-87d367bd3c8c",
 		"name": "SAP MCW",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "238742"
@@ -134,21 +134,6 @@
 			"response": []
 		}
 	],
-	"auth": {
-		"type": "basic",
-		"basic": [
-			{
-				"key": "password",
-				"value": "Welcome1",
-				"type": "string"
-			},
-			{
-				"key": "username",
-				"value": "S4H_EXT",
-				"type": "string"
-			}
-		]
-	},
 	"event": [
 		{
 			"listen": "prerequest",

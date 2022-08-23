@@ -376,7 +376,7 @@ This task demonstrates creating a sales view in SAP and exposing it as an OData 
 
 ### Task 5: Prepare the business partner service in SAP
 
-A service is available that allows for the update of a Business Partner record. A Business Partner record is where non-paying entities are flagged in the system.
+A service is available that allows for the update of a Business Partner record. A Business Partner record is where non-paying entities are flagged in the system. This service does not have company names that match what is imported from the Sales data. This task updates the company name of a record in SAP for use in the lab.
 
 1. In the SAP UI, access the Activate and Maintain Service transaction by typing `/n/IWFND/MAINT_SERVICE` in the toolbar menu transaction combo box and press <kbd>Enter</kbd>. This opens the **Activate and Maintain Services** window.
 
@@ -436,6 +436,50 @@ A service is available that allows for the update of a Business Partner record. 
 14. On the **ICF Node** pane, select the **Call Browser** button. This will bring up the **Security GUI** dialog once more. Copy the URL value for future use in the lab. After recording the value, close the dialog. This URL is the service endpoint for the Business Partner OData service.
 
     ![The SAP GUI Security dialog displays with the URL value highlighted.](media/sapvm_sapgui_sapguisecuritydialog_gwsample.png "Service endpoint")
+
+15. Next, obtain the IP Address for the MCWSAP-SAP1 virtual machine. In the [Azure Portal](https://portal.azure.com), enter `MCWSAP-SAP1` in the search box located in the top toolbar and select the **MCWSAP-SAP1** virtual machine from the filtered list of resources.
+
+    ![The Azure Portal toolbar search box displays with MCWSAP-SAP1 text and the MCWSAP-SAP1 virtual machine resource selected.](media/ap_searchmcwsapsap1_vm.png "Search for VM")
+
+16. On the MCWSAP-SAP1 virtual machine Overview screen, copy the IP address and record it for future use.
+
+    ![The MCWSAP-SAP1 Virtual machine screen displays with the Public IP address highlighted.](media/ap_mcwsapsap1vm_ip.png "MCWSAP-SAP1 Virtual Machine Overview")
+
+    >**Note**: This IP address can change, it does not have a static IP. Please obtain the current IP address.
+
+17. Open Postman on your local machine and select **Import** from the Workspace toolbar to import a collection.
+
+    ![The Postman interface displays with the Import button highlighted.](media/pm_importcollection.png "Import Collection")
+
+18. On the Import dialog, select the **Link** tab, then enter the following URL and select **Continue**.
+
+    ```text
+    https://raw.githubusercontent.com/codingbandit/MCW-SAP-plus-extend-and-innovate/feature/exercise10/Hands-on%20lab/Resources/postman/SAP%20MCW.postman_collection.json
+    ```
+
+    ![The Import dialog displays with the Link tab highlighted and the above URL entered above the Continue button.](media/pm_importlink.png "Import Collection via Link")
+
+19. On the next screen, select **Import**.
+
+    ![The Import dialog shows the collection to be imported. The Import button is highlighted.](media/pm_importcollection2.png "Import Collection")
+
+20. In the Postman Collections list, select the **SAP MCW** collection. Select the **Variables** tab and enter the MCWSAP-SAP1 IP address in the **INITIAL VALUE** and **CURRENT VALUE** column. Select **Save** on the collection.
+
+    ![The Variables for the SAP MCW collection displays with the initial value and current value set to an IP address. The Save button is highlighted.](media/pm_enteripvarsincollection.png "Set ip-address values")
+
+21. Expand the SAP MCW Collection, and select the **GET Company** request. Select **Send**. Notice how the CompanyName is currently **Office Line Prag**.
+
+    ![The SAP MCW Collection is expanded with the GET Company request selected. The Send button is highlighted. The CompanyName of Office Line Prag is highlighted in the response.](media/pm_get_officelineprag.png "Get Company Request - Office Line Prag Company Name")
+
+22. In the SAP MCW Collection, select the **Patch Company** request and select **Send**. The response should show the status of **204 No Content**.
+
+    ![The Patch Company request displays with the Send button highlighted. The status indicates 204 No Content.](media/pm_patchcompanyname.png "PATCH company")
+
+23. Return to the **GET Company** request, and select **Send**. Notice how the CompanyName now shows **Bigmart**.
+
+    ![The GET Company request displays with the Send button highlighted and the CompanyName value set to Bigmart in the response"](media/pm_getcompany_bigmart.png "CompanyName updated to Bigmart")
+
+24. Retain this collection in Postman for use during the hands-on lab.
 
 ### Task 5: Prepare payment data in Cosmos DB
 
