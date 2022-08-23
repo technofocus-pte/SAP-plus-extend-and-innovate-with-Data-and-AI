@@ -107,6 +107,8 @@ Duration: 3 - 4 hours
 
     ![The Basic Mode: Create Instance screen displays with the Instance Details form filled as previously specified. The Create button is highlighted.](media/sap_create_instance_instance_details.png "Instance Details form")
 
+    >**Note**: If difficulty arises using the **Basic** mode, an alternative is to use **Authorization with Application Type** using a [service principal](https://docs.microsoft.com/azure/active-directory/develop/howto-create-service-principal-portal).
+
 9. On the **Supported VM Sizes** modal dialog, select **OK**.
 
     ![The Supported VM Sizes dialog displays with the OK button highlighted.](media/sapcal_supportedvmsize_ok.png "Supported VM Sizes")

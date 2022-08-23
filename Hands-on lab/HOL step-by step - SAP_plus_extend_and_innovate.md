@@ -78,7 +78,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 3: Create an alerting dashboard to send email with Power Automate](#task-3-create-an-alerting-dashboard-to-send-email-with-power-automate)
   - [Exercise 10: Update SAP from Power BI](#exercise-10-update-sap-from-power-bi)
     - [Task 1: Import a Power Automate flow](#task-1-import-a-power-automate-flow)
-    - [Task 2: Add a Power Automate visual and author the update flow](#task-2-add-a-power-automate-visual-and-author-the-update-flow)
+    - [Task 2: Add a Power Automate visual and trigger the flow from Power BI](#task-2-add-a-power-automate-visual-and-trigger-the-flow-from-power-bi)
   - [After the hands-on lab](#after-the-hands-on-lab)
     - [Task 1: Delete the Power Automate flows](#task-1-delete-the-power-automate-flows)
     - [Task 2: Delete the Power BI workspace report and dataset](#task-2-delete-the-power-bi-workspace-report-and-dataset)
@@ -644,7 +644,7 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
 
     | Field | Value |
     |-------|-------|
-    | Name | Enter `sales_payments_full_sql`. |
+    | Name | Enter `sales_payments_full`. |
     | Linked service | Select **sales_order_data_sql**. |
     | Table name | Select **dbo.SalesPaymentsFull**. |
     | Import schema | Select **From connection/store**. |
@@ -1173,7 +1173,7 @@ Contoso Retail would like to gain insights into historical sales order and payme
 
 1. In the Visualizations pane, select **Stacked Bar Chart**.
 
-2. From the **Fields** pane, drag-and-drop the SalesOrderHeaders.CUSTOMERGROUP field to the Y-axis box, the SalesOrderItems.NetAmount field to the Y-axis box and the SalesOrderItems.MaterialGroup field to the Legend box.
+2. From the **Fields** pane, drag-and-drop the SalesOrderHeaders.CUSTOMERGROUP field to the Y-axis box, the SalesOrderItems.NetAmount field to the X-axis box and the SalesOrderItems.MaterialGroup field to the Legend box.
 
     ![The Power BI Visualization pane displays with Stacked bar chart selected as the selected visualization and the settings populated with the previously mentioned values.](media/pbi_stackedbar_vispane.png "Visualization pane")
 
@@ -1563,7 +1563,7 @@ Contoso Retail also needs a way to flag risky customers in the SAP system whose 
 
 12. Keep this screen open for a future task.
 
-### Task 2: Add a Power Automate visual and author the update flow
+### Task 2: Add a Power Automate visual and trigger the flow from Power BI
 
 1. Access and log into [Power BI](https://app.powerbi.com).
 
