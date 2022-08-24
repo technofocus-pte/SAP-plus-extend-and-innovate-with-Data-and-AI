@@ -53,7 +53,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 2: Create an Azure Machine Learning datastore](#task-2-create-an-azure-machine-learning-datastore)
     - [Task 3: Create and run an Automated ML job](#task-3-create-and-run-an-automated-ml-job)
     - [Task 4: Deploy the best model as a web service](#task-4-deploy-the-best-model-as-a-web-service)
-  - [Exercise 6: Train a regression model to predict incoming cashflow using Azure Synapse Analytics (OPTIONAL)](#exercise-6-train-a-regression-model-to-predict-incoming-cashflow-using-azure-synapse-analytics-optional)
+  - [Exercise 6: Train a regression model to predict incoming cashflow using Azure Synapse Analytics (Optional)](#exercise-6-train-a-regression-model-to-predict-incoming-cashflow-using-azure-synapse-analytics-optional)
     - [Task 1: Create the SalesPaymentsFull Spark table from the parquet file](#task-1-create-the-salespaymentsfull-spark-table-from-the-parquet-file)
     - [Task 2: Create an Azure Machine Learning linked service](#task-2-create-an-azure-machine-learning-linked-service)
     - [Task 3: Train a new regression model for incoming cash flow](#task-3-train-a-new-regression-model-for-incoming-cash-flow)
@@ -109,7 +109,7 @@ When customers buy goods, the corresponding payments are not completed immediate
 
 ## Solution architecture
 
-![The solution architecture diagram displays.](media/solution_architecture.png "Solution architecture")
+![The solution architecture diagram displays as described below.](media/solution_architecture.png "Solution architecture")
 
  Sales Order information is stored in an S/4 HANA system and payments data is stored in Cosmos DB. Synapse Pipelines are used to ingest historical data from both sources. Power BI is used to visualize historical data and to create reports. Azure Machine Learning is used to create a model to predict incoming cash flow. Finally, a data alert is established to identify risky payers whose payments are typically late. This alert triggers a Power Automate process that will in-turn flag the risky payers in SAP.
 
@@ -131,7 +131,7 @@ Refer to the Before the hands-on lab setup guide manual before continuing to the
 
 ## Exercise 1: Install the self-hosted integration runtime on the SAP virtual machine
 
-Estimated time: 30 minutes
+Duration: 30 minutes
 
 In this exercise, we will assume the SAP environment is either on-premises or secured via a virtual network. In order for Azure Synapse Analytics to utilize the locally hosted OData services on the SAP virtual machine, a self-hosted integration runtime must be installed. The self-hosted integration runtime is used to establish connectivity between Azure Synapse Analytics and other non-public internet facing compute resources. These can be on-premises resources and those protected by virtual networks and firewalls.
 
@@ -157,7 +157,7 @@ In this exercise, we will assume the SAP environment is either on-premises or se
 
 7. Enter `SAPVM-SHIR` in the Name field and select **Create**.
 
-    ![A form displays on teh Integration runtime setup blade with SAPVM-SHIR entered in the Name field.](media/ss_shir_name.png "Naming the Self-Hosted integration runtime")
+    ![A form displays on the Integration runtime setup blade with SAPVM-SHIR entered in the Name field.](media/ss_shir_name.png "Naming the Self-Hosted integration runtime")
 
 8. Select the link below the **Option 1: Express setup** header. This will download an executable file.
 
@@ -171,13 +171,13 @@ In this exercise, we will assume the SAP environment is either on-premises or se
 
 11. The Integration runtimes list should now display **SAPVM-SHIR** in the list.
 
-    ![The Integration runtimes list displays with teh SAPVM-SHIR item highlighted.](media/ss_irlisting_withshir.png "Integration runtimes list")
+    ![The Integration runtimes list displays with the SAPVM-SHIR item highlighted.](media/ss_irlisting_withshir.png "Integration runtimes list")
 
 12. Optionally close Chrome and minimize the SAP VM.
 
 ## Exercise 2: Ingest sales order information from SAP into Azure Synapse Analytics
 
-Estimated time: 35 minutes
+Duration: 35 minutes
 
 Historical sales order information resides in S/4HANA and is exposed with OData services. The self-hosted integration runtime installed on the SAP virtual machine enables connectivity between Azure Synapse Analytics and S/4HANA, this will allow for local web calls to take place to the OData endpoints to retrieve sales data.
 
@@ -276,7 +276,7 @@ A linked service describes connectivity to external resources. In this case, an 
 
     ![The New linked service blade displays with OData in the search box and in the filtered search results.](media/ss_newlinkedservice_odatasel.png "New OData Linked service")
 
-3. Fill the New linked service form as follows, then test connection. Select **Create**.
+3. Fill in the New linked service form as follows, then test connection. Select **Create**.
 
     | Field | Value |
     |-------|-------|
@@ -299,7 +299,7 @@ A linked service describes connectivity to external resources. In this case, an 
 
     ![The New linked service blade displays with OData in the search box and in the filtered search results.](media/ss_newlinkedservice_odatasel.png "New OData Linked service")
 
-3. Fill the New linked service form as follows, then test connection. Select **Create**.
+3. Fill in the New linked service form as follows, then test connection. Select **Create**.
 
     | Field | Value |
     |-------|-------|
@@ -350,7 +350,7 @@ The Copy activity in Azure Synapse Analytics requires the usage of integration d
 
     ![The New integration dataset blade displays with OData entered in the search box and OData shown in the search results.](media/ss_newintegrationdataset_odatamenu.png "OData integration dataset")
 
-3. On the **Set properties** blade, fill the form as follows and select **OK**. This will create the integration dataset representing sales order header information.
+3. On the **Set properties** blade, fill in the form as follows and select **OK**. This will create the integration dataset representing sales order header information.
 
     | Field | Value |
     |-------|-------|
@@ -360,7 +360,7 @@ The Copy activity in Azure Synapse Analytics requires the usage of integration d
 
     ![The Set properties blade displays populated with the preceding values.](media/ss_salesorderheader_dataset_form.png "Sales order headers integration dataset details")
 
-4. Repeat steps 1 and 2 to create a new integration dataset. On the **Set properties** blade, fill the form as follows and select **OK**. This creates the integration dataset for sales item information.
+4. Repeat steps 1 and 2 to create a new integration dataset. On the **Set properties** blade, fill in the form as follows and select **OK**. This creates the integration dataset for sales item information.
 
     | Field | Value |
     |-------|-------|
@@ -481,7 +481,7 @@ An Azure Synapse Analytics pipeline can be used to move data from source to sink
 
 ## Exercise 3: Ingest payment information from Cosmos DB into Azure Synapse Analytics
 
-Estimated time: 30 minutes
+Duration: 30 minutes
 
 Payment history data is required when creating the cash flow prediction model. This data resides in Cosmos DB. In this exercise, a pipeline is created to move payment history data from a Cosmos DB collection into a table in a dedicated SQL pool in Azure Synapse Analytics. In the steps taken in the Before the hands-on lab steps, a linked service for Cosmos DB (payment_data_cosmosdb) and an integration dataset for the paymentData collection (payments_cosmosdb) were created. These assets will be reused in this exercise to implement the payment ingestion pipeline.
 
@@ -588,7 +588,7 @@ Payment history data is required when creating the cash flow prediction model. T
 
 ## Exercise 4: Prepare data for the incoming cashflow prediction model training
 
-Estimated time: 30 minutes
+Duration: 30 minutes
 
 Contoso Retail would like to take advantage of the historical sales order and payment data to create a machine learning model that predicts incoming cashflow. In this exercise, a Sales Order and Payments data are combined in a SQL view whose data is then stored as a parquet file in Azure Data Lake Storage Gen2.
 
@@ -716,7 +716,7 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
 
 ## Exercise 5: Train a regression model to predict incoming cashflow using Azure Machine Learning Studio
 
-Estimated time: 50 minutes
+Duration: 50 minutes
 
 ### Task 1: Retrieve the access key for the Azure Data Lake Storage account
 
@@ -746,7 +746,7 @@ Estimated time: 50 minutes
 
     ![The Datastores screen displays with the + New datastore button highlighted.](media/amls_newdatastore_menu.png "New datastore")
 
-5. On the New datastore blade, fill the form as follows then select **Create**.
+5. On the New datastore blade, fill in the form as follows then select **Create**.
 
     | Field | Value |
     |-------|-------|
@@ -810,9 +810,9 @@ Estimated time: 50 minutes
 
     ![The Select Azure ML compute cluster field displays with the + New button highlighted.](media/amls_newcomputecluster_button.png "Create new Compute cluster")
 
-12. On the Create compute cluster blade Virtual machine step, accept the defaults and select **Next**.
+12. On the Create compute cluster blade Virtual machine step, accept the defaults, and select **Next**.
 
-13. On the Create compute cluster blade Advanced settings, fill the form as follows then select **Create**. It takes a few moments for the  
+13. On the Create compute cluster blade Advanced settings, fill in the form as follows then select **Create**. It takes a few moments for the  
 
     | Field | Value |
     |-------|-------|
@@ -821,7 +821,7 @@ Estimated time: 50 minutes
 
     ![The Compute cluster Advanced Settings displays with automlcompute entered in the Compute name and the Maximum number of nodes is set to three.](media/amls_compute_advancedsettings.png "Compute cluster Advanced Settings")
 
-14. On the Configure job step, fill the form as follows, then select **Next**.
+14. On the Configure job step, fill in the form as follows, then select **Next**.
 
     | Field | Value |
     |-------|-------|
@@ -836,7 +836,7 @@ Estimated time: 50 minutes
 
     ![The Select task and settings step displays with the Regression item checked and the View additional configuration settings link highlighted.](media/amls_selecttaskandsettings.png "Select task and settings step")
 
-16. On the Additional configurations blade, select the Primary metric of **Normalized root mean squared error**, then expand the Blocked models drop down and check the following items and select **Save**. This will reduce the time to train the model.
+16. On the Additional configurations blade, select the Primary metric of **Normalized root mean squared error**, then expand the Blocked models drop down, check the following items, and select **Save**. This will reduce the time to train the model.
     1. ElasticNet
     2. GradientBoosting
     3. KNN
@@ -858,15 +858,15 @@ Estimated time: 50 minutes
 
 ### Task 4: Deploy the best model as a web service
 
-1. Once the Automated ML job indicates a status of **Completed**, in the Best model summary card on the screen, select the link beneather the **Algorithm name** heading.
+1. Once the Automated ML job indicates a status of **Completed**, in the Best model summary card on the screen, select the link beneath the **Algorithm name** heading.
 
     ![The Automated ML job screen displays with a Status of Completed. The link below Algorithm name is highlighted.](media/amls_automljob_complete.png "Completed Automated ML job")
 
 2. On the Model screen, expand the **Deploy** item in the toolbar menu and select **Deploy to web service**.
 
-    ![The Model screen displays with the Deploy item expanded in the toolbar menu and teh Deploy to web service option highlighted.](media/amls_model_deploy_menu.png "Deploy model as web service")
+    ![The Model screen displays with the Deploy item expanded in the toolbar menu and the Deploy to web service option highlighted.](media/amls_model_deploy_menu.png "Deploy model as web service")
 
-3. On the Deploy a model blade, fill the form as follows then select **Deploy**.
+3. On the Deploy a model blade, complete the form as follows then select **Deploy**.
 
     | Field | Value |
     |-------|-------|
@@ -923,9 +923,9 @@ Estimated time: 50 minutes
 
     ![The predict-incoming-cashflow-svc endpoint screen displays with the test data in the text box. The results of the call are also displayed.](media/amls_endpoint_test.png "Test service deployment endpoint")
 
-## Exercise 6: Train a regression model to predict incoming cashflow using Azure Synapse Analytics (OPTIONAL)
+## Exercise 6: Train a regression model to predict incoming cashflow using Azure Synapse Analytics (Optional)
 
-Estimated time: 50 minutes
+Duration: 50 minutes
 
 ### Task 1: Create the SalesPaymentsFull Spark table from the parquet file
 
@@ -947,7 +947,7 @@ Estimated time: 50 minutes
 
     ![The New linked service blade displays with Azure Machine Learning entered in the search box and selected from the results.](media/ss_newamllinkedsvc_menu.png "New Azure Machine Learning linked service")
 
-3. Fill the New linked service - Azure Machine Learning form as follows, then select **Create**.
+3. Fill in the New linked service - Azure Machine Learning form as follows, then select **Create**.
 
     | Field | Value |
     |-------|-------|
@@ -1040,7 +1040,7 @@ Estimated time: 50 minutes
 
     ![The column mappings display on the Predict with a model blade. The Continue button is highlighted.](media/ss_modelmapping.png "Model column mappings")
 
-7. On the Predict with a model blade, fill the database form as follows then select **Deploy model + open script**. This will create a table to hold the trained models as well as encapsulate the calling of the model with a stored procedure.
+7. On the Predict with a model blade, fill in the database form as follows then select **Deploy model + open script**. This will create a table to hold the trained models as well as encapsulate the calling of the model with a stored procedure.
 
     | Field | Value |
     |-------|-------|
@@ -1057,7 +1057,7 @@ Estimated time: 50 minutes
 
 ## Exercise 7: Visualize historical data with Power BI
 
-Estimated time: 40 minutes
+Duration: 40 minutes
 
 Contoso Retail would like to gain insights into historical sales order and payments data.
 
@@ -1114,7 +1114,7 @@ Contoso Retail would like to gain insights into historical sales order and payme
 
 9. Select **Close & Apply** in the Power Query editor toolbar.
 
-    ![A portion of the Power Query editor toolbar displays with teh Close & Apply button highlighted.](media/pbi_closeapply_powerqueryeditor.png "Close & Apply")
+    ![A portion of the Power Query editor toolbar displays with the Close & Apply button highlighted.](media/pbi_closeapply_powerqueryeditor.png "Close & Apply")
 
 ### Task 3: Create the relational model
 
@@ -1205,7 +1205,7 @@ This report shows the average number of days by which each customer group pays t
 
 6. Select **Close & Apply** in the Power Query editor toolbar.
 
-    ![A portion of the Power Query editor toolbar displays with teh Close & Apply button highlighted.](media/pbi_closeapply_powerqueryeditor.png "Close & Apply")
+    ![A portion of the Power Query editor toolbar displays with the Close & Apply button highlighted.](media/pbi_closeapply_powerqueryeditor.png "Close & Apply")
 
 7. From the report designer, expand the **Transform data** item on Home tab toolbar menu. Select **Transform data**.
 
@@ -1229,7 +1229,7 @@ This report shows the average number of days by which each customer group pays t
 
 11. Return to the Home tab and select **Close & Apply** in the Power Query editor toolbar.
 
-    ![A portion of the Power Query editor toolbar displays with teh Close & Apply button highlighted.](media/pbi_closeapply_powerqueryeditor.png "Close & Apply")
+    ![A portion of the Power Query editor toolbar displays with the Close & Apply button highlighted.](media/pbi_closeapply_powerqueryeditor.png "Close & Apply")
 
 12. On the report canvas, add a **Stacked Column** chart. Drag-and-drop the SalesOrderPayments.CUSTOMERGROUP to the X-axis box and SalesOrderPayments.Offset to the Y-axis box. Expand the chevron menu next to the Offset column and choose to report the **Average**.
 
@@ -1257,7 +1257,7 @@ A box plot can provide a more detailed view of the payment offset by customer gr
 
 4. On the Visualizations pane, select the newly added **Box and Whisker** chart. In the Category field, drag-and-drop the SalesOrderPayments.CUSTOMERGROUP, SalesOrderPayments.Offset into the Sampling field, and SalesOrderPayments.Offset into the Value field. Expand the chevron menu in the Value field and select the **Average** option.
 
-    ![The Visulization pane displays with the Box and Whisker visual selected. SalesOrderPayments.CUSTOMER group is found in the Category box, SalesOrderPayments.Offset is found in the Sampling and Value boxes. The chevron menu next to the Value field is expanded with Average selected from the options.](media/pbi_boxwhisker_settings.png "Box and Whisker chart")
+    ![The visualization pane displays with the Box and Whisker visual selected. SalesOrderPayments.CUSTOMER group is found in the Category box, SalesOrderPayments.Offset is found in the Sampling and Value boxes. The chevron menu next to the Value field is expanded with Average selected from the options.](media/pbi_boxwhisker_settings.png "Box and Whisker chart")
 
 5. Adjust the sizing of the chart on the report canvas as desired.
 
@@ -1273,7 +1273,7 @@ A box plot can provide a more detailed view of the payment offset by customer gr
 
 ## Exercise 8: Integrate Azure Machine Learning and Power BI
 
-Estimated time: 25 minutes
+Duration: 25 minutes
 
 Contoso retail would like to augment their Power BI report with data enriched with predictions from the machine learning model trained in [Exercise 5](#exercise-5-train-a-regression-model-to-predict-incoming-cashflow-using-azure-machine-learning-studio) to predict incoming cashflow.
 
@@ -1297,7 +1297,7 @@ Contoso retail would like to augment their Power BI report with data enriched wi
 
     ![The Power Query Editor window displays with SalesOrderPayments selected in the left menu. The tabular data is scrolled to the right and the context menu on the AzureML.predict-incoming-cashflow-svc expanded with the Rename option selected.](media/pbi_renameamlcolumn.png "Rename the new column")
 
-5. Right-click the **predOffset** column, and expand the **Change Type** option and select **Whole Number**.
+5. Right-click the **predOffset** column, expand the **Change Type** option, and select **Whole Number**.
 
     ![The predOffset column displays with it's context menu expanded, the Change Type option is expanded with the Whole Number item selected.](media/pbi_changepredoffsettowholenumber.png "Change column type")
 
@@ -1317,11 +1317,11 @@ Contoso retail would like to augment their Power BI report with data enriched wi
 
 9. Select the **Home** tab then **Close & Apply**.
 
-    ![A portion of the Power Query editor toolbar displays with teh Close & Apply button highlighted.](media/pbi_closeapply_powerqueryeditor.png "Close & Apply")
+    ![A portion of the Power Query editor toolbar displays with the Close & Apply button highlighted.](media/pbi_closeapply_powerqueryeditor.png "Close & Apply")
 
 ### Task 2: Create a Date table for report aggregation
 
-Contoso retail wants to display the Sales and Payment figures aggregated by different days (BILLINGDOCUMENTDATE, predPaymentDate), this requires the creation of a calendar table with the timeslots by which to aggregate.
+Contoso retail wants to display the Sales and Payment figures aggregated by different days (BILLINGDOCUMENTDATE, predPaymentDate); this requires the creation of a calendar table with the timeslots by which to aggregate.
 
 1. In Power BI, select the **Data** item from the left menu.
 
@@ -1361,7 +1361,7 @@ Contoso retail wants to display the Sales and Payment figures aggregated by diff
 
     ![The Models item is selected from the Power BI left menu. The Date.Date field is highlighted as well as the preceding fields in a model diagram.](media/pbi_relationships_date.png "Model diagram")
 
-5. Select the **Data** from the left hand menu once more, and in the Table tools menu select the **New measure** button.
+5. Select the **Data** from the left-hand menu once more, and in the Table tools menu select the **New measure** button.
 
     ![The Data item is selected from the left menu and the New measure button is highlighed in the Table tools menu.](media/pbi_date_newmeasuremenu.png "New measure")
 
@@ -1401,9 +1401,10 @@ Contoso retail wants to display the Sales and Payment figures aggregated by diff
 
 ## Exercise 9: Create an alert in Power BI
 
-Estimated time: 30 minutes
 
-In this exercise, a Power BI and Power Automate subscription are used to create an alert and trigger a Power Automate flow to send an email.
+Duration: 30 minutes
+
+In this exercise, Power BI and Power Automate subscriptions are used to create an alert and trigger a Power Automate flow to send an email.
 
 ### Task 1: Publish the Power BI report to an online workspace
 
@@ -1439,7 +1440,7 @@ In this exercise, a Power BI and Power Automate subscription are used to create 
 
 ### Task 3: Create an alerting dashboard to send email with Power Automate
 
-1. On the report, select to **Pin** the Gauge visulization to a new dashboard.
+1. On the report, select to **Pin** the Gauge visualization to a new dashboard.
 
     ![The gauge visualization displays with the Pin icon highlighted.](media/opbi_pingauge.png "Pin visualization")
 
@@ -1471,7 +1472,7 @@ In this exercise, a Power BI and Power Automate subscription are used to create 
 
     ![The Trigger a flow with a Power BI data-driven alert screen displays with the sign in and Continue button highlighted.](media/pa_triggerflowconnection.png "Sign in and Continue")
 
-9. In the flow designer, in the When a data driven alert is triggered step, expand the Alert id field and select **Max of predOffset**.
+9. In the flow designer, in the When a data driven alert is triggered step, expand the Alert Id field, and select **Max of predOffset**.
 
     ![The When a data driven alert is triggered step displays with the Alert Id drop down expanded and the Max of predOffset value is selected.](media/pa_alert_maxofpredoffset.png "Alert selection")
 
@@ -1507,7 +1508,7 @@ In this exercise, a Power BI and Power Automate subscription are used to create 
 
 ## Exercise 10: Update SAP from Power BI
 
-Estimated time: 30 minutes
+Duration: 30 minutes
 
 Contoso Retail also needs a way to flag risky customers in the SAP system whose payments tend to arrive late. In this exercise, a Power Automate flow is added in the Power BI report that initiates a business partner update in SAP using OData.
 
@@ -1539,11 +1540,11 @@ Contoso Retail also needs a way to flag risky customers in the SAP system whose 
 
     ![The Import setup blade displays with a user account selected from the list and the Save button highlighted.](media/pa_importsetup_selpbiusr.png "Select Power BI user account")
 
-7. Select **Import** to comlete the import of the flow.
+7. Select **Import** to complete the import of the flow.
 
     ![The Import package review screen displays with the Import button highlighted.](media/pa_importflow_button.png "Import flow")
 
-8. A message indicating successful import will display at the top of the screen. Select the **Open flow** link from this message.
+8. A message indicating the successful import will display at the top of the screen. Select the **Open flow** link from this message.
 
     ![A success message displays with the Open flow link highlighted.](media/pa_successimport_message.png "Open flow")
 
@@ -1551,7 +1552,7 @@ Contoso Retail also needs a way to flag risky customers in the SAP system whose 
 
     ![The flow design canvas displays with the Initialize variable step expanded and highlighted. The Save button is higlighted in the toolbar menu.](media/pa_importflow_edit_ip.png "Edit IP address variable")
 
-    >**Note**: This flow initiates a get request to the SAP service to retrieve a business partner by name using the CUSTOMERNAME value passed in by Power BI. This request also requests a X-CSRF-Token that will allow the current sesstion to perform an update. The last HTTP call issues the update of the business partner record found in the first HTTP activity to 02, indicating a risky customer.
+    >**Note**: This flow initiates a get request to the SAP service to retrieve a business partner by name using the CUSTOMERNAME value passed in by Power BI. This request also requests an X-CSRF-Token that will allow the current session to perform an update. The last HTTP call issues the update of the business partner record found in the first HTTP activity to 02, indicating a risky customer.
 
 10. Select the back arrow icon next to the Update Business Partner from Power BI title in the toolbar.
 
@@ -1603,7 +1604,7 @@ Contoso Retail also needs a way to flag risky customers in the SAP system whose 
 
 11. Select the **Run flow** button (anywhere in the blue area), and the Update Business Partner from Power BI flow will be triggered.
 
-12. Return to the Power Automate Update Business Partner from Power BI flow screen (left open in Task 1). The history displays the status of the run as succeeded. Optionally, drill into the the Date link beneath the Start header to view the run details.
+12. Return to the Power Automate Update Business Partner from Power BI flow screen (left open in Task 1). The history displays the status of the run as succeeded. Optionally, drill into the Date link beneath the Start header to view the run details.
 
     ![The Power Automate screen indicates a flow run succeeded.](media/pa_flow_succeeded.png "Power Automate run succeeded")
 
@@ -1649,7 +1650,7 @@ Duration: 10 minutes
 
     > **Note**: Ensure the proper subscription is set using `az account set --subscription {SUBSCRIPTION_ID_GOES_HERE} if experiencing difficulties.
 
-4. Execute the following command **two times** to retun to the user directory.
+4. Execute the following command **two times** to return to the user directory.
 
     ```PowerShell
     cd..
