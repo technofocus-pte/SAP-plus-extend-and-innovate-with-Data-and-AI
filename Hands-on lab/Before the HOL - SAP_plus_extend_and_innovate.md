@@ -28,15 +28,12 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
 - [SAP plus extend and innovate with Data and AI before the hands-on lab setup guide](#sap-plus-extend-and-innovate-with-data-and-ai-before-the-hands-on-lab-setup-guide)
   - [Requirements](#requirements)
   - [Before the hands-on lab](#before-the-hands-on-lab)
-    - [Task 1: Obtain the desired Azure Subscription Id value](#task-1-obtain-the-desired-azure-subscription-id-value)
-    - [Task 2: Create a SAP Cloud Appliance](#task-2-create-a-sap-cloud-appliance)
+    - [Task 1: Obtain the desired Azure Subscription ID value](#task-1-obtain-the-desired-azure-subscription-id-value)
+    - [Task 2: Create an SAP Cloud Appliance](#task-2-create-an-sap-cloud-appliance)
     - [Task 3: Deploy the Azure Resources](#task-3-deploy-the-azure-resources)
     - [Task 4: Prepare sales data in SAP](#task-4-prepare-sales-data-in-sap)
     - [Task 5: Prepare the business partner service in SAP](#task-5-prepare-the-business-partner-service-in-sap)
-    - [Task 5: Prepare payment data in Cosmos DB](#task-5-prepare-payment-data-in-cosmos-db)
-      - [Step 1: Create linked services in Azure Synapse Analytics](#step-1-create-linked-services-in-azure-synapse-analytics)
-      - [Step 2: Create source and sink integration datasets](#step-2-create-source-and-sink-integration-datasets)
-      - [Step 3: Create pipeline to ingest payment data into Cosmos DB](#step-3-create-pipeline-to-ingest-payment-data-into-cosmos-db)
+    - [Task 6: Prepare payment data in Cosmos DB](#task-6-prepare-payment-data-in-cosmos-db)
 
 # SAP plus extend and innovate with Data and AI before the hands-on lab setup guide
 
@@ -52,7 +49,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
 
 Duration: 3 - 4 hours
 
-### Task 1: Obtain the desired Azure Subscription Id value
+### Task 1: Obtain the desired Azure Subscription ID value
 
 1. Using an internet browser, log into the [Azure Portal](https://portal.azure.com).
 
@@ -64,7 +61,7 @@ Duration: 3 - 4 hours
 
     ![The Subscriptions screen displays with the Subscription ID value copied from a list of subscriptions.](media/azure_portal_copy_subscription_id.png "Azure Subscriptions")
 
-### Task 2: Create a SAP Cloud Appliance
+### Task 2: Create an SAP Cloud Appliance
 
 1. Using an internet browser, open the [SAP Cloud Appliance Library](https://cal.sap.com/) website.
 
@@ -113,13 +110,13 @@ Duration: 3 - 4 hours
 
     ![The Supported VM Sizes dialog displays with the OK button highlighted.](media/sapcal_supportedvmsize_ok.png "Supported VM Sizes")
 
-10. On the **Private Key** modal, select to **Store** the private ky in the SAP Cloud Appliance Library. Check the **Encrypt the private key with a password** and enter a password. Type the password once more in the **Retype Password** textbox. Select the **Download** button to download the encrypted key.
+10. On the **Private Key** modal, select to **Store** the private key in the SAP Cloud Appliance Library. Check the **Encrypt the private key with a password** and enter a password. Type the password once more in the **Retype Password** textbox. Select the **Download** button to download the encrypted key.
 
     ![The Private Key dialog displays with the password fields filled in and the Store and Download buttons highlighted.](media/sapcal_privatekey.png "Private Key dialog")
 
 11. The deployment  will take approximately 90 minutes. The status will update on the Instances screen. Once complete, the status will indicate **Active**.
 
-    ![The MCW SAP instance displays with a status of Active](media/sapcal_activeinstance.png "SAP CAL Instance listing")
+    ![The MCW SAP instance displays with a status of Active.](media/sapcal_activeinstance.png "SAP CAL Instance listing")
 
 ### Task 3: Deploy the Azure Resources
 
@@ -135,7 +132,7 @@ This lab utilizes Terraform Infrastructure as Code to deploy the necessary Azure
     git clone --branch feature/hands-on-lab https://github.com/codingbandit/MCW-SAP-plus-extend-and-innovate.git
     ```
 
-3. Navigate to the Terraform directory by executing the following command.
+3. Navigate to the Terraform directory by executing the following command:
 
     ```PowerShell
     cd 'MCW-SAP-plus-extend-and-innovate/Hands-on lab/Resources/terraform'
@@ -153,7 +150,7 @@ This lab utilizes Terraform Infrastructure as Code to deploy the necessary Azure
     az login
     ```
 
-6. Initialize the Terraform code using the following command.
+6. Initialize the Terraform code using the following command:
 
     ```PowerShell
     terraform init
@@ -213,7 +210,7 @@ This task demonstrates creating a sales view in SAP and exposing it as an OData 
 
     ![The Select a wizard dialog displays with Data Definition entered in the search box and the Data Definition item selected from the search results. The Next button is highlighted.](media/sapvm_newdatadefinition.png "New Data Definition")
 
-12. Fill the **New Data Definition** dialog as follows, then select **Finish**.
+12. Fill in the **New Data Definition** dialog as follows, then select **Finish**.
 
     | Field | Value |
     |-------|-------|
@@ -283,7 +280,7 @@ This task demonstrates creating a sales view in SAP and exposing it as an OData 
 
 14. Right-click in the whitespace of the **ZBD_ISALESDOCUMENT_E** view code window and select **Activate**.
 
-    ![The ZBD_ISALESDOCUMENT_E view displays a context menu with the **Activate** item selected.](media/sapvm_activatezbd_isalesdocument_e.png "Activate the ZBD_ISALESDOCUMENT_E view")
+    ![The ZBD_ISALESDOCUMENT_E view displays a context menu with the activate item selected.](media/sapvm_activatezbd_isalesdocument_e.png "Activate the ZBD_ISALESDOCUMENT_E view")
 
 15. Right-click in the whitespace of the **ZBD_ISALESDOCUMENT_E** view once more, this time select **Open With** and choose **Data Preview**. This will display the raw data of the view.
 
@@ -307,9 +304,9 @@ This task demonstrates creating a sales view in SAP and exposing it as an OData 
 
     ![The SAP Logon icon located on the virtual machine desktop displays.](media/sapvm_saplogonicon.png "SAP Logon icon")
 
-20. From the top toolbar menu, select the **Logon** button.
+20. From the top toolbar menu, select the **Log On** button.
 
-    ![A portion of the SAP GUI toolbar displays with the Logon button highlighted.](media/sapvm_sapguilogonbutton.png "Logon")
+    ![A portion of the SAP GUI toolbar displays with the Log On button highlighted.](media/sapvm_sapguilogonbutton.png "Logon")
 
 21. Log in with the username `S4H_EXT` and the password `Welcome1`, press <kbd>Enter</kbd> to submit the form.
 
@@ -323,7 +320,7 @@ This task demonstrates creating a sales view in SAP and exposing it as an OData 
 
     ![A portion of the Activate and Maintain Services toolbar displays with the Add service button highlighted.](media/sapvm_sapgui_maintsvcs_addservicebutton.png "Add Service")
 
-24. Populate the **Add Selected Services** filter form as follows and press <kbd>Enter</kbd>.
+24. Populate the **Add Selected Services** filter form as follows, and press <kbd>Enter</kbd>.
 
     | Field | Value |
     |-------|-------|
@@ -340,13 +337,13 @@ This task demonstrates creating a sales view in SAP and exposing it as an OData 
 
     ![The Add Service dialog displays with the Local Object button highlighted.](media/sapvm_sapgui_addservicedialog.png "Add Service dialog")
 
-27. On the **Add Selected Services** screen, select the **Back** button on the toolbar menu. This will open the **Activate and Maintan Services** window once more.
+27. On the **Add Selected Services** screen, select the **Back** button on the toolbar menu. This will open the **Activate and Maintain Services** window once more.
 
     ![A portion of the Add Selected Services toolbar displays with the Back button highlighted.](media/sapvm_sapgui_backbuttonaddservices.png "Back button")
 
 28. On the **Activate and Maintain Services** screen, select the **Filter** button from the toolbar menu.
 
-    ![A portion of the Activate and Maintain Services toolbar menu displays with the Filter button highlighted](media/sapvm_sapgui_activateandmaintainfilterbutton.png "Filter services")
+    ![A portion of the Activate and Maintain Services toolbar menu displays with the Filter button highlighted.](media/sapvm_sapgui_activateandmaintainfilterbutton.png "Filter services")
 
 29. In the **Filter for Service Catalog** dialog, type `ZBD_*` in the **Technical Service Name** field and press <kbd>Enter</kbd>.
 
@@ -390,7 +387,7 @@ A service is available that allows for the update of a Business Partner record. 
 
     ![A portion of the Activate and Maintain Services toolbar displays with the Add service button highlighted.](media/sapvm_sapgui_maintsvcs_addservicebutton.png "Add Service")
 
-3. Populate the **Add Selected Services** filter form as follows and press <kbd>Enter</kbd>.
+3. Populate the **Add Selected Services** filter form as follows, and press <kbd>Enter</kbd>.
 
     | Field | Value |
     |-------|-------|
@@ -407,7 +404,7 @@ A service is available that allows for the update of a Business Partner record. 
 
     ![The Add Service dialog displays with the Local Object button highlighted.](media/sapvm_sapgui_addservicedialog_gwsample.png "Add Service dialog")
 
-6. On the **Add Selected Services** screen, select the **Back** button on the toolbar menu. This will open the **Activate and Maintan Services** window once more.
+6. On the **Add Selected Services** screen, select the **Back** button on the toolbar menu. This will open the **Activate and Maintain Services** window once more.
 
     ![A portion of the Add Selected Services toolbar displays with the Back button highlighted.](media/sapvm_sapgui_backbuttonaddservices_gwsample.png "Back button")
 
@@ -485,9 +482,9 @@ A service is available that allows for the update of a Business Partner record. 
 
 24. Retain this collection in Postman for use during the hands-on lab.
 
-### Task 5: Prepare payment data in Cosmos DB
+### Task 6: Prepare payment data in Cosmos DB
 
-Raw payment data is available in Azure Data Lake storage. This exercise walks through loading raw payment data into Cosmos DB by leveraging Azure Synapse Analytics. First, linked services are created - these act as the connection strings to external compute resources. Next, integration datasets are created, these indicate the location and shape of the data being used in the migration. Finally, a pipeline is created to orchestrate moving data from Azure Data Lake Storage Gen2 to Cosmos DB.
+Raw payment data is available in Azure Data Lake storage. This exercise walks through loading raw payment data into Cosmos DB by leveraging Azure Synapse Analytics. First, linked services are created, these act as the connection strings to external compute resources. Next, integration datasets are created, these indicate the location and shape of the data being used in the migration. Finally, a pipeline is created to orchestrate moving data from Azure Data Lake Storage Gen2 to Cosmos DB.
 
 #### Step 1: Create linked services in Azure Synapse Analytics
 
@@ -528,7 +525,7 @@ Raw payment data is available in Azure Data Lake storage. This exercise walks th
 
     ![The New linked service blade displays with Azure Cosmos DB (SQL API) selected. The Continue button is highlighted.](media/ss_linkedservice_cosmosdbsql.png "New Cosmos DB Linked Service")
 
-9. In the New linked service - Azure Cosmos DB form, fill it as follows then select the **Create** button. Unspecified fields retain their default values.
+9. In the New linked service - Azure Cosmos DB form, fill it in as follows, then select the **Create** button. Unspecified fields retain their default values.
 
     | Field | Value |
     |-------|-------|
@@ -552,7 +549,7 @@ The source data is payment data that is located in Azure Data Lake Storage Gen2 
 
    ![The left menu of Synapse Studio displays with the Data hub highlighted.](media/ss_datahub_menu.png "Data hub")
 
-2. From the center pane, select the **Linked** tab. Expand the **Azure Data Lake Storage Gen2** item, followed by teh **datalake** item, and select the **payment-data-csv** container. From the **payment-data-csv** tab, select the **paymentData_CAL2021.csv** file. Next, select **New integration dataset** from the toolbar menu.
+2. From the center pane, select the **Linked** tab. Expand the **Azure Data Lake Storage Gen2** item, followed by the **datalake** item, and select the **payment-data-csv** container. From the **payment-data-csv** tab, select the **paymentData_CAL2021.csv** file. Next, select **New integration dataset** from the toolbar menu.
 
     ![The Data hub displays with the Linked tab selected and the Azure Datalake Storage Gen2 item expanded along with the datalake item. The payment-data-csv container is selected. The paymentData_CAL2021.csv file is selected with the New integration dataset menu item highlighted in the toolbar menu.](media/ss_paymentdata_newdatasetmenu.png "Data hub new integration dataset")
 
