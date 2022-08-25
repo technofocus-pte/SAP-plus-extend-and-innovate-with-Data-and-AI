@@ -837,16 +837,16 @@ Duration: 50 minutes
     ![The Select task and settings step displays with the Regression item checked and the View additional configuration settings link highlighted.](media/amls_selecttaskandsettings.png "Select task and settings step")
 
 16. On the Additional configurations blade, select the Primary metric of **Normalized root mean squared error**, then expand the Blocked models drop down, check the following items, and select **Save**. This will reduce the time to train the model.
-    1. ElasticNet
-    2. GradientBoosting
-    3. KNN
-    4. LassoLars
-    5. SGD
-    6. RandomForest
-    7. ExtremeRandomTrees
-    8. LightGBM
-    9. FastLinearRegressor
-    10. OnlineGradientDescentRegressor
+   - ElasticNet
+   - GradientBoosting
+   - KNN
+   - LassoLars
+   - SGD
+   - RandomForest
+   - ExtremeRandomTrees
+   - LightGBM
+   - FastLinearRegressor
+   - OnlineGradientDescentRegressor
 
     ![The Additional configurations blade displays with Normalized root mean squared error selected as the Primary metric and the Blocked models expanded with the above items checked.](media/amls_jobadditionalconfigurations.png "Additional configurations")
 
@@ -989,7 +989,7 @@ Duration: 50 minutes
 
 6. From the notebook toolbar menu, select **Run all** to execute all cells in the notebook. This notebook registers the dataset with Azure Machine Learning and creates an AutoML experiment to determine the best model to determine the incoming cashflow via predicting the payment delay in days. The best model is then registered with the Azure Machine Learning workspace.
 
-    > **Note**: this notebook will run for approximately 20 minutes. Proceed to [Exercise 7](#exercise-7-visualize-historical-data-with-power-bi) and return here once completed.
+    > **Note**: This notebook will run for approximately 20 minutes. Proceed to [Exercise 7](#exercise-7-visualize-historical-data-with-power-bi) and return here once completed.
 
 7. Once the notebook has completed running, the output of the last cell will indicate the best model that is registered in the Azure Machine Learning workspace.
 
@@ -1183,7 +1183,7 @@ Contoso Retail would like to gain insights into historical sales order and payme
 
 ### Task 8: Create a payment offset per customer group visualization
 
-This report shows the average number of days by which each customer group pays their SalesOrders. Afterwards a comparison can be made with the outcome of the Machine Learning Model built in the next exercise. SalesOrderHeaders and the Payment data are combined to calculate the number of days between the billing date and the payment date.
+This report shows the average number of days by which each customer group pays their SalesOrders. Afterwards, a comparison can be made with the outcome of the Machine Learning Model built in the next exercise. SalesOrderHeaders and the Payment data are combined to calculate the number of days between the billing date and the payment date.
 
 1. In Power BI Desktop, expand the **Transform data** item on Home tab toolbar menu. Select **Transform data**.
 
@@ -1354,10 +1354,10 @@ Contoso retail wants to display the Sales and Payment figures aggregated by diff
     ![The new table formula textbox displays with the above code and the checkmark button highlighted.](media/pbi_newtableformula.png "New table formula")
 
 4. From the left menu, select the **Models** option. Establish the following relationships from the **Date.Date** field using drag and drop to the following table.fields:
-   1. SalesOrderPayments.CREATIONDATE
-   2. SalesOrderPayments.BILLINGDOCUMENTDATE
-   3. SalesOrderPayments.PaymentDate
-   4. SalesOrderPayments.predPaymentDate
+   - SalesOrderPayments.BILLINGDOCUMENTDATE
+   - SalesOrderPayments.CREATIONDATE
+   - SalesOrderPayments.PaymentDate
+   - SalesOrderPayments.predPaymentDate
 
     ![The Models item is selected from the Power BI left menu. The Date.Date field is highlighted as well as the preceding fields in a model diagram.](media/pbi_relationships_date.png "Model diagram")
 
@@ -1400,7 +1400,6 @@ Contoso retail wants to display the Sales and Payment figures aggregated by diff
     ![The Sales and Payment Forecast visualization displays in a clustered column chart visualization.](media/pbi_clusteredcolumnchart.png "Clustered Column Chart")
 
 ## Exercise 9: Create an alert in Power BI
-
 
 Duration: 30 minutes
 
