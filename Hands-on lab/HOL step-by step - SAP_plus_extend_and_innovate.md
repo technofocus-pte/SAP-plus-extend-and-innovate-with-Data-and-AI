@@ -790,11 +790,11 @@ Duration: 50 minutes
    ![The Create dataset from datastore blade displays with tabular data.](media/amls_dataset_settingsandpreview.png "Preview data")
 
 7. On the Create dataset from datastore blade Schema step, toggle the following fields off so that they are not included in the dataset then select **Next**:
-   1. SALESDOCUMENT
-   2. BILLINGDOCUMENTDATE
-   3. PAYMENTDATE
-   4. SALESGROUP
-   5. SALESOFFICE
+   - SALESDOCUMENT
+   - BILLINGDOCUMENTDATE
+   - PAYMENTDATE
+   - SALESGROUP
+   - SALESOFFICE
 
     ![A portion of the Schema step screen displays with the specified fields toggled to not be included.](media/amls_dataset_schema.png "Dataset Schema")
 
