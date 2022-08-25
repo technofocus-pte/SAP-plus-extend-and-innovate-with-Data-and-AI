@@ -346,7 +346,7 @@ The Copy activity in Azure Synapse Analytics requires the usage of integration d
 
     ![The Data hub displays with the + menu expanded and the Integration dataset option highlighted.](media/ss_datahub_newintegrationdataset.png "New Integration dataset")
 
-2. In the New integration dataset blade, search for and select **OData**
+2. In the New integration dataset blade, search for and select **OData**.
 
     ![The New integration dataset blade displays with OData entered in the search box and OData shown in the search results.](media/ss_newintegrationdataset_odatamenu.png "OData integration dataset")
 
@@ -578,7 +578,7 @@ Payment history data is required when creating the cash flow prediction model. T
 
 11. On the left menu of Synapse Studio, select the **Monitor** hub. Ensure **Pipeline runs** is selected from the center menu. Observe the IngestPaymentsData pipeline status over time. Use the **Refresh** button to update the table.
 
-    ![The IngestSalesOrderData pipeline shows as in progress in the Pipeline runs Monitor hub table.](mmedia/ss_paymentsingestionpipeline_monitor.png "Monitor Pipeline runs")
+    ![The IngestSalesOrderData pipeline shows as in progress in the Pipeline runs Monitor hub table.](media/ss_paymentsingestionpipeline_monitor.png "Monitor Pipeline runs")
 
 12. Upon successful completion of the pipeline run, verify data was copied by accessing the **Develop** hub from the left menu, expanding the **+** menu and selecting **SQL script**. In the **Connect to** field of the SQL script, select **sapdatasynsql**. In the query window, paste the following SQL command and run the query. Ensure the value returned is non-zero.
 
