@@ -34,6 +34,9 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 4: Prepare sales data in SAP](#task-4-prepare-sales-data-in-sap)
     - [Task 5: Prepare the business partner service in SAP](#task-5-prepare-the-business-partner-service-in-sap)
     - [Task 6: Prepare payment data in Cosmos DB](#task-6-prepare-payment-data-in-cosmos-db)
+      - [Step 1: Create linked services in Azure Synapse Analytics](#step-1-create-linked-services-in-azure-synapse-analytics)
+      - [Step 2: Create source and sink integration datasets](#step-2-create-source-and-sink-integration-datasets)
+      - [Step 3: Create pipeline to ingest payment data into Cosmos DB](#step-3-create-pipeline-to-ingest-payment-data-into-cosmos-db)
 
 # SAP plus extend and innovate with Data and AI before the hands-on lab setup guide
 
@@ -81,7 +84,7 @@ Duration: 3 - 4 hours
 
     | Field | Value |
     |-------|-------|
-    | Name | MCW SAP plus extend and innovate with Data and AI |
+    | Name | MCW SAP plus extend and innovate |
     | Description | SAP instance for the Microsoft Cloud Workshop |
     | Cloud Provider | Select **Microsoft Azure** |
     | Subscription ID | Paste the **Subscription ID** value from Task 1 |

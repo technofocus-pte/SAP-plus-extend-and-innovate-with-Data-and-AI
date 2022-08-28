@@ -91,17 +91,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
 
 ## Abstract and learning objectives
 
-In this hands-on lab you will:
-
-1. **Extract** (historical) Sales Orders from SAP S/4HANA using Azure Synapse Analytics pipelines
-
-2. **Extract** historical payments from a non-SAP system, in this case Cosmos DB using Azure Synapse Analytics pipelines
-
-3. **Visualize** the extracted Sales Orders and invoice data with Power BI
-
-4. **Predict** incoming cash flow for Sales Orders using Azure Machine Learning
-
-5. **Trigger actions** in SAP based on insights gained from the prediction model
+In this hands-on lab you will **extract** (historical) Sales Orders from SAP S/4 HANA and historical payments from a non-SAP system, in this case Cosmos DB using Azure Synapse Analytics pipelines. You will **visualize** the extracted Sales Orders and invoice data with Power BI. Next, you will unleash the power of data using Azure Machine Learning to train a model to **predict** incoming cash flow. You will learn to implement dashboards and alerting using Power BI and Power Automate. Finally, you will add the ability to update data in SAP based on insights gained from the prediction model.
 
 ## Overview
 
@@ -933,7 +923,7 @@ Duration: 50 minutes
 
     ![Synapse Studio displays with the Data hub selected. The Linked tab is selected from the center pane. The Azure Data Lake Storage Gen2 and datalake items are expanded. The sales-payments-parquet container is selected. In the data explorer tab the context menu on the dbo.SalesPaymentsFull.parquet file displays with the New notebook item expanded and New Spark table selected.](media/ss_datahub_newsparktable.png "New Spark table")
 
-2. This will open a notebook with some code scaffolded. In the Notebook toolbar, select to Attach to **SparkPoolSmall**. In the code cell, change the table name that is being saved to `default.SalesPaymentsFull`. Select the **Run all** button from the toolbar. **Note**: It will take a few minutes for the Spark cluster to be provisioned.
+2. This will open a notebook with some code scaffolded. In the Notebook toolbar, select **SparkPoolSmall** from the Attach to dropdown. In the code cell, change the table name that is being saved to `default.SalesPaymentsFull`. Select the **Run all** button from the toolbar. **Note**: It will take a few minutes for the Spark cluster to be provisioned.
 
     ![A Synapse notebook displays with code to create a new Spark table scaffolded.](media/ss_createsparktablenotebook.png "Spark notebook")
 
@@ -1547,7 +1537,7 @@ Contoso Retail also needs a way to flag risky customers in the SAP system whose 
 
     ![A success message displays with the Open flow link highlighted.](media/pa_successimport_message.png "Open flow")
 
-9. On the flow design canvas, expand the second step **Initialize variable** and replace the Value field with the IP address of the MCWSAP-SAP1 virtual machine. Select **Save** from the toolbar menu. Refer to the [Before the hands-on lab Task 5](Before%20the%20HOL%20-%20SAP_plus_extend_and_innovate.md#task-5-prepare-the-business-partner-service-in-sap) steps 15 and 16 for guidance.
+9. On the flow design canvas, expand the second step **Initialize variable** and replace the Value field with the IP address of the MCWSAP-SAP1 virtual machine. Select **Save** from the toolbar menu. Refer to the [Before the hands-on lab Task 5](Before%20the%20HOL%20-%20SAP_plus_extend_and_innovate_with_data_and_ai.md#task-5-prepare-the-business-partner-service-in-sap) steps 15 and 16 for guidance.
 
     ![The flow design canvas displays with the Initialize variable step expanded and highlighted. The Save button is higlighted in the toolbar menu.](media/pa_importflow_edit_ip.png "Edit IP address variable")
 
@@ -1593,7 +1583,7 @@ Contoso Retail also needs a way to flag risky customers in the SAP system whose 
 
     ![The report toolbar displays with Save and Reading view highlighted.](media/opbi_save_readerview_menu.png "Save and switch to Reading view")
 
-9. Switch to the Postman application, issue the **GET Customer** request from the SAP MCW collection. Refer to the [Before the hands-on-lab](#task-5-prepare-the-business-partner-service-in-sap) step 17 through 21 for guidance if necessary. Make note that in the response, the **BusinessPartnerRole** indicates **01** for **Bigmart** - this indicates a customer in good standing.
+9. Switch to the Postman application, issue the **GET Customer** request from the SAP MCW collection. Refer to the [Before the hands-on-lab](Before%20the%20HOL%20-%20SAP_plus_extend_and_innovate_with_data_and_ai.md#task-5-prepare-the-business-partner-service-in-sap) step 17 through 21 for guidance if necessary. Make note that in the response, the **BusinessPartnerRole** indicates **01** for **Bigmart** - this indicates a customer in good standing.
 
     ![A portion of the Postman response displays with Bigmart highlighted with a BusinessPartnerRole of 01.](media/pm_bigmart_partner_01_value.png "Bigmart BusinessPartnerRole has a value of 01")
 
