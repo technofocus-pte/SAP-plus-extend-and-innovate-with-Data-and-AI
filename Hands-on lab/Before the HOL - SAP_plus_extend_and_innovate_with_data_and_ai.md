@@ -132,13 +132,13 @@ This lab utilizes Terraform Infrastructure as Code to deploy the necessary Azure
 2. In the Cloud Shell pane, ensure the PowerShell language is selected. Clone the source code repository by issuing the following command.
 
     ```PowerShell
-    git clone --branch feature/hands-on-lab https://github.com/codingbandit/MCW-SAP-plus-extend-and-innovate.git
+    git clone https://github.com/microsoft/MCW-SAP-plus-extend-and-innovate-with-data-and-ai.git
     ```
 
 3. Navigate to the Terraform directory by executing the following command:
 
     ```PowerShell
-    cd 'MCW-SAP-plus-extend-and-innovate/Hands-on lab/Resources/terraform'
+    cd 'MCW-SAP-plus-extend-and-innovate-with-data-and-ai/Hands-on lab/Resources/terraform'
     ```
 
 4. Set the desired subscription by executing the following code, replace **SUBSCRIPTION_ID** with the value you recorded earlier in the lab setup.
@@ -458,7 +458,7 @@ A service is available that allows for the update of a Business Partner record. 
 18. On the Import dialog, select the **Link** tab, then enter the following URL and select **Continue**.
 
     ```text
-    https://raw.githubusercontent.com/codingbandit/MCW-SAP-plus-extend-and-innovate/feature/exercise10/Hands-on%20lab/Resources/postman/SAP%20MCW.postman_collection.json
+    https://raw.githubusercontent.com/microsoft/MCW-SAP-plus-extend-and-innovate-with-data-and-ai/main/Hands-on%20lab/Resources/postman/SAP%20MCW.postman_collection.json
     ```
 
     ![The Import dialog displays with the Link tab highlighted and the above URL entered above the Continue button.](media/pm_importlink.png "Import Collection via Link")

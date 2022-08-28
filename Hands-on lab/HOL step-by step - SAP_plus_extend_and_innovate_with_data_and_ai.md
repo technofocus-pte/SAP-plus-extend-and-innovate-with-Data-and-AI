@@ -641,7 +641,7 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
 
     ![The Set properties blade for the new integration dataset displays populated with the preceding values.](media/ss_salespaymentsfull_dataset_form.png "Set integration dataset properties")
 
-4. Expand the **+** menu in the center pane. Select **Integration dataset**.
+4. Remaining in the Data hub, expand the **+** menu in the center pane. Select **Integration dataset**.
 
     ![The Data hub displays with the + menu expanded and the Integration dataset option highlighted.](media/ss_datahub_newintegrationdataset.png "New Integration dataset")
 
@@ -705,6 +705,8 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
     ![The Monitor hub pipeline runs displays indicating the successful completion of the CreateSalesPaymentsParquet pipeline.](media/ss_createsalespaymentsparquet_pipelinesucceeded.png "Successfully completed pipeline")
 
 ## Exercise 5: Train a regression model to predict incoming cashflow using Azure Machine Learning Studio
+
+In this exercise, you will learn to connect to sales data in Azure Data Lake Storage from Azure Machine Learning and train a model to predict incoming cashflow.
 
 Duration: 50 minutes
 
@@ -790,11 +792,15 @@ Duration: 50 minutes
 
 8. On the Create dataset from datastore blade Confirm details step, select **Create**.
 
+    ![The Create dataset from datastore Confirm details screen displays with the Create button highlighted.](media/amls_dataset_confirmscreen.png "Confirm details step")
+
 9. On the Select data asset step of the Create a new Automated ML job screen, refresh the data asset table.
+
+    ![The Select data asset step screen displays with the Refresh button highlighted.](media/amls_dataassetselection.png "Select data asset step")
 
 10. On the Select data asset step, select **sap-sales-payments-full** from the list and select **Next**.
 
-    ![The Select data asset screen displays with the sap-sales-payments-full item selected.](media/amls_automlrun_selectdataset_sap.png "Select data asset")
+    ![The Select data asset screen displays with the sap-sales-payments-full item selected.](media/amls_automlrun_selectdataset_sap.png "Select data asset step")
 
 11. On the Configure job step, select the **+ New** button below the **Select Azure ML compute cluster** field.
 
@@ -802,7 +808,9 @@ Duration: 50 minutes
 
 12. On the Create compute cluster blade Virtual machine step, accept the defaults, and select **Next**.
 
-13. On the Create compute cluster blade Advanced settings, fill in the form as follows then select **Create**. It takes a few moments for the  
+    ![The Virtual machine step screen displays with the Next button highlighted.](media/amls_newcomputecluster_defaultspecs.png "Default virtual machine")
+
+13. On the Create compute cluster blade Advanced settings, fill in the form as follows then select **Create**. It takes a few moments for the cluster to be provisioned.
 
     | Field | Value |
     |-------|-------|
@@ -827,16 +835,17 @@ Duration: 50 minutes
     ![The Select task and settings step displays with the Regression item checked and the View additional configuration settings link highlighted.](media/amls_selecttaskandsettings.png "Select task and settings step")
 
 16. On the Additional configurations blade, select the Primary metric of **Normalized root mean squared error**, then expand the Blocked models drop down, check the following items, and select **Save**. This will reduce the time to train the model.
-   - ElasticNet
-   - GradientBoosting
-   - KNN
-   - LassoLars
-   - SGD
-   - RandomForest
-   - ExtremeRandomTrees
-   - LightGBM
-   - FastLinearRegressor
-   - OnlineGradientDescentRegressor
+
+    - ElasticNet
+    - GradientBoosting
+    - KNN
+    - LassoLars
+    - SGD
+    - RandomForest
+    - ExtremeRandomTrees
+    - LightGBM
+    - FastLinearRegressor
+    - OnlineGradientDescentRegressor
 
     ![The Additional configurations blade displays with Normalized root mean squared error selected as the Primary metric and the Blocked models expanded with the above items checked.](media/amls_jobadditionalconfigurations.png "Additional configurations")
 
@@ -914,6 +923,8 @@ Duration: 50 minutes
     ![The predict-incoming-cashflow-svc endpoint screen displays with the test data in the text box. The results of the call are also displayed.](media/amls_endpoint_test.png "Test service deployment endpoint")
 
 ## Exercise 6: Train a regression model to predict incoming cashflow using Azure Synapse Analytics (Optional)
+
+In this exercise, you'll leverage the integration of Azure Machine Learning in Azure Synapse Analytics. You will train a model to predict incoming cashflow and deploy the final model for use in the dedicated SQL Pool.
 
 Duration: 50 minutes
 
@@ -1047,9 +1058,9 @@ Duration: 50 minutes
 
 ## Exercise 7: Visualize historical data with Power BI
 
-Duration: 40 minutes
+In this exercise, we will implement visualizations to help Contoso Retail gain insights into historical sales order and payments data.
 
-Contoso Retail would like to gain insights into historical sales order and payments data.
+Duration: 40 minutes
 
 ### Task 1: Retrieve the database connection information for the dedicated SQL pool
 
@@ -1122,13 +1133,11 @@ Contoso Retail would like to gain insights into historical sales order and payme
 
 ### Task 4: Create a sales per data and customer group visualization
 
-1. In the Visualizations pane, select **Stacked column chart**.
-
-2. From the **Fields** pane, drag-and-drop the SalesOrderHeaders.CREATIONDATE field to the X-axis box, the SalesOrderHeaders.TOTALNETAMOUNT field to the Y-axis box and the SalesOrderHeaders.CUSTOMERGROUP field to the Legend box.
+1. In the Visualizations pane, select **Stacked column chart**. From the **Fields** pane, drag-and-drop the SalesOrderHeaders.CREATIONDATE field to the X-axis box, the SalesOrderHeaders.TOTALNETAMOUNT field to the Y-axis box and the SalesOrderHeaders.CUSTOMERGROUP field to the Legend box.
 
     ![The Power BI Visualization pane displays with Stacked column chart selected as the selected visualization and the settings populated with the previously mentioned values.](media/pbi_visualizationspane_salesbyyearandcustomergroup.png "Visualization pane")
 
-3. Adjust the sizing of the chart on the report canvas as desired.
+2. Adjust the sizing of the chart on the report canvas as desired.
 
     ![The report canvas displays with a stacked column chart representation of the total sales by customer group.](media/pbi_salesbydataandcustomergroup_chart.png "Total sales by customer group chart")
 
@@ -1263,9 +1272,9 @@ A box plot can provide a more detailed view of the payment offset by customer gr
 
 ## Exercise 8: Integrate Azure Machine Learning and Power BI
 
-Duration: 25 minutes
+In this exercise, you will help Contoso retail augment their Power BI report with data enriched with predictions from the machine learning model trained in [Exercise 5](#exercise-5-train-a-regression-model-to-predict-incoming-cashflow-using-azure-machine-learning-studio) to predict incoming cashflow.
 
-Contoso retail would like to augment their Power BI report with data enriched with predictions from the machine learning model trained in [Exercise 5](#exercise-5-train-a-regression-model-to-predict-incoming-cashflow-using-azure-machine-learning-studio) to predict incoming cashflow.
+Duration: 25 minutes
 
 ### Task 1: Add the deployed model to the Power BI report
 
@@ -1506,7 +1515,7 @@ Contoso Retail also needs a way to flag risky customers in the SAP system whose 
 1. In a web browser, access the following link and select **Download** to download the UpdateBusinessPartnerFromPowerBI.zip file. This file contains the exported flow that is used in this exercise.
 
     ```text
-    https://github.com/codingbandit/MCW-SAP-plus-extend-and-innovate/blob/feature/exercise10/Hands-on%20lab/Resources/powerautomate/UpdateBusinessPartnerFromPowerBI.zip
+    https://github.com/microsoft/MCW-SAP-plus-extend-and-innovate-with-data-and-ai/blob/feature/exercise10/Hands-on%20lab/Resources/powerautomate/UpdateBusinessPartnerFromPowerBI.zip
     ```
 
     ![A portion of a GitHub window displays with the Download button highlighted.](media/gh_downloadzip.png "Download file from GitHub")
@@ -1593,6 +1602,8 @@ Contoso Retail also needs a way to flag risky customers in the SAP system whose 
 
 11. Select the **Run flow** button (anywhere in the blue area), and the Update Business Partner from Power BI flow will be triggered.
 
+    ![The Run flow button is highlighted on the report.](media/opbi_run_flow.png "Run flow")
+
 12. Return to the Power Automate Update Business Partner from Power BI flow screen (left open in Task 1). The history displays the status of the run as succeeded. Optionally, drill into the Date link beneath the Start header to view the run details.
 
     ![The Power Automate screen indicates a flow run succeeded.](media/pa_flow_succeeded.png "Power Automate run succeeded")
@@ -1628,7 +1639,7 @@ Duration: 10 minutes
 2. Navigate to the Terraform directory by executing the following command.
 
     ```PowerShell
-    cd 'MCW-SAP-plus-extend-and-innovate/Hands-on lab/Resources/terraform'
+    cd 'MCW-SAP-plus-extend-and-innovate-with-data-and-ai/Hands-on lab/Resources/terraform'
     ```
 
 3. Enter the following command to remove all deployed resources, type `yes` and <kbd>Enter</kbd> when prompted.
@@ -1648,7 +1659,7 @@ Duration: 10 minutes
 5. Delete the cloned source code repository with the following command.
 
    ```PowerShell
-   Remove-Item -Path .\MCW-SAP-plus-extend-and-innovate -recurse -force  
+   Remove-Item -Path .\MCW-SAP-plus-extend-and-innovate-with-data-and-ai -recurse -force  
    ```
 
 ### Task 4: Terminate the SAP CAL appliance
