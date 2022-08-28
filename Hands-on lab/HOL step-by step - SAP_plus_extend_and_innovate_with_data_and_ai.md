@@ -706,9 +706,9 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
 
 ## Exercise 5: Train a regression model to predict incoming cashflow using Azure Machine Learning Studio
 
-In this exercise, you will learn to connect to sales data in Azure Data Lake Storage from Azure Machine Learning and train a model to predict incoming cashflow.
-
 Duration: 50 minutes
+
+In this exercise, you will learn to connect to sales data in Azure Data Lake Storage from Azure Machine Learning and train a model to predict incoming cashflow.
 
 ### Task 1: Retrieve the access key for the Azure Data Lake Storage account
 
@@ -924,9 +924,9 @@ Duration: 50 minutes
 
 ## Exercise 6: Train a regression model to predict incoming cashflow using Azure Synapse Analytics (Optional)
 
-In this exercise, you'll leverage the integration of Azure Machine Learning in Azure Synapse Analytics. You will train a model to predict incoming cashflow and deploy the final model for use in the dedicated SQL Pool.
-
 Duration: 50 minutes
+
+In this exercise, you'll leverage the integration of Azure Machine Learning in Azure Synapse Analytics. You will train a model to predict incoming cashflow and deploy the final model for use in the dedicated SQL Pool.
 
 ### Task 1: Create the SalesPaymentsFull Spark table from the parquet file
 
@@ -1058,9 +1058,9 @@ Duration: 50 minutes
 
 ## Exercise 7: Visualize historical data with Power BI
 
-In this exercise, we will implement visualizations to help Contoso Retail gain insights into historical sales order and payments data.
-
 Duration: 40 minutes
+
+In this exercise, we will implement visualizations to help Contoso Retail gain insights into historical sales order and payments data.
 
 ### Task 1: Retrieve the database connection information for the dedicated SQL pool
 
@@ -1272,9 +1272,9 @@ A box plot can provide a more detailed view of the payment offset by customer gr
 
 ## Exercise 8: Integrate Azure Machine Learning and Power BI
 
-In this exercise, you will help Contoso retail augment their Power BI report with data enriched with predictions from the machine learning model trained in [Exercise 5](#exercise-5-train-a-regression-model-to-predict-incoming-cashflow-using-azure-machine-learning-studio) to predict incoming cashflow.
-
 Duration: 25 minutes
+
+In this exercise, you will help Contoso retail augment their Power BI report with data enriched with predictions from the machine learning model trained in [Exercise 5](#exercise-5-train-a-regression-model-to-predict-incoming-cashflow-using-azure-machine-learning-studio) to predict incoming cashflow.
 
 ### Task 1: Add the deployed model to the Power BI report
 
