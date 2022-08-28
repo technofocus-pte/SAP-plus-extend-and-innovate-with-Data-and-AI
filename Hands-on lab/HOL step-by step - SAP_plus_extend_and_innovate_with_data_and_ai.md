@@ -1392,7 +1392,7 @@ Contoso retail wants to display the Sales and Payment figures aggregated by diff
 
     ![The Power BI left menu displays with the Report item highlighted.](media/pbi_report_leftmenu.png "Report view")
 
-2. In the Visualizations pane, select **Clustered Column Chart**. Drag-and-drop the **Date.Date** field to the **X-axis** box. Drag-and-drop the **Date.Sales at Billing Date**, **Date.Payment at pred Date**, and **Date.Payment at actual Date** to the **Y-axis** box.
+2. In the Visualizations pane, select **Clustered Column Chart**. Drag-and-drop the **Date.Date** field to the **X-axis** box. Drag-and-drop the **Date.Sales at Billing Date**, **Date.Payment at pred Date**, and **Date.Payment at actual Date** to the **Y-axis** box. The rendered visualization is shown below the settings screenshot.
 
     ![The Visualizations pane displays with the Clustered Column Chart item highlighted and the form filled out as described above.](media/pbi_visualizations_clusteredcolumn.png "Clustered Column Chart visualization details")
 
@@ -1515,7 +1515,7 @@ Contoso Retail also needs a way to flag risky customers in the SAP system whose 
 1. In a web browser, access the following link and select **Download** to download the UpdateBusinessPartnerFromPowerBI.zip file. This file contains the exported flow that is used in this exercise.
 
     ```text
-    https://github.com/microsoft/MCW-SAP-plus-extend-and-innovate-with-data-and-ai/blob/feature/exercise10/Hands-on%20lab/Resources/powerautomate/UpdateBusinessPartnerFromPowerBI.zip
+    https://github.com/microsoft/MCW-SAP-plus-extend-and-innovate-with-data-and-ai/blob/main/Hands-on%20lab/Resources/powerautomate/UpdateBusinessPartnerFromPowerBI.zip
     ```
 
     ![A portion of a GitHub window displays with the Download button highlighted.](media/gh_downloadzip.png "Download file from GitHub")
