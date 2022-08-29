@@ -22,9 +22,14 @@ In this workshop, you will learn how to architect an extendable deployment of SA
 At the end of workshop, you will have the knowledge necessary to build a data pipeline that will ingest SAP and Cosmos DB data into a common data warehouse. You will be able analyze AR and sales data to deliver a 360-degree view of customers’ accounts.
 
 The primary goal for this system is to extract SAP data into a single dashboard for use in self-service reporting.
+
 ### Whiteboard design session
 
 In this whiteboard design session, you will learn how to design a solution to allow customers to pull data from multiple data sources, provide an analytics, and automate repetitive tasks.
+
+### Hands-on lab
+
+In this hands-on lab you will extract (historical) Sales Orders from SAP S/4 HANA and historical payments from a non-SAP system, in this case Cosmos DB using Azure Synapse Analytics pipelines. You will visualize the extracted Sales Orders and invoice data with Power BI. Next, you will unleash the power of data using Azure Machine Learning to train a model to predict incoming cash flow. You will learn to implement dashboards and alerting using Power BI and Power Automate. Finally, you will add the ability to update data in SAP based on insights gained from the prediction model.
 
 ## Azure services and related products
 
