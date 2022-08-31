@@ -25,7 +25,7 @@ The primary goal for this system is to extract SAP data into a single dashboard 
 
 ### Whiteboard design session
 
-In this whiteboard design session, you will learn how to design a solution to allow customers to pull data from multiple data sources, provide an analytics, and automate repetitive tasks.
+In this whiteboard design session, you will learn how to design a solution to allow customers to pull data from multiple data sources, provide analytics, and automate repetitive tasks.
 
 ### Hands-on lab
 
