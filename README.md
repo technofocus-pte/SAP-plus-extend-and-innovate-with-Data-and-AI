@@ -27,9 +27,13 @@ The primary goal for this system is to extract SAP data into a single dashboard 
 
 In this whiteboard design session, you will learn how to design a solution to allow customers to pull data from multiple data sources, provide analytics, and automate repetitive tasks.
 
+Continue to the [Whiteboard design session](https://github.com/microsoft/MCW-SAP-plus-extend-and-innovate-with-Data-and-AI/tree/main/Whiteboard%20design%20session) documents folder.
+
 ### Hands-on lab
 
 In this hands-on lab you will extract (historical) Sales Orders from SAP S/4 HANA and historical payments from a non-SAP system, in this case Cosmos DB using Azure Synapse Analytics pipelines. You will visualize the extracted Sales Orders and invoice data with Power BI. Next, you will unleash the power of data using Azure Machine Learning to train a model to predict incoming cash flow. You will learn to implement dashboards and alerting using Power BI and Power Automate. Finally, you will add the ability to update data in SAP based on insights gained from the prediction model.
+
+Continue to the [Hands-on lab](https://github.com/microsoft/MCW-SAP-plus-extend-and-innovate-with-Data-and-AI/tree/main/Hands-on%20lab) documents folder.
 
 ## Azure services and related products
 
