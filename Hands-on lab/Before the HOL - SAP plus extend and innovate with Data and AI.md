@@ -72,7 +72,7 @@ Duration: 3 - 4 hours
 
     ![A portion of the SAP Cloud Appliance Library site displays with the Log On button highlighted.](media/sapcal_logon_button.png "SAP Cloud Appliance Library Log On")
 
-3. Either register for a new account, or log in with your existing credentials.
+3. Either register for a new account or log in with your existing credentials.
 
 4. On the SAP Cloud Appliance Library **Appliance Templates** screen, search for and locate the **SAP S/4HANA 2021, Fully-Activated Appliance** item, and select the **Create Appliance** button in the search results.
 
@@ -299,9 +299,9 @@ This task demonstrates creating a sales view in SAP and exposing it as an OData 
 
     ![A portion of a code window displays with the preceding line of code highlighted.](media/sapvm_addodataannotation.png "Add OData publish annotation")
 
-17. Right-click in the whitespace of the **ZBD_ISALESDOCUMENT_E** file, and select **Activate**.
+17. Right-click in the whitespace of the **ZBD_ISALESDOCUMENT_E** file and select **Activate**.
 
-18. Minimize the Eclipse development environment, and double-click the **SAP Logon** icon located on the desktop of the virtual machine. This will open the SAP GUI application.
+18. Minimize the Eclipse development environment and double-click the **SAP Logon** icon located on the desktop of the virtual machine. This will open the SAP GUI application.
 
     ![The SAP Logon icon located on the virtual machine desktop displays.](media/sapvm_saplogonicon.png "SAP Logon icon")
 
@@ -469,7 +469,7 @@ A service is available that allows for the update of a Business Partner record. 
 
     ![The Variables for the SAP MCW collection displays with the initial value and current value set to an IP address. The Save button is highlighted.](media/pm_enteripvarsincollection.png "Set ip-address values")
 
-21. Expand the SAP MCW Collection, and select the **GET Company** request. Select **Send**. Notice how the CompanyName is currently **Office Line Prag**.
+21. Expand the SAP MCW Collection and select the **GET Company** request. Select **Send**. Notice how the CompanyName is currently **Office Line Prag**.
 
     ![The SAP MCW Collection is expanded with the GET Company request selected. The Send button is highlighted. The CompanyName of Office Line Prag is highlighted in the response.](media/pm_get_officelineprag.png "Get Company Request - Office Line Prag Company Name")
 
@@ -477,7 +477,7 @@ A service is available that allows for the update of a Business Partner record. 
 
     ![The Patch Company request displays with the Send button highlighted. The status indicates 204 No Content.](media/pm_patchcompanyname.png "PATCH company")
 
-23. Return to the **GET Company** request, and select **Send**. Notice how the CompanyName now shows **Bigmart**.
+23. Return to the **GET Company** request and select **Send**. Notice how the CompanyName now shows **Bigmart**.
 
     ![The GET Company request displays with the Send button highlighted and the CompanyName value set to Bigmart in the response"](media/pm_getcompany_bigmart.png "CompanyName updated to Bigmart")
 
