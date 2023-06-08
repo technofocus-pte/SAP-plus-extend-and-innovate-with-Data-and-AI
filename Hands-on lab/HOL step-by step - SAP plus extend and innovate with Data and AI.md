@@ -398,7 +398,7 @@ The Copy activity in Azure Synapse Analytics requires the usage of integration d
 
 An Azure Synapse Analytics pipeline can be used to move data from source to sink. The Copy data activity moves data from a source dataset to a sink dataset. This task creates a pipeline with two Copy data activities to move sales order header and sales order items data from S/4HANA into the dedicated SQL pool tables in Azure Synapse Analytics.
 
-1. In Synapse Studio, select the **Integrate** hub from the left menu. Expand the **+** menu from the center pane, and choose **Pipeline**.
+1. In Synapse Studio, select the **Integrate** hub from the left menu. Expand the **+** menu from the center pane and choose **Pipeline**.
 
     ![Synapse Studio displays with the Integrate hub selected in the left menu and the + menu expanded in the center panel. The pipeline item is selected.](media/ss_newpipelinemenu.png "New pipeline")
 
@@ -526,7 +526,7 @@ Payment history data is required when creating the cash flow prediction model. T
 
 ### Task 3: Create the Payments ingestion pipeline
 
-1. In Synapse Studio, select the **Integrate** hub from the left menu. Expand the **+** menu from the center pane, and choose **Pipeline**.
+1. In Synapse Studio, select the **Integrate** hub from the left menu. Expand the **+** menu from the center pane and choose **Pipeline**.
 
     ![Synapse Studio displays with the Integrate hub selected in the left menu and the + menu expanded in the center panel. The pipeline item is selected.](media/ss_newpipelinemenu.png "New pipeline")
 
@@ -668,7 +668,7 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
 
     ![The Synapse Studio toolbar menu displays with the Publish all button highlighted.](media/ss_publishall.png "Publish all")
 
-9. In Synapse Studio, select the **Integrate** hub from the left menu. Expand the **+** menu from the center pane, and choose **Pipeline**.
+9. In Synapse Studio, select the **Integrate** hub from the left menu. Expand the **+** menu from the center pane and choose **Pipeline**.
 
     ![Synapse Studio displays with the Integrate hub selected in the left menu and the + menu expanded in the center panel. The pipeline item is selected.](media/ss_newpipelinemenu.png "New pipeline")
 
@@ -700,7 +700,7 @@ In this task, a pipeline is created to copy the SalesPaymentsFull view to a parq
 
     ![The pipeline toolbar menu displays with the Add trigger menu expanded and the Trigger now item selected.](media/ss_pipelinetriggernow.png "Trigger pipeline")
 
-17. Use the **Monitor** hub to ensure the pipeline run successful completion.
+17. Use the **Monitor** hub to ensure the pipeline run has successfully completed.
 
     ![The Monitor hub pipeline runs displays indicating the successful completion of the CreateSalesPaymentsParquet pipeline.](media/ss_createsalespaymentsparquet_pipelinesucceeded.png "Successfully completed pipeline")
 
@@ -932,7 +932,7 @@ In this exercise, you will learn to connect to sales data in Azure Data Lake Sto
 
 Duration: 50 minutes
 
-In this exercise, you'll leverage the integration of Azure Machine Learning in Azure Synapse Analytics. You will train a model to predict incoming cashflow and deploy the final model for use in the dedicated SQL Pool.
+In this exercise, you will leverage the integration of Azure Machine Learning in Azure Synapse Analytics. You will train a model to predict incoming cashflow and deploy the final model for use in the dedicated SQL Pool.
 
 ### Task 1: Create the SalesPaymentsFull Spark table from the parquet file
 
@@ -970,7 +970,7 @@ In this exercise, you'll leverage the integration of Azure Machine Learning in A
 
 ### Task 3: Train a new regression model for incoming cash flow
 
-1. In Synapse Studio, select the **Data** hub, select the **Workspace** tab. Expand the **Lake database** section. Expand the **default** database and **Tables**. Right-click on the **salespaymentsfull** table, and expand the **Machine Learning** item and choose **Train a new model**. If you don't see the **Lake database** section, reload the page.
+1. In Synapse Studio, select the **Data** hub, and the **Workspace** tab. Expand the **Lake database** section. Expand the **default** database and **Tables**. Right-click on the **salespaymentsfull** table, expand the **Machine Learning** item, and choose **Train a new model**. If you don't see the **Lake database** section, reload the page.
 
     ![Synapse Studio displays with the Data Hub selected. The Workspace tab is selected with the Lake database, default, and Tables items expanded. The context menu on the ssalespaymentsfull table is expanded with Machine Learning expanded and Train a new model item selected.](media/ss_mltrainmodel_menu.png "Train a new model from a Spark table")
 
@@ -1066,7 +1066,7 @@ In this exercise, you'll leverage the integration of Azure Machine Learning in A
 
 Duration: 40 minutes
 
-In this exercise, we will implement visualizations to help Contoso Retail gain insights into historical sales order and payments data.
+In this exercise, we will implement visualizations to help Contoso Retail gain insight into historical sales orders and payment data.
 
 ### Task 1: Retrieve the database connection information for the dedicated SQL pool
 
@@ -1202,11 +1202,11 @@ This report shows the average number of days by which each customer group pays t
 
     ![The Power Query Editor displays with the SalesOrderHeaders table selected in the Queries pane and the Merge Queries menu expanded with the Merge Queries as New option selected.](media/pbi_mergequeriesasnewmenu.png "Power Query Editor")  
 
-3. In the Merge window, select the SALESDOCUMENT column of the SalesOrderHeaders table. Select the **Payments** table as the second table, and select the SalesOrderNr field. Select **OK**.
+3. In the Merge window, select the SALESDOCUMENT column of the SalesOrderHeaders table. Select the **Payments** table as the second table and select the SalesOrderNr field. Select **OK**.
 
     ![The Merge window displays with the SALESDOCUMENT column selected. The Payments table is selected as the second table with the SalesOrderNr field highlighted. The OK button is highlighted.](media/pbi_mergequerieswindow.png "Merge Queries Window")
 
-4. Rename the Merge query by right-clicking the Merge query in the Queries pane, and selecting **Rename**. Name the merged query **SalesOrderPayments**.
+4. Rename the Merge query by right-clicking the Merge query in the Queries pane and selecting **Rename**. Name the merged query **SalesOrderPayments**.
 
 5. With the SalesOrderPayments query selected, scroll the table completely to the right. Expand the **Payments** column menu, and choose to include the following fields: **PaymentNr**, **PaymentDate**, **PaymentValue** and **Currency**. Select **OK**.
 
@@ -1438,7 +1438,7 @@ In this exercise, Power BI and Power Automate subscriptions are used to create a
 
     ![The online Power BI report editor displays with the Edit button highlighted.](media/opbi_editmenu.png "Edit report")
 
-2. In the Visualizations pane, select **Gauge**. Drag-and-drop the **SalesOrderPayments.predOffset** from the Data pane to the **Value** box. Expand the **Value** field using the chevron menu, and select **Maximum**.
+2. In the Visualizations pane, select **Gauge**. Drag-and-drop the **SalesOrderPayments.predOffset** from the Data pane to the **Value** box. Expand the **Value** field using the chevron menu and select **Maximum**.
 
     ![The Visualization pane displays with the Guage visualization selected. The SalesOrderPayments.predOffset value is in the Value box with the chevron menu expanded. The Maximum item is selected from this menu.](media/opbi_gauge_settings.png "Gauge visualization")
 
@@ -1640,7 +1640,7 @@ Duration: 10 minutes
 
 ### Task 2: Delete the Power BI workspace report and dataset
 
-1. In the Power BI workspace, select **My workspace** from the left menu to get a listing of items. Delete the report, dataset and the Alerting dashboard items by expanding the ellipsis menu and choosing Delete.
+1. In the Power BI workspace, select **My workspace** from the left menu to get a listing of items. Delete the report, dataset, and the Alerting dashboard items by expanding the ellipsis menu and choosing Delete.
 
     ![The My workspace items are listed with an ellipsis menu displaying with the Delete option highlighted.](media/opbi_deleteitems.png "Delete item")
 
