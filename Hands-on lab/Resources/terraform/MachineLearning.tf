@@ -54,16 +54,10 @@ resource "azurerm_key_vault_access_policy" "aml_kv_policy" {
 
 #######################################################################
 ## Authorize Current User to read AML models 
-##  - requires Reader IAM role to subscription and the aml workspace
+##  - requires Reader IAM role to subscription
 #######################################################################
 resource "azurerm_role_assignment" "usertosub" {
   scope                = data.azurerm_subscription.current.id
-  role_definition_name = "Reader"
-  principal_id         = local.currentuserobjectid
-}
-
-resource "azurerm_role_assignment" "usertoaml" {
-  scope                = azurerm_machine_learning_workspace.mlws.id
   role_definition_name = "Reader"
   principal_id         = local.currentuserobjectid
 }
