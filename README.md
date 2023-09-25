@@ -1,6 +1,7 @@
 # SAP plus extend and innovate with Data and AI
+##Please Note: This workshop will retire effective October 31, 2023. The workshop is no longer being maintained.
 
-##Please Note: This workshop will retire effect October 31, 2023. The workshop is no longer being maintained. Contoso Retail processes and distributes food to supermarkets and other small-to-medium sized companies.  Generous credit terms based on relationships instead of data analytics has put the company in financial difficulty.  They have challenges identifying customers’ payment behaviors and notifying customers when they are behind on invoice payments.  The accounting department uses manual processes to identify delinquent accounts making the accounts receivable (AR) management time consuming.  Also, lenders and have capped CFD’s line of credit and increased the interest rate until they can lower their AR balance and be able to predict near term future cash flow.
+Contoso Retail processes and distributes food to supermarkets and other small-to-medium sized companies.  Generous credit terms based on relationships instead of data analytics has put the company in financial difficulty.  They have challenges identifying customers’ payment behaviors and notifying customers when they are behind on invoice payments.  The accounting department uses manual processes to identify delinquent accounts making the accounts receivable (AR) management time consuming.  Also, lenders and have capped CFD’s line of credit and increased the interest rate until they can lower their AR balance and be able to predict near term future cash flow.
 
 June 2023
 
